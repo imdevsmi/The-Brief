@@ -8,6 +8,10 @@
 import SnapKit
 import UIKit
 
+protocol SplashVCProtocol: AnyObject {
+    
+}
+
 final class SplashVC: UIViewController {
     
     // MARK: Properties
@@ -51,6 +55,8 @@ final class SplashVC: UIViewController {
     }
 }
 
+// MARK: - Private Methods
+
 private extension SplashVC {
     func setupUI() {
         view.backgroundColor = .systemBackground
@@ -75,5 +81,13 @@ private extension SplashVC {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(32)
         }
+    }
+}
+
+// MARK: Output Protocol
+
+extension SplashVC: SplashVCProtocol {
+    func ToMainScene() {
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
     }
 }
