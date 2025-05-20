@@ -11,6 +11,13 @@ protocol SplashVMProtocol: AnyObject{
     func splashScreen()
 }
 
-final class SplashVM {
+final class SplashVM: SplashVMProtocol {
     
+    weak var output: SplashVMProtocol?
+    
+    func splashScreen() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.output?.splashScreen()
+        }
+    }
 }
