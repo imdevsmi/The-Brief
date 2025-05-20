@@ -22,7 +22,6 @@ final class TabBar: UITabBarController {
 private extension TabBar {
     func setupTabs() {
         let homeVC = createNav(with: "News", and: UIImage(systemName: "newspaper.fill"), viewController: HomeVC())
-        
         let settingsVC = createNav(with: "Settings", and: UIImage(systemName: "gear"), viewController: SettingsVC())
         
         setViewControllers([homeVC, settingsVC], animated: false)
@@ -34,9 +33,9 @@ private extension TabBar {
         let nav = UINavigationController(rootViewController: viewController)
         nav.tabBarItem.title = title
         nav.tabBarItem.image = image
-        viewController.title = title
         nav.navigationBar.prefersLargeTitles = true
         viewController.navigationItem.largeTitleDisplayMode = .always
+        viewController.title = title
         
         return nav
     }
