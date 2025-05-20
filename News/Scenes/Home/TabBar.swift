@@ -23,7 +23,7 @@ private extension TabBar {
     func setupTabs() {
         let homeVC = createNav(with: "News", and: UIImage(systemName: "newspaper.fill"), viewController: HomeVC())
         
-        let settingsVC = createNav(with: "Settings", and: UIImage(systemName: "gearshape"), viewController: SettingsVC())
+        let settingsVC = createNav(with: "Settings", and: UIImage(systemName: "gear"), viewController: SettingsVC())
         
         setViewControllers([homeVC, settingsVC], animated: false)
         tabBar.tintColor = .systemBlue
