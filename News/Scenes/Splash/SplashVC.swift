@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 protocol SplashVCProtocol: AnyObject {
-    
+    func toMainScene()
 }
 
 final class SplashVC: UIViewController {
@@ -63,6 +63,14 @@ final class SplashVC: UIViewController {
         super.viewDidLoad()
         setupUI()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+            self?.toMainScene()
+        }
+    }
+    
 }
 
 // MARK: - Private Methods
@@ -95,7 +103,13 @@ private extension SplashVC {
 // MARK: Output Protocol
 
 extension SplashVC: SplashVCProtocol {
-    func ToMainScene() {
-        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
+    func toMainScene() {
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+              let window = sceneDelegate.window else { return }
+        
+        let homeVC = HomeVC()
+        let navVC = UINavigationController(rootViewController: homeVC)
+        window.rootViewController = navVC
+        window.makeKeyAndVisible()
     }
 }
