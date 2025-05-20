@@ -16,6 +16,16 @@ final class SplashVC: UIViewController {
     
     // MARK: Properties
     
+    private let stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.alignment = .center
+        stack.distribution = .equalSpacing
+        stack.spacing = 16
+        
+        return stack
+    }()
+
     private let newsImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -24,7 +34,7 @@ final class SplashVC: UIViewController {
         
         return imageView
     }()
-    
+
     private let newsLabel: UILabel = {
         let label = UILabel()
         label.text = "Sami News"
@@ -51,7 +61,7 @@ final class SplashVC: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupUI()
     }
 }
 
@@ -65,21 +75,19 @@ private extension SplashVC {
     }
     
     func setupViews() {
-        view.addSubview(newsImage)
-        view.addSubview(newsLabel)
+        view.addSubview(stackView)
+        stackView.addArrangedSubview(newsImage)
+        stackView.addArrangedSubview(newsLabel)
     }
     
     func setupLayout() {
-        newsImage.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-16)
-            make.width.height.equalTo(224)
+        stackView.snp.makeConstraints { make in
+            make.centerY.equalTo(view.safeAreaLayoutGuide).multipliedBy(0.8) 
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
         
-        newsLabel.snp.makeConstraints { make in
-            make.top.equalTo(newsImage.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(32)
+        newsImage.snp.makeConstraints { make in
+            make.width.height.lessThanOrEqualTo(200)
         }
     }
 }
