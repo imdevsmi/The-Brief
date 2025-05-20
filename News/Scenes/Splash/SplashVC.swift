@@ -46,6 +46,7 @@ final class SplashVC: UIViewController {
     }()
     
     private var splashVM: SplashVM
+    weak var input: SplashVCProtocol?
     
     // MARK: Inits
     
@@ -67,7 +68,7 @@ final class SplashVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
-            self?.toMainScene()
+            self?.input?.toMainScene()
         }
     }
     
