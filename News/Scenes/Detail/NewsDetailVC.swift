@@ -8,13 +8,13 @@
 import SnapKit
 import UIKit
 
-protocol DetailViewModelOutputProtocol: AnyObject {
+protocol NewsDetailVMOutputProtocol: AnyObject {
+    
 }
 
 final class NewsDetailVC: UIViewController {
     
     //  MARK: Properties
-    
     var viewModel: NewsDetailVM
     
     private let scrollView: UIScrollView = {
@@ -81,7 +81,6 @@ final class NewsDetailVC: UIViewController {
     }()
     
     // MARK: Inits
-
     init(viewModel: NewsDetailVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -91,17 +90,69 @@ final class NewsDetailVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc private func imageTapped() {
-        
-    }
-    
     // MARK: LifeCycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
 }
 
+// MARK: - Private Methods
+private extension NewsDetailVC {
+    func setupUI() {
+        view.backgroundColor = .systemBackground
+        addViews()
+        configureLayout()
+        setupNavigationBar()
+    }
+    
+    func addViews() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(stackView)
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(authorLabel)
+        stackView.addArrangedSubview(imageDescriptionLabel)
+    }
+
+    func configureLayout() {
+        scrollView.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview()
+            $0.leading.trailing.equalTo(view.layoutMarginsGuide)
+        }
+        
+        stackView.snp.makeConstraints {
+            $0.edges.equalTo(scrollView)
+            $0.width.equalTo(scrollView.snp.width)
+        }
+        
+        imageView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.height.equalTo(240)
+        }
+    }
+
+    func setupNavigationBar() {
+        let shareButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareTapped))
+        navigationItem.rightBarButtonItem = shareButton
+    }
+}
+
+// MARK: Objective Methods
+@objc private extension NewsDetailVC {
+    
+    func imageTapped() {
+        
+    }
+    
+    func shareTapped() {
+        
+    }
+}
