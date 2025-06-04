@@ -46,7 +46,7 @@ final class NewsCell: UITableViewCell {
         button.setPreferredSymbolConfiguration(imageConfig, forImageIn: .normal)
         button.tintColor = .label
         button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
+        //button.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
         
         return button
     }()
@@ -163,5 +163,26 @@ private extension NewsCell {
             make.height.equalTo(1)
             make.bottom.equalToSuperview()
         }
+    }
+}
+
+// MARK: - Public Methods
+
+extension NewsCell {
+    func setup(with article: Article) {
+        newsLabel.text = article.title
+        authorLabel.text = article.author
+        hourLabel.text = article.publishedAt?.formattedHourAndMinute() ?? "Unknown time"
+        dateLabel.text = article.publishedAt?.timeAgoSinceDate() ?? "Unknown time"
+        url = article.url
+        newsImage.setImage(with: article.urlToImage)
+    }
+
+    func cancel() {
+        newsImage.kf.cancelDownloadTask()
+    }
+
+    func clear() {
+        newsImage.image = nil
     }
 }
