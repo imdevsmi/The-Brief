@@ -11,6 +11,11 @@ import UIKit
 
 final class NewsCell: UITableViewCell {
     
+    
+    static let identifier = "NewsCell"
+    private var url: String?
+    private var article: Article?
+    
     // MARK: Properties
     
     private lazy var newsImage: UIImageView = {
