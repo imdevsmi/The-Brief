@@ -62,11 +62,11 @@ final class NewsCell: UITableViewCell {
     }()
     
     private let hourSeperatorView: UIView = {
-        let seperator = UIView()
-        seperator.layer.cornerRadius = 4
-        seperator.backgroundColor = .separator
+        let hour = UIView()
+        hour.layer.cornerRadius = 4
+        hour.backgroundColor = .separator
         
-        return seperator
+        return hour
     }()
     
     private let dateLabel: UILabel = {
@@ -77,4 +77,10 @@ final class NewsCell: UITableViewCell {
         return label
     }()
     
+    private let separatorView: UIView = {
+        let separator = UIView()
+        separator.backgroundColor = .systemGray6
+        
+        return separator
+    }()
 }
