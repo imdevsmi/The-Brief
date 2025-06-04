@@ -11,7 +11,7 @@ import UIKit
 
 final class NewsCell: UITableViewCell {
     
-    static let identifier = "NewsCell"
+    static let reuseIdentifier = "NewsCell"
     private var url: String?
     private var article: Article?
     
