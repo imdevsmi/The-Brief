@@ -11,15 +11,26 @@ import UIKit
 
 final class NewsCell: UITableViewCell {
     
-    
     static let identifier = "NewsCell"
     private var url: String?
     private var article: Article?
     
+    // MARK: Inits
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 24, leading: 16, bottom: 24, trailing: 16)
+        setupUI()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: Properties
     
     private lazy var newsImage: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 12
         imageView.clipsToBounds = true
@@ -91,6 +102,7 @@ final class NewsCell: UITableViewCell {
 }
 
 // MARK: - Private Methods
+
 private extension NewsCell {
     func setupUI() {
         addViews()
