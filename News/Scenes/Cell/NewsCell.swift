@@ -84,3 +84,67 @@ final class NewsCell: UITableViewCell {
         return separator
     }()
 }
+
+// MARK: - Private Methods
+private extension NewsCell {
+    func setupUI() {
+        addViews()
+        setupLayouts()
+    }
+    
+    func addViews() {
+        contentView.addSubview(newsImage)
+        contentView.addSubview(moreButton)
+        contentView.addSubview(newsLabel)
+        contentView.addSubview(authorLabel)
+        contentView.addSubview(hourLabel)
+        contentView.addSubview(hourSeperatorView)
+        contentView.addSubview(dateLabel)
+        contentView.addSubview(separatorView)
+    }
+    
+    func setupLayouts() {
+        newsImage.snp.makeConstraints { make in
+            make.top.leading.equalTo(contentView.layoutMarginsGuide)
+            make.width.height.equalTo(136)
+        }
+        newsLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentView.layoutMarginsGuide)
+            make.leading.equalTo(newsImage.snp.trailing).offset(12)
+            make.trailing.equalTo(contentView.layoutMarginsGuide)
+        }
+        authorLabel.snp.makeConstraints { make in
+            make.top.equalTo(newsLabel.snp.bottom).offset(12)
+            make.leading.equalTo(newsImage.snp.trailing).offset(12)
+            make.trailing.equalTo(contentView.layoutMarginsGuide)
+        }
+        hourLabel.snp.makeConstraints { make in
+            make.top.equalTo(authorLabel.snp.bottom).offset(12)
+            make.leading.equalTo(newsImage.snp.trailing).offset(12)
+            make.height.equalTo(24)
+        }
+        hourSeperatorView.snp.makeConstraints { make in
+            make.leading.equalTo(hourLabel.snp.trailing).offset(12)
+            make.centerY.equalTo(hourLabel)
+            make.width.equalTo(8)
+            make.height.equalTo(8)
+        }
+        dateLabel.snp.makeConstraints { make in
+            make.leading.equalTo(hourSeperatorView.snp.trailing).offset(12)
+            make.centerY.equalTo(hourLabel)
+            make.height.equalTo(24)
+        }
+        moreButton.snp.makeConstraints { make in
+            make.centerY.equalTo(dateLabel)
+            make.trailing.equalTo(contentView.layoutMarginsGuide)
+            make.width.equalTo(24)
+        }
+        separatorView.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(contentView.layoutMarginsGuide)
+            make.top.equalTo(newsImage.snp.bottom).offset(24).priority(.low)
+            make.top.greaterThanOrEqualTo(hourLabel.snp.bottom).offset(24).priority(.high)
+            make.height.equalTo(1)
+            make.bottom.equalToSuperview()
+        }
+    }
+}
