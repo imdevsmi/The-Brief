@@ -46,7 +46,7 @@ final class NewsCell: UITableViewCell {
         button.setPreferredSymbolConfiguration(imageConfig, forImageIn: .normal)
         button.tintColor = .label
         button.imageView?.contentMode = .scaleAspectFit
-        //button.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
         
         return button
     }()
@@ -184,5 +184,29 @@ extension NewsCell {
 
     func clear() {
         newsImage.image = nil
+    }
+}
+
+// MARK: Objective Methods
+
+private extension NewsCell {
+    @objc func didTapMoreButton () {
+        guard let url = url, let shareUrl = URL(string: url) else { return }
+        
+        let browser = openBrowser()
+        let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+            let browserVC = UIActivityViewController(activityItems: [shareUrl], applicationActivities: [browser])
+
+            if let topController = UIApplication.shared.connectedScenes
+                .compactMap({ $0 as? UIWindowScene })
+                .flatMap({ $0.windows })
+                .first(where: { $0.isKeyWindow })?.rootViewController {
+                topController.present(browserVC, animated: true)
+            }
+        }
+        
+        let menu = UIMenu(title: "", children: [shareAction])
+        moreButton.menu = menu
+        moreButton.showsMenuAsPrimaryAction = true
     }
 }
