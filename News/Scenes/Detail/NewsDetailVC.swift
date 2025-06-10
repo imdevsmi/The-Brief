@@ -123,19 +123,19 @@ private extension NewsDetailVC {
     }
 
     func configureLayout() {
-        scrollView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview()
-            $0.leading.trailing.equalTo(view.layoutMarginsGuide)
+        scrollView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview()
+            make.leading.trailing.equalTo(view.layoutMarginsGuide)
         }
-        
-        stackView.snp.makeConstraints {
-            $0.edges.equalTo(scrollView)
-            $0.width.equalTo(scrollView.snp.width)
+
+        stackView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+            make.width.equalTo(scrollView.snp.width)
         }
-        
-        imageView.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.height.equalTo(240)
+
+        imageView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(240)
         }
     }
 
