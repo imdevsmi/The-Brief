@@ -189,8 +189,8 @@ extension NewsCell {
 
 // MARK: Objective Methods
 
-private extension NewsCell {
-    @objc func didTapMoreButton () {
+@objc private extension NewsCell {
+    func didTapMoreButton () {
         guard let url = url, let shareUrl = URL(string: url) else { return }
         
         let browser = openBrowser()
