@@ -107,7 +107,7 @@ extension SplashVC: SplashVCProtocol {
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
               let window = sceneDelegate.window else { return }
         
-        let homeVC = HomeVC()
+        let homeVC = HomeVC(viewModel: HomeVM())
         let navVC = UINavigationController(rootViewController: homeVC)
         window.rootViewController = navVC
         window.makeKeyAndVisible()
