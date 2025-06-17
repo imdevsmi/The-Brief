@@ -37,7 +37,6 @@ final class SplashVC: UIViewController {
 
     private let newsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sami News"
         label.textColor = .label
         label.font = .systemFont(ofSize: 32, weight: .bold)
         label.textAlignment = .center
