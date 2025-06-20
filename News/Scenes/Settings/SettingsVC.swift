@@ -45,4 +45,8 @@ final class SettingsVC: UIViewController {
         super.viewDidLoad()
 
     }
+    
+    extension SettingsVC: UITableViewDataSource {
+        
+    }
 }
