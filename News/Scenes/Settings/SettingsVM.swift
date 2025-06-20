@@ -11,7 +11,7 @@ import Foundation
 protocol SettingsViewMInputProtocol: AnyObject {
     func fetchThemeMode() -> Int
     func updateThemeMode(_ mode: Int)
-    
+    func didSelect(item: SettingsModel)
     func updateNotification(isOn: Bool)
     func fetchNotificationStatus(_ completion: @escaping (Bool) -> Void)
 }
