@@ -45,8 +45,25 @@ final class SettingsVC: UIViewController {
         super.viewDidLoad()
 
     }
+}
+
+// MARK: Data Source- TableViewDelegate
+extension SettingsVC: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+    }
     
-    extension SettingsVC: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
     }
 }
+
+extension SettingsVC: UITableViewDelegate {
+    
+}
+
+
