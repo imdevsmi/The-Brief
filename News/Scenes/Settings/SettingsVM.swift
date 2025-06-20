@@ -18,4 +18,24 @@ protocol SettingsViewMInputProtocol: AnyObject {
 
 final class SettingsVM {
     
+    
+    lazy var sections: [SettingsSection] = [
+        SettingsSection(title: "Appearance", items: [
+            SettingsModel(title: "App Theme", iconName: "circle.righthalf.filled", type: .theme)
+        ]),
+        
+        SettingsSection(title: "Notifications", items: [
+            SettingsModel(title: "Notifications", iconName: "bell.fill", type: .notification)
+        ]),
+        
+        SettingsSection(title: "General", items: [
+            SettingsModel(title: "Rate us", iconName: "star.fill", type: .rateApp)
+        ]),
+        
+        SettingsSection(title: "Legal", items: [
+            SettingsModel(title: "Privacy Policy", iconName: "text.document.fill", type: .privacyPolicy),
+            SettingsModel(title: "Terms of Use", iconName: "checkmark.shield.fill", type: .termsOfUse)
+        ])
+    ]
+    
 }
