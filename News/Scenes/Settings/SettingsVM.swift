@@ -21,6 +21,10 @@ final class SettingsVM {
     weak var input: SettingsVMInputProtocol?
     weak var output: SettingsVMOutputProtocol?
     
+    init(){
+        input = self
+    }
+    
     lazy var sections: [SettingsSection] = [
         SettingsSection(title: "Appearance", items: [SettingsModel(title: "App Theme", iconName: "circle.righthalf.filled", type: .theme)]),
         
