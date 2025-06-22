@@ -17,6 +17,8 @@ protocol SettingsVMInputProtocol: AnyObject {
 
 final class SettingsVM {
     
+    private let themeKey = "savedTheme"
+    
     lazy var sections: [SettingsSection] = [
         SettingsSection(title: "Appearance", items: [SettingsModel(title: "App Theme", iconName: "circle.righthalf.filled", type: .theme)]),
         
