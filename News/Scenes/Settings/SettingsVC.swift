@@ -46,7 +46,6 @@ final class SettingsVC: UIViewController {
 
     }
 }
-
 // MARK: Data Source- TableViewDelegate
 extension SettingsVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
