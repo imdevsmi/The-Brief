@@ -75,7 +75,7 @@ extension SettingsVC: SettingsVMOutputProtocol {
     }
     
     func didUpdateNotification(_ isAuthorized: Bool) {
-        
+        print("Notification \(isAuthorized ? "On" : "Off")")
     }
     
     func openURL(_ url: String) {
