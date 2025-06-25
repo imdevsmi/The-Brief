@@ -39,6 +39,7 @@ extension SettingsVM: SettingsVMInputProtocol {
     
     func updateThemeMode(_ mode: Int) {
         UserDefaults.standard.set(mode, forKey: themeKey)
+        output?.didTheme(mode)
     }
     
     func didSelect(item: SettingsModel) {
@@ -46,10 +47,10 @@ extension SettingsVM: SettingsVMInputProtocol {
     }
     
     func updateNotification(isOn: Bool) {
-        <#code#>
+        
     }
     
     func fetchNotificationStatus(_ completion: @escaping (Bool) -> Void) {
-        <#code#>
+        
     }
 }
