@@ -30,5 +30,26 @@ final class SettingsVM {
         
         SettingsSection(title: "Legal", items: [SettingsModel(title: "Privacy Policy", iconName: "text.document.fill", type: .privacyPolicy), SettingsModel(title: "Terms of Use", iconName:"checkmark.shield.fill", type: .termsOfUse)])
     ]
+}
+
+extension SettingsVM: SettingsVMInputProtocol {
+    func fetchThemeMode() -> Int {
+        UserDefaults.standard.integer(forKey: themeKey)
+    }
     
+    func updateThemeMode(_ mode: Int) {
+        UserDefaults.standard.set(mode, forKey: themeKey)
+    }
+    
+    func didSelect(item: SettingsModel) {
+        
+    }
+    
+    func updateNotification(isOn: Bool) {
+        <#code#>
+    }
+    
+    func fetchNotificationStatus(_ completion: @escaping (Bool) -> Void) {
+        <#code#>
+    }
 }
