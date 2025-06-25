@@ -16,7 +16,7 @@ protocol SettingsVMOutputProtocol: AnyObject {
 }
 
 final class SettingsVC: UIViewController {
-    
+
     // MARK: Properties
 
     private let viewModel: SettingsVM
@@ -35,7 +35,7 @@ final class SettingsVC: UIViewController {
     init(viewModel: SettingsVM = SettingsVM()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.viewModel.outputDelegate = self
+        self.viewModel.output = self
     }
 
     required init?(coder: NSCoder) { fatalError() }
@@ -65,4 +65,20 @@ extension SettingsVC: UITableViewDelegate {
     
 }
 
-
+extension SettingsVC: SettingsVMOutputProtocol {
+    func didTheme(_ mode: Int) {
+        <#code#>
+    }
+    
+    func didUpdateNotification(_ isAuthorized: Bool) {
+        <#code#>
+    }
+    
+    func openURL(_ url: String) {
+        <#code#>
+    }
+    
+    func promptReview() {
+        <#code#>
+    }
+}
