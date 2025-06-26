@@ -62,6 +62,8 @@ extension SettingsVC: UITableViewDataSource {
         
         let section = viewModel.sections[indexPath.section]
         let item = section.items[indexPath.row]
+        
+        return cell
     }
 }
 
