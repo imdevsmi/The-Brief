@@ -89,7 +89,11 @@ extension SettingsVC: UITableViewDataSource {
 }
 
 extension SettingsVC: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = viewModel.sections[indexPath.section].items[indexPath.row]
+        viewModel.input?.didSelect(item: item)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
 
 extension SettingsVC: SettingsVMOutputProtocol {
