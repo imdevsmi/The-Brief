@@ -57,7 +57,11 @@ extension SettingsVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.tintColor = .label
         
+        let section = viewModel.sections[indexPath.section]
+        let item = section.items[indexPath.row]
     }
 }
 
