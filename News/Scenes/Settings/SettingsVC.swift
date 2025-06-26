@@ -63,6 +63,11 @@ extension SettingsVC: UITableViewDataSource {
         let section = viewModel.sections[indexPath.section]
         let item = section.items[indexPath.row]
         
+        cell.textLabel?.text = item.title
+        cell.textLabel?.textColor = .label
+        cell.textLabel?.textAlignment = .natural
+        cell.imageView?.image = UIImage(systemName: item.iconName)
+        
         return cell
     }
 }
