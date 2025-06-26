@@ -68,6 +68,22 @@ extension SettingsVC: UITableViewDataSource {
         cell.textLabel?.textAlignment = .natural
         cell.imageView?.image = UIImage(systemName: item.iconName)
         
+        switch item.type {
+        case .theme:
+            
+        case .notification:
+            
+        case .rateApp, .privacyPolicy, .termsOfUse:
+            cell.selectionStyle = .default
+            cell.accessoryType = .disclosureIndicator
+            
+        case .version:
+            cell.imageView?.image = nil
+            cell.backgroundColor = .clear
+            cell.isUserInteractionEnabled = false
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.textColor = .secondaryLabel
+        }
         return cell
     }
 }
