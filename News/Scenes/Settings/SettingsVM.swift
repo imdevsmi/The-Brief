@@ -68,6 +68,14 @@ extension SettingsVM: SettingsVMInputProtocol {
     }
     
     func fetchNotificationStatus(_ completion: @escaping (Bool) -> Void) {
+        let center = UNUserNotificationCenter.current()
         
+        center.getNotificationSettings { settings in
+            let isAuthorized = settings.authorizationStatus == .authorized
+            
+            DispatchQueue.main.async {
+                completion(isAuthorized)
+            }
+        }
     }
 }
