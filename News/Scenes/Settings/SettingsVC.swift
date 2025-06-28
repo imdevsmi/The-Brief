@@ -90,8 +90,12 @@ extension SettingsVC: UITableViewDataSource {
         
         switch item.type {
         case .theme:
+            cell.accessoryView = nil
             
         case .notification:
+            let switchUI = UISwitch()
+            switchUI.onTintColor = .label
+            cell.accessoryView = switchUI
             
         case .rateApp, .privacyPolicy, .termsOfUse:
             cell.selectionStyle = .default
