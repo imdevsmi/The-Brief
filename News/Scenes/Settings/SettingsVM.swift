@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UserNotifications
 
 protocol SettingsVMInputProtocol: AnyObject {
     func fetchThemeMode() -> Int
@@ -52,7 +53,18 @@ extension SettingsVM: SettingsVMInputProtocol {
     }
     
     func updateNotification(isOn: Bool) {
+        guard isOn else {
+            output?.didUpdateNotification(false)
+            return
+        }
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        let center = UNUserNotificationCenter.current()
         
+        center.requestAuthorization(options: options) { [weak self] granted, error in
+            DispatchQueue.main.async {
+                self?.output?.didUpdateNotification(granted)
+            }
+        }
     }
     
     func fetchNotificationStatus(_ completion: @escaping (Bool) -> Void) {
