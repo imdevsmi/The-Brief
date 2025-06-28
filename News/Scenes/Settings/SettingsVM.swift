@@ -43,7 +43,12 @@ extension SettingsVM: SettingsVMInputProtocol {
     }
     
     func didSelect(item: SettingsModel) {
-        
+        switch item.type {
+        case .rateApp: output?.promptReview()
+        case .privacyPolicy: output?.openURL("")
+        case .termsOfUse: output?.openURL("")
+        default: break
+        }
     }
     
     func updateNotification(isOn: Bool) {
