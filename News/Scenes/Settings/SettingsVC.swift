@@ -43,9 +43,29 @@ final class SettingsVC: UIViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupUI()
     }
 }
+
+// MARK: Private Methods
+private extension SettingsVC {
+    func setupUI() {
+        view.backgroundColor = .systemGroupedBackground
+        setupConstraints()
+        setupLayout()
+    }
+    
+    func setupConstraints() {
+        view.addSubview(tableView)
+    }
+    
+    func setupLayout() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+}
+
 // MARK: Data Source- TableViewDelegate
 extension SettingsVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
