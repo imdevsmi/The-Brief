@@ -46,8 +46,8 @@ extension SettingsVM: SettingsVMInputProtocol {
     func didSelect(item: SettingsModel) {
         switch item.type {
         case .rateUs: output?.promptReview()
-        case .privacyPolicy: output?.openURL("")
-        case .termsOfUse: output?.openURL("")
+        case .privacyPolicy: output?.openURL("https://www.linkedin.com/in/samigundogan/")
+        case .termsOfUse: output?.openURL("https://www.linkedin.com/in/samigundogan/")
         default: break
         }
     }
