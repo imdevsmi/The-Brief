@@ -27,7 +27,7 @@ final class SettingsVM {
         
         SettingsSection(title: "Notifications", items: [SettingsModel(title: "Notifications", iconName: "bell.fill", type: .notification)]),
         
-        SettingsSection(title: "General", items: [SettingsModel(title: "Rate us", iconName: "star.fill", type: .rateApp)]),
+        SettingsSection(title: "General", items: [SettingsModel(title: "Rate us", iconName: "star.fill", type: .rateUs)]),
         
         SettingsSection(title: "Legal", items: [SettingsModel(title: "Privacy Policy", iconName: "text.document.fill", type: .privacyPolicy), SettingsModel(title: "Terms of Use", iconName:"checkmark.shield.fill", type: .termsOfUse)])
     ]
@@ -45,7 +45,7 @@ extension SettingsVM: SettingsVMInputProtocol {
     
     func didSelect(item: SettingsModel) {
         switch item.type {
-        case .rateApp: output?.promptReview()
+        case .rateUs: output?.promptReview()
         case .privacyPolicy: output?.openURL("")
         case .termsOfUse: output?.openURL("")
         default: break

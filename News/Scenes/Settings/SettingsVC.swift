@@ -97,7 +97,7 @@ extension SettingsVC: UITableViewDataSource {
             switchUI.onTintColor = .label
             cell.accessoryView = switchUI
             
-        case .rateApp, .privacyPolicy, .termsOfUse:
+        case .rateUs, .privacyPolicy, .termsOfUse:
             cell.selectionStyle = .default
             cell.accessoryType = .disclosureIndicator
             

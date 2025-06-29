@@ -10,7 +10,7 @@ import Foundation
 enum SettingsType {
     case theme
     case notification
-    case rateApp
+    case rateUs
     case privacyPolicy
     case termsOfUse
     case version
