@@ -122,11 +122,7 @@ extension SettingsVC: UITableViewDelegate {
 
 extension SettingsVC: SettingsVMOutputProtocol {
     func didTheme(_ mode: Int) {
-        switch mode {
-        case 1: view.window?.overrideUserInterfaceStyle = .light
-        case 2: view.window?.overrideUserInterfaceStyle = .dark
-        default: view.window?.overrideUserInterfaceStyle = .unspecified
-        }
+        
     }
     
     func didUpdateNotification(_ isAuthorized: Bool) {
