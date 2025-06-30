@@ -40,12 +40,12 @@ extension SettingsVM: SettingsVMInputProtocol {
     
     func updateThemeMode(_ mode: Int) {
         UserDefaults.standard.set(mode, forKey: themeKey)
-        output?.didTheme(mode)
+        output?.updateTheme(mode)
     }
     
     func didSelect(item: SettingsModel) {
         switch item.type {
-        case .rateUs: output?.promptReview()
+        case .rateUs: output?.showReview()
         case .privacyPolicy: output?.openURL("https://www.linkedin.com/in/samigundogan/")
         case .termsOfUse: output?.openURL("https://www.linkedin.com/in/samigundogan/")
         default: break
@@ -54,7 +54,7 @@ extension SettingsVM: SettingsVMInputProtocol {
     
     func updateNotification(isOn: Bool) {
         guard isOn else {
-            output?.didUpdateNotification(false)
+            output?.updateNotification(false)
             return
         }
         let options: UNAuthorizationOptions = [.alert, .sound, .badge]
@@ -62,7 +62,7 @@ extension SettingsVM: SettingsVMInputProtocol {
         
         center.requestAuthorization(options: options) { [weak self] granted, error in
             DispatchQueue.main.async {
-                self?.output?.didUpdateNotification(granted)
+                self?.output?.updateNotification(granted)
             }
         }
     }
