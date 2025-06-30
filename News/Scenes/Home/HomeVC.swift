@@ -68,7 +68,7 @@ final class HomeVC: UIViewController {
         
         view.backgroundColor = .systemBackground
         configureView()
-        viewModel.inputDelegate?.viewDidLoad()
+        viewModel.input?.viewDidLoad()
     }
     
     // MARK: Inits
@@ -76,7 +76,7 @@ final class HomeVC: UIViewController {
     init(viewModel: HomeVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.viewModel.outputDelegate = self
+        self.viewModel.output = self
     }
 
     required init?(coder: NSCoder) {
@@ -138,7 +138,7 @@ private extension HomeVC {
 
 @objc private extension HomeVC {
     func refreshData() {
-        viewModel.inputDelegate?.loadMore()
+        viewModel.input?.loadMore()
     }
 }
 

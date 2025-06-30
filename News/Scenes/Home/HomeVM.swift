@@ -34,14 +34,14 @@ final class HomeVM {
     private let debounceInterval: TimeInterval = 0.5
     private var debounceWorkItem: DispatchWorkItem?
     
-    weak var inputDelegate: HomeVMInputProtocol?
-    weak var outputDelegate: HomeVMOutputProtocol?
+    weak var input: HomeVMInputProtocol?
+    weak var output: HomeVMOutputProtocol?
     
     // MARK: Init
 
     init(service: NetworkServiceProtocol = NetworkService()) {
         newsService = service
-        inputDelegate = self
+        input = self
     }
 
     deinit { debounceWorkItem?.cancel() }
@@ -93,15 +93,15 @@ private extension HomeVM {
             switch result {
             case .success(let newsModel):
                 if reset { articles = newsModel.articles } else { articles += newsModel.articles }
-                outputDelegate?.didUpdateArticles(articles, append: !reset)
-                outputDelegate?.didBecomeEmpty(articles.isEmpty)
+                output?.didUpdateArticles(articles, append: !reset)
+                output?.didBecomeEmpty(articles.isEmpty)
                 
                 if !newsModel.articles.isEmpty { page += 1 }
                 print("page: \(page)")
                 print("articles count: \(articles.count)")
 
             case .failure(let error):
-                outputDelegate?.didFail(with: error)
+                output?.didFail(with: error)
             }
         }
 
