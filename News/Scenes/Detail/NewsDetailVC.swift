@@ -93,7 +93,6 @@ final class NewsDetailVC: UIViewController {
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
