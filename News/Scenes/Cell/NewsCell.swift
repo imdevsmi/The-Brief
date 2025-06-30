@@ -39,6 +39,12 @@ final class NewsCell: UITableViewCell {
         return imageView
     }()
     
+    private lazy var loadingIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+    
     private lazy var moreButton: UIButton = {
         let button = UIButton()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular, scale: .large)
@@ -118,6 +124,7 @@ private extension NewsCell {
         contentView.addSubview(hourSeperatorView)
         contentView.addSubview(dateLabel)
         contentView.addSubview(separatorView)
+        newsImage.addSubview(loadingIndicator)
     }
     
     func setupLayouts() {
@@ -163,6 +170,9 @@ private extension NewsCell {
             make.height.equalTo(1)
             make.bottom.equalToSuperview()
         }
+        loadingIndicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
     }
 }
 
@@ -175,7 +185,11 @@ extension NewsCell {
         hourLabel.text = article.publishedAt?.formattedHourAndMinute() ?? "Unknown time"
         dateLabel.text = article.publishedAt?.timeAgoSinceDate() ?? "Unknown time"
         url = article.url
-        newsImage.setImage(with: article.urlToImage)
+        
+        loadingIndicator.startAnimating()
+        newsImage.setImage(with: article.urlToImage, placeholder: nil, targetSize: nil) { [weak self] in
+            self?.loadingIndicator.stopAnimating()
+        }
     }
 
     func cancel() {
