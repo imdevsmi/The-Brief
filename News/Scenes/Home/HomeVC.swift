@@ -115,12 +115,12 @@ private extension HomeVC {
     }
 
     func configureLayout() {
-        tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
 
-        emptyLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
+        emptyLabel.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
 }
