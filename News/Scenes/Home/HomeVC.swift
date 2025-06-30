@@ -33,6 +33,12 @@ final class HomeVC: UIViewController {
         return searchController
     }()
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return refresh
+    }()
+    
     private lazy var emptyLabel: UILabel = {
         let label = UILabel()
         label.text = "No news found."
@@ -93,8 +99,11 @@ extension HomeVC: HomeVMOutputProtocol {
     func didUpdateArticles(_ articles: [Article], append: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
+            if self.refreshControl.isRefreshing {
+                self.refreshControl.endRefreshing()
+            }
             self.tableView.reloadData()
-            emptyLabel.isHidden = !articles.isEmpty
+            self.emptyLabel.isHidden = !articles.isEmpty
         }
     }
 }
@@ -122,6 +131,14 @@ private extension HomeVC {
         emptyLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
+    }
+}
+
+// MARK: Objective Methods
+
+@objc private extension HomeVC {
+    func refreshData() {
+        viewModel.inputDelegate?.loadMore()
     }
 }
 
