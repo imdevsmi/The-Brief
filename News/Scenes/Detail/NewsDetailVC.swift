@@ -93,6 +93,7 @@ final class NewsDetailVC: UIViewController {
     // MARK: LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         setupUI()
     }
     
@@ -106,7 +107,6 @@ final class NewsDetailVC: UIViewController {
 // MARK: - Private Methods
 private extension NewsDetailVC {
     func setupUI() {
-        view.backgroundColor = .systemBackground
         addViews()
         configureLayout()
         setupNavigationBar()
