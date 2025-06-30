@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NewsDetailVMInputProtocol {
-    
+    func shareArticle()
 }
 
 final class NewsDetailVM {
@@ -29,5 +29,7 @@ private extension NewsDetailVM {
 }
 
 extension NewsDetailVM: NewsDetailVMInputProtocol {
-    
+    func shareArticle() {
+        
+    }
 }

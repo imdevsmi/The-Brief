@@ -48,7 +48,7 @@ final class NewsDetailVC: UIViewController {
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .subheadline)
-        label.text = "Authors: \(viewModel.article.author ?? "Unknown")"
+        label.text = "By: \(viewModel.article.author ?? "Unknown")"
         label.textAlignment = .natural
         label.textColor = .secondaryLabel
         label.numberOfLines = 0
@@ -147,7 +147,6 @@ private extension NewsDetailVC {
 
 // MARK: Objective Methods
 @objc private extension NewsDetailVC {
-    
     func imageTapped() {
         let previewVC = ImagePreview(imageURL: viewModel.article.urlToImage)
         previewVC.modalPresentationStyle = .fullScreen
