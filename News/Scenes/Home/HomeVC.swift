@@ -138,7 +138,7 @@ private extension HomeVC {
 
 @objc private extension HomeVC {
     func refreshData() {
-        viewModel.input?.loadMore()
+        viewModel.input?.more()
     }
 }
 
@@ -173,7 +173,7 @@ extension HomeVC: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == viewModel.articles.count - 1 { viewModel.loadMore() }
+        if indexPath.row == viewModel.articles.count - 1 { viewModel.more() }
     }
 
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {

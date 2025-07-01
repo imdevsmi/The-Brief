@@ -9,7 +9,7 @@ import Foundation
 import UserNotifications
 
 protocol SettingsVMInputProtocol: AnyObject {
-    func fetchThemeMode() -> Int
+    func themeMode() -> Int
     func updateThemeMode(_ mode: Int)
     func didSelect(item: SettingsModel)
     func updateNotification(isOn: Bool)
@@ -34,7 +34,7 @@ final class SettingsVM {
 }
 
 extension SettingsVM: SettingsVMInputProtocol {
-    func fetchThemeMode() -> Int {
+    func themeMode() -> Int {
         UserDefaults.standard.integer(forKey: themeKey)
     }
     

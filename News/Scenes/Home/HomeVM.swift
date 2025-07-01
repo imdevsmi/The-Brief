@@ -16,7 +16,7 @@ enum Mode: Equatable {
 protocol HomeVMInputProtocol: AnyObject {
     func search(term: String)
     func viewDidLoad()
-    func loadMore()
+    func more()
 }
 
 final class HomeVM {
@@ -71,7 +71,7 @@ extension HomeVM: HomeVMInputProtocol {
         fetch(reset: true)
     }
 
-    func loadMore() {
+    func more() {
         if mode == .top, page > 2 { return }
         guard !isLoading else { return }
         fetch(reset: false)
