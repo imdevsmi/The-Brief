@@ -16,9 +16,9 @@ protocol SettingsVMOutputProtocol: AnyObject {
 }
 
 final class SettingsVC: UIViewController {
-
+    
     // MARK: Properties
-
+    
     private let viewModel: SettingsVM
     
     private lazy var tableView: UITableView = {
@@ -31,15 +31,15 @@ final class SettingsVC: UIViewController {
     }()
     
     // MARK: Inits
-
+    
     init(viewModel: SettingsVM = SettingsVM()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.output = self
     }
-
+    
     required init?(coder: NSCoder) { fatalError() }
-
+    
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()

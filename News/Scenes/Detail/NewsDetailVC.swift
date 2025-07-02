@@ -8,9 +8,7 @@
 import SnapKit
 import UIKit
 
-protocol NewsDetailVMOutputProtocol: AnyObject {
-    
-}
+protocol NewsDetailVMOutputProtocol: AnyObject { }
 
 final class NewsDetailVC: UIViewController {
     
@@ -85,7 +83,7 @@ final class NewsDetailVC: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -120,24 +118,24 @@ private extension NewsDetailVC {
         stackView.addArrangedSubview(authorLabel)
         stackView.addArrangedSubview(imageDescriptionLabel)
     }
-
+    
     func configureLayout() {
         scrollView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.leading.trailing.equalTo(view.layoutMarginsGuide)
         }
-
+        
         stackView.snp.makeConstraints { make in
             make.edges.equalTo(scrollView)
             make.width.equalTo(scrollView.snp.width)
         }
-
+        
         imageView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalTo(240)
         }
     }
-
+    
     func setupNavigationBar() {
         let shareButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareTapped))
         navigationItem.rightBarButtonItem = shareButton

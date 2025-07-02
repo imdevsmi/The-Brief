@@ -12,13 +12,13 @@ protocol NewsDetailVMInputProtocol {
 }
 
 final class NewsDetailVM {
-
+    
     // MARK: Properties
     
     var article: Article
-
+    
     // MARK: Inits
-
+    
     init(article: Article) {
         self.article = article
     }

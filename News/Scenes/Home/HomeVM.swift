@@ -38,12 +38,12 @@ final class HomeVM {
     weak var output: HomeVMOutputProtocol?
     
     // MARK: Init
-
+    
     init(service: NetworkServiceProtocol = NetworkService()) {
         newsService = service
         input = self
     }
-
+    
     deinit { debounceWorkItem?.cancel() }
 }
 
@@ -53,24 +53,21 @@ extension HomeVM: HomeVMInputProtocol {
     
     func search(term: String) {
         let trimmed = term.trimmingCharacters(in: .whitespacesAndNewlines)
-
+        
         debounceWorkItem?.cancel()
-
         let workItem = DispatchWorkItem { [weak self] in
             guard let self else { return }
             self.mode = trimmed.isEmpty ? .top : .search(trimmed)
             self.fetch(reset: true)
         }
-
         debounceWorkItem = workItem
-
         DispatchQueue.main.asyncAfter(deadline: .now() + debounceInterval, execute: workItem)
     }
     
     func viewDidLoad() {
         fetch(reset: true)
     }
-
+    
     func more() {
         if mode == .top, page > 2 { return }
         guard !isLoading else { return }
@@ -85,11 +82,11 @@ private extension HomeVM {
         guard !isLoading else { return }
         isLoading = true
         if reset { page = 1 }
-
+        
         let completion: (Result<NewsModel, NetworkError>) -> Void = { [weak self] result in
             guard let self else { return }
             isLoading = false
-
+            
             switch result {
             case .success(let newsModel):
                 if reset { articles = newsModel.articles } else { articles += newsModel.articles }
@@ -99,12 +96,11 @@ private extension HomeVM {
                 if !newsModel.articles.isEmpty { page += 1 }
                 print("page: \(page)")
                 print("articles count: \(articles.count)")
-
+                
             case .failure(let error):
                 output?.didFail(with: error)
             }
         }
-
         switch mode {
         case .top:
             newsService.fetchNews(country: "us", page: page, pageSize: 20, completion: completion)

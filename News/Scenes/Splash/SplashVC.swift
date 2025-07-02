@@ -25,7 +25,7 @@ final class SplashVC: UIViewController {
         
         return stack
     }()
-
+    
     private let newsImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -34,7 +34,7 @@ final class SplashVC: UIViewController {
         
         return imageView
     }()
-
+    
     private let newsLabel: UILabel = {
         let label = UILabel()
         label.textColor = .label

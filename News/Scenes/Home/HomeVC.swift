@@ -72,13 +72,13 @@ final class HomeVC: UIViewController {
     }
     
     // MARK: Inits
-
+    
     init(viewModel: HomeVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.output = self
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -117,17 +117,17 @@ private extension HomeVC {
         addViews()
         configureLayout()
     }
-
+    
     func addViews() {
         view.addSubview(tableView)
         view.addSubview(emptyLabel)
     }
-
+    
     func configureLayout() {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
+        
         emptyLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
@@ -148,7 +148,7 @@ extension HomeVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.articles.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseIdentifier, for: indexPath) as? NewsCell else {
             fatalError()
@@ -156,7 +156,7 @@ extension HomeVC: UITableViewDataSource {
         cell.setup(with: viewModel.articles[indexPath.row])
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         let urls = indexPaths.compactMap { viewModel.articles[$0.row].urlToImage }.compactMap(URL.init(string:))
         ImagePrefetcher(urls: urls).start()
@@ -171,11 +171,11 @@ extension HomeVC: UITableViewDelegate {
         let detailVC = NewsDetailVC(viewModel: NewsDetailVM(article: viewModel.articles[indexPath.row]))
         navigationController?.pushViewController(detailVC, animated: true)
     }
-
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == viewModel.articles.count - 1 { viewModel.more() }
     }
-
+    
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         (cell as? NewsCell)?.cancel()
     }
@@ -189,7 +189,7 @@ extension HomeVC: UISearchBarDelegate {
         if text.isEmpty { viewModel.search(term: "") }
         else if text.count >= 3 { viewModel.search(term: text) }
     }
-
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         viewModel.search(term: "")
     }
