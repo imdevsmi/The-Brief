@@ -15,7 +15,7 @@ final class NewsDetailVM {
     
     // MARK: Properties
     
-    var article: Article
+    let article: Article
     
     // MARK: Inits
     

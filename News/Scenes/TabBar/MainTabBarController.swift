@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TabBar: UITabBarController {
+final class MainTabBarController: UITabBarController {
 
     // MARK: - Lifecycle
 
@@ -19,7 +19,7 @@ final class TabBar: UITabBarController {
 
 // MARK: - Private Methods
 
-private extension TabBar {
+private extension MainTabBarController {
     func setupTabs() {
         let homeVC = createNav(with: "News", and: UIImage(systemName: "newspaper.fill"), viewController: HomeVC(viewModel: HomeVM()))
         let settingsVC = createNav(with: "Settings", and: UIImage(systemName: "gear"), viewController: SettingsVC())

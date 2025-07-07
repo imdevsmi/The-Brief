@@ -13,7 +13,7 @@ protocol NewsDetailVMOutputProtocol: AnyObject { }
 final class NewsDetailVC: UIViewController {
     
     //  MARK: Properties
-    var viewModel: NewsDetailVM
+    private let viewModel: NewsDetailVM
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()

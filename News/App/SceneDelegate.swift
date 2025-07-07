@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.windowScene = windowScene
         let homeVC = HomeVC(viewModel: HomeVM())
         let navigationController = UINavigationController(rootViewController: homeVC)
-        window.rootViewController = TabBar()
+        window.rootViewController = MainTabBarController()
         window.makeKeyAndVisible()
         
         applyTheme()
