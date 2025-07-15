@@ -8,5 +8,9 @@
 import UIKit
 
 final class openBrowser: UIActivity {
+    private var url: URL?
     
+    override var activityTitle: String? {
+        "Open in Safari"
+    }
 }
