@@ -29,7 +29,8 @@ final class SettingsVM {
         
         SettingsSection(title: "General", items: [SettingsModel(title: "Rate us", iconName: "star.fill", type: .rateUs)]),
         
-        SettingsSection(title: "Legal", items: [SettingsModel(title: "Privacy Policy", iconName: "text.document.fill", type: .privacyPolicy), SettingsModel(title: "Terms of Use", iconName:"checkmark.shield.fill", type: .termsOfUse)])
+        SettingsSection(title: "Legal", items: [SettingsModel(title: "Privacy Policy", iconName: "text.document.fill", type: .privacyPolicy),
+            SettingsModel(title: "Terms of Use", iconName: "checkmark.shield.fill", type: .termsOfUse)])
     ]
 }
 
@@ -66,13 +67,9 @@ extension SettingsVM: SettingsVMInputProtocol {
     }
     
     func fetchNotificationStatus(_ completion: @escaping (Bool) -> Void) {
-        let center = UNUserNotificationCenter.current()
-        
-        center.getNotificationSettings { settings in
-            let isAuthorized = settings.authorizationStatus == .authorized
-            
+        UNUserNotificationCenter.current().getNotificationSettings { status in
             DispatchQueue.main.async {
-                completion(isAuthorized)
+                completion(status.authorizationStatus == .authorized)
             }
         }
     }
