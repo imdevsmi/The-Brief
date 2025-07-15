@@ -6,7 +6,9 @@
 //
 
 import UIKit
+import SafariServices
 import SnapKit
+import StoreKit
 
 protocol SettingsVMOutputProtocol: AnyObject {
     func updateTheme(_ mode: Int)
@@ -122,7 +124,11 @@ extension SettingsVC: UITableViewDelegate {
 
 extension SettingsVC: SettingsVMOutputProtocol {
     func updateTheme(_ mode: Int) {
-        
+        switch mode {
+        case 1: view.window?.overrideUserInterfaceStyle = .light
+        case 2: view.window?.overrideUserInterfaceStyle = .dark
+        default: view.window?.overrideUserInterfaceStyle = .unspecified
+        }
     }
     
     func updateNotification(_ isAuthorized: Bool) {
@@ -130,10 +136,15 @@ extension SettingsVC: SettingsVMOutputProtocol {
     }
     
     func openURL(_ url: String) {
-        
+        guard let urlToOpen = URL(string: url) else { return }
+        let safariVC = SFSafariViewController(url: urlToOpen)
+        safariVC.modalPresentationStyle = .overFullScreen
+        present(safariVC, animated: true)
     }
     
     func showReview() {
-        
+        if let scn = view.window?.windowScene {
+            SKStoreReviewController.requestReview(in: scn)
+        }
     }
 }

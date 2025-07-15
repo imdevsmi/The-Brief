@@ -57,10 +57,8 @@ extension SettingsVM: SettingsVMInputProtocol {
             output?.updateNotification(false)
             return
         }
-        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
-        let center = UNUserNotificationCenter.current()
         
-        center.requestAuthorization(options: options) { [weak self] granted, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
             DispatchQueue.main.async {
                 self?.output?.updateNotification(granted)
             }
