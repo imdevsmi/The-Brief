@@ -98,9 +98,10 @@ extension SettingsVC: UITableViewDataSource {
             cell.accessoryView = segmentedControl
             
         case .notification:
-            let switchUI = UISwitch()
-            switchUI.onTintColor = .label
-            cell.accessoryView = switchUI
+            let switcher = UISwitch()
+            viewModel.input?.fetchNotificationStatus { switcher.isOn = $0 }
+            switcher.addTarget(self, action: #selector(didToggleNotification), for: .valueChanged)
+            cell.accessoryView = switcher
             
         case .rateUs, .privacyPolicy, .termsOfUse:
             cell.selectionStyle = .default
