@@ -92,7 +92,10 @@ extension SettingsVC: UITableViewDataSource {
         
         switch item.type {
         case .theme:
-            cell.accessoryView = nil
+            let segmentedControl = UISegmentedControl(items: ["Auto", "Light", "Dark"])
+            segmentedControl.selectedSegmentIndex = viewModel.input?.themeMode() ?? 0
+            segmentedControl.addTarget(self, action: #selector(didChangeTheme(_:)), for: .valueChanged)
+            cell.accessoryView = segmentedControl
             
         case .notification:
             let switchUI = UISwitch()
@@ -119,6 +122,15 @@ extension SettingsVC: UITableViewDelegate {
         let item = viewModel.sections[indexPath.section].items[indexPath.row]
         viewModel.input?.didSelect(item: item)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+@objc private extension SettingsVC {
+    func didChangeTheme(_ sender: UISegmentedControl) {
+        viewModel.input?.updateThemeMode(sender.selectedSegmentIndex)
+    }
+    func didToggleNotification(_ sender: UISwitch) {
+        viewModel.input?.updateNotification(isOn: sender.isOn)
     }
 }
 
