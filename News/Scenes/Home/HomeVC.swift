@@ -79,9 +79,7 @@ final class HomeVC: UIViewController {
         self.viewModel.output = self
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { fatalError() }
 }
 
 // MARK: - HomeVMOuputProtocol
