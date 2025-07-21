@@ -7,6 +7,15 @@
 
 import Foundation
 
+protocol FavoritesVMOutputProtocol: AnyObject{
+    
+}
+
 final class FavoritesVM {
+    
+    weak var output: FavoritesVMOutputProtocol?
+    weak var input: FavoritesVCInputProtocol?
+    
+    private(set) var favoritesArticles: [Article] = []
     
 }
