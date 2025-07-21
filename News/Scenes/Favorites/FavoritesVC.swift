@@ -5,7 +5,7 @@
 //  Created by Sami Gündoğan on 19.07.2025.
 //
 
-import Foundation
+import SnapKit
 import UIKit
 
 protocol FavoritesVCInputProtocol: AnyObject {
@@ -26,11 +26,41 @@ final class FavoritesVC: UIViewController {
         return tableView
     }()
     
+    // MARK: Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     init(viewModel: FavoritesVM) {
                 
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: Private Methods
+private extension FavoritesVC {
+    func setupUI() {
+        view.backgroundColor = .systemBackground
+        setupConstraints()
+        setupLayout()
+    }
+    
+    func setupConstraints() {
+        view.addSubview(tableView)
+    }
+    
+    func setupLayout() {
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 }
