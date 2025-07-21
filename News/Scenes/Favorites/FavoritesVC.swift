@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+protocol FavoritesVCInputProtocol: AnyObject {
+    
+}
+
 final class FavoritesVC: UIViewController {
     private let viewModel: FavoritesVM
     
