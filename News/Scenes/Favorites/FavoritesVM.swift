@@ -8,7 +8,9 @@
 import Foundation
 
 protocol FavoritesVMOutputProtocol: AnyObject{
-    
+    func viewDidLoad()
+    func fetchFavoritesNews()
+    func removeNews(at index: Int)
 }
 
 final class FavoritesVM {
@@ -18,4 +20,18 @@ final class FavoritesVM {
     
     private(set) var favoritesArticles: [Article] = []
     
+}
+
+extension FavoritesVM: FavoritesVMOutputProtocol {
+    func viewDidLoad() {
+        
+    }
+    
+    func fetchFavoritesNews() {
+        <#code#>
+    }
+    
+    func removeNews(at index: Int) {
+        <#code#>
+    }
 }
