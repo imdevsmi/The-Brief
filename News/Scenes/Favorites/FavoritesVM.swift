@@ -31,6 +31,6 @@ extension FavoritesVM: FavoritesVMOutputProtocol {
     }
     
     func removeNews(at index: Int) {
-        <#code#>
+        
     }
 }

@@ -37,8 +37,9 @@ final class FavoritesVC: UIViewController {
         
     }
     
-    init(viewModel: FavoritesVM) {
-                
+    init(viewModel: FavoritesVM = FavoritesVM()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) { fatalError() }
