@@ -24,11 +24,10 @@ final class FavoritesVM {
 
 extension FavoritesVM: FavoritesVMOutputProtocol {
     func viewDidLoad() {
-        fetchFavoritesNews()
+        
     }
     
     func fetchFavoritesNews() {
-        <#code#>
     }
     
     func removeNews(at index: Int) {

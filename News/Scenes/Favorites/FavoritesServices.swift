@@ -7,3 +7,10 @@
 
 import Foundation
 
+protocol FavoritesServicesProtocol {
+    
+}
+
+final class FavoriteService {
+    
+}
