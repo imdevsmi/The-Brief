@@ -8,7 +8,7 @@
 import SnapKit
 import UIKit
 
-protocol FavoritesVCInputProtocol: AnyObject {
+protocol FavoritesVCOtputProtocol: AnyObject {
     
 }
 

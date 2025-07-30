@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FavoritesVMOutputProtocol: AnyObject{
+protocol FavoritesVMInputProtocol: AnyObject{
     func viewDidLoad()
     func fetchFavoritesNews()
     func removeNews(at index: Int)
@@ -15,14 +15,14 @@ protocol FavoritesVMOutputProtocol: AnyObject{
 
 final class FavoritesVM {
     
-    weak var input: FavoritesVMOutputProtocol?
-    weak var output: FavoritesVCInputProtocol?
+    weak var input: FavoritesVMInputProtocol?
+    weak var output: FavoritesVCOtputProtocol?
     
     private(set) var favoritesArticles: [Article] = []
     
 }
 
-extension FavoritesVM: FavoritesVMOutputProtocol {
+extension FavoritesVM: FavoritesVMInputProtocol {
     func viewDidLoad() {
         
     }
