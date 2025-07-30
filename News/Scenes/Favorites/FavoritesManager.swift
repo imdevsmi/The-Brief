@@ -11,3 +11,7 @@ enum FavoritesError {
     case error
 }
 
+enum FavoritesKey: String {
+    case favoritesArticle = "favoritesArticle"
+    case theme = "theme"
+}
