@@ -34,7 +34,7 @@ final class FavoritesVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        viewModel.input?.fetchFavoritesNews()
     }
     
     init(viewModel: FavoritesVM = FavoritesVM()) {
