@@ -16,7 +16,7 @@ protocol FavoritesVMInputProtocol: AnyObject{
 final class FavoritesVM {
     
     weak var input: FavoritesVMInputProtocol?
-    weak var output: FavoritesVCOtputProtocol?
+    weak var output: FavoritesVCOutputProtocol?
     
     private(set) var favoritesArticles: [Article] = []
     

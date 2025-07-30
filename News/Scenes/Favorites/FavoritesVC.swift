@@ -8,8 +8,9 @@
 import SnapKit
 import UIKit
 
-protocol FavoritesVCOtputProtocol: AnyObject {
-    
+protocol FavoritesVCOutputProtocol: AnyObject {
+    func reloadData()
+    func showModal(title: String, message: String)
 }
 
 final class FavoritesVC: UIViewController {
@@ -64,6 +65,20 @@ private extension FavoritesVC {
     }
 }
 
+extension FavoritesVC: FavoritesVCOutputProtocol {
+    func reloadData() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+
+    func showModal(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+}
 extension FavoritesVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.favoritesArticles.count
