@@ -19,7 +19,12 @@ final class FavoritesVM {
     weak var output: FavoritesVCOutputProtocol?
     
     private(set) var favoritesArticles: [Article] = []
+    private let service: FavoritesServicesProtocol
     
+    init(service: FavoritesServicesProtocol = FavoriteService()) {
+        self.service = service
+        input = self
+    }
 }
 
 extension FavoritesVM: FavoritesVMInputProtocol {
