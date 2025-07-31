@@ -24,7 +24,21 @@ final class FavoriteService {
 
 extension FavoriteService: FavoritesServicesProtocol {
     func saveFavoriteArtice(_ article: Article, completion: @escaping (Result<Void, FavoritesError>) -> Void) {
-        <#code#>
+        manager.fetchAll { [weak self] (result: Result<[Article], FavoritesError>) in
+            guard let self else { return }
+            
+            switch result {
+            case .success(var articles):
+                if (articles.firstIndex(where: { $0.url == article.url }) != nil) {
+                    return
+                }
+                articles.append(article)
+                self.manager.save(item: articles)
+                completion(.success(()))
+            case .failure(let failure):
+                completion(.failure(failure))
+            }
+        }
     }
     
     func fetchFavorites(completion: @escaping (Result<[Article], FavoritesError>) -> Void) {
@@ -36,6 +50,16 @@ extension FavoriteService: FavoritesServicesProtocol {
     }
     
     func createFavoriteArticleDatabase() {
-        <#code#>
+        manager.fetchAll { [weak self] (result: Result<[Article], FavoritesError>) in
+            guard let self else { return }
+            
+            switch result {
+            case .success(_):
+                return
+            case .failure(_):
+                let articles: [Article] = []
+                manager.save(item: articles)
+            }
+        }
     }
 }

@@ -36,7 +36,6 @@ final class FavoritesManager {
 }
 
 extension FavoritesManager: FavoritesManagerProtocol {
-    
     func save<T: Codable>(item: T) {
         if let data = try? encoder.encode(item) {
             userDefaults.set(data, forKey: key)
