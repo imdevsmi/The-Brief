@@ -79,7 +79,7 @@ extension FavoritesVC: FavoritesVCOutputProtocol {
         present(alertController, animated: true, completion: nil)
     }
 }
-extension FavoritesVC: UITableViewDataSource, UITableViewDelegate {
+extension FavoritesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.favoritesArticles.count
     }
@@ -90,5 +90,27 @@ extension FavoritesVC: UITableViewDataSource, UITableViewDelegate {
         }
         cell.setup(with: viewModel.favoritesArticles[indexPath.row])
         return cell
+    }
+}
+
+extension FavoritesVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let detailVM: NewsDetailVM = .init(article: viewModel.favoritesArticles[indexPath.row])
+        let detailVC = NewsDetailVC(viewModel: detailVM)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (_, _, completion) in
+            let alert = UIAlertController(title: "Are you sure?", message: "Do you want to remove this article from your favorites?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            alert.addAction(UIAlertAction(title: "Remove", style: .destructive) { _ in
+                self?.viewModel.input?.removeNews(at: indexPath.row)
+            })
+            self?.present(alert, animated: true)
+            completion(true)
+        }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
