@@ -85,6 +85,10 @@ extension FavoritesVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseIdentifier, for: indexPath) as? NewsCell else {
+            return UITableViewCell()
+        }
+        cell.setup(with: viewModel.favoritesArticles[indexPath.row])
+        return cell
     }
 }
