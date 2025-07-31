@@ -28,11 +28,11 @@ extension FavoriteService: FavoritesServicesProtocol {
     }
     
     func fetchFavorites(completion: @escaping (Result<[Article], FavoritesError>) -> Void) {
-        <#code#>
+        manager.fetchAll(completion: completion)
     }
     
     func updateFavorites(articles: [Article]) {
-        <#code#>
+        manager.save(item: articles)
     }
     
     func createFavoriteArticleDatabase() {
