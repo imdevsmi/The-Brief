@@ -15,7 +15,11 @@ protocol FavoritesServicesProtocol {
 }
 
 final class FavoriteService {
+    let manager: FavoritesManagerProtocol
     
+    init(manager: FavoritesManagerProtocol = FavoritesManager(key: .favoritesArticle)) {
+        self.manager = manager
+    }
 }
 
 extension FavoriteService: FavoritesServicesProtocol {
