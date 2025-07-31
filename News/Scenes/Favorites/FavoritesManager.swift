@@ -34,3 +34,29 @@ final class FavoritesManager {
         self.encoder = encoder
     }
 }
+
+extension FavoritesManager: FavoritesManagerProtocol {
+    
+    func save<T: Codable>(item: T) {
+        if let data = try? encoder.encode(item) {
+            userDefaults.set(data, forKey: key)
+        }
+    }
+    
+    func fetchAll<T: Codable>(completion: @escaping (Result<T, FavoritesError>) -> Void) {
+        if let data = userDefaults.data(forKey: key) {
+            do {
+                let item = try decoder.decode(T.self, from: data)
+                completion(.success(item))
+            } catch {
+                completion(.failure(.error))
+            }
+        } else {
+            completion(.failure(.error))
+        }
+    }
+    
+    func removeAll() {
+        userDefaults.removeObject(forKey: key)
+    }
+}
