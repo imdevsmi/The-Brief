@@ -17,3 +17,21 @@ protocol FavoritesServicesProtocol {
 final class FavoriteService {
     
 }
+
+extension FavoriteService: FavoritesServicesProtocol {
+    func saveFavoriteArtice(_ article: Article, completion: @escaping (Result<Void, FavoritesError>) -> Void) {
+        <#code#>
+    }
+    
+    func fetchFavorites(completion: @escaping (Result<[Article], FavoritesError>) -> Void) {
+        <#code#>
+    }
+    
+    func updateFavorites(articles: [Article]) {
+        <#code#>
+    }
+    
+    func createFavoriteArticleDatabase() {
+        <#code#>
+    }
+}
