@@ -21,3 +21,16 @@ protocol FavoritesManagerProtocol {
     func fetchAll<T: Codable>(completion: @escaping(Result<T, FavoritesError>) -> Void)
     func removeAll()
 }
+
+final class FavoritesManager {
+    private let userDefaults = UserDefaults.standard
+    private let key: String
+    private let decoder: JSONDecoder
+    private let encoder: JSONEncoder
+    
+    init(key: FavoritesKey, decoder: JSONDecoder = .init(), encoder: JSONEncoder = .init()) {
+        self.key = key.rawValue
+        self.decoder = decoder
+        self.encoder = encoder
+    }
+}
