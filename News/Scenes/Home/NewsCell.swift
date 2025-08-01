@@ -232,4 +232,9 @@ extension NewsCell {
         moreButton.menu = menu
         moreButton.showsMenuAsPrimaryAction = true
     }
+    
+    func didTapFavorite() {
+        guard let article = article else { return }
+        
+    }
 }
