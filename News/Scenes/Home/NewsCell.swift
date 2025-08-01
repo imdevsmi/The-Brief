@@ -57,6 +57,15 @@ final class NewsCell: UITableViewCell {
         return button
     }()
     
+    private lazy var favoriteButton: UIButton = {
+        let button = UIButton(type: .system)
+        let image = UIImage(systemName: "heart")
+        button.setImage(image, for: .normal)
+        button.tintColor = .systemRed
+        button.addTarget(self, action: #selector(didTapFavorite), for: .touchUpInside)
+        return button
+    }()
+    
     private let newsLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .headline)
