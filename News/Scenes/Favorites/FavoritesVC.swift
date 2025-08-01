@@ -14,6 +14,8 @@ protocol FavoritesVCOutputProtocol: AnyObject {
 }
 
 final class FavoritesVC: UIViewController {
+    
+    // MARK: Properties
     private let viewModel: FavoritesVM
     
     // MARK: Properties
@@ -38,6 +40,7 @@ final class FavoritesVC: UIViewController {
         viewModel.input?.fetchFavoritesNews()
     }
     
+    // MARK: - Init
     init(viewModel: FavoritesVM = FavoritesVM()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -79,6 +82,8 @@ extension FavoritesVC: FavoritesVCOutputProtocol {
         present(alertController, animated: true, completion: nil)
     }
 }
+
+// MARK: - UITableViewDataSource
 extension FavoritesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.favoritesArticles.count
@@ -93,6 +98,7 @@ extension FavoritesVC: UITableViewDataSource {
     }
 }
 
+// MARK: UITableViewDelegate
 extension FavoritesVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

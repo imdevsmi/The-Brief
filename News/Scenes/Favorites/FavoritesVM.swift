@@ -15,18 +15,21 @@ protocol FavoritesVMInputProtocol: AnyObject{
 
 final class FavoritesVM {
     
+    // MARK: - Properties
     weak var input: FavoritesVMInputProtocol?
     weak var output: FavoritesVCOutputProtocol?
     
     private(set) var favoritesArticles: [Article] = []
     private let service: FavoritesServicesProtocol
     
+    // MARK: - Init
     init(service: FavoritesServicesProtocol = FavoriteService()) {
         self.service = service
         input = self
     }
 }
 
+// MARK: - Lifecycle
 extension FavoritesVM: FavoritesVMInputProtocol {
     func viewDidLoad() {
         fetchFavoritesNews()

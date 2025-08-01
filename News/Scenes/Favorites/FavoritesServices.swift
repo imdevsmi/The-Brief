@@ -22,6 +22,7 @@ final class FavoriteService {
     }
 }
 
+// MARK: - FavoritesServicesProtocol Conformance
 extension FavoriteService: FavoritesServicesProtocol {
     func saveFavoriteArtice(_ article: Article, completion: @escaping (Result<Void, FavoritesError>) -> Void) {
         manager.fetchAll { [weak self] (result: Result<[Article], FavoritesError>) in
