@@ -29,10 +29,20 @@ final class FavoritesVM {
 
 extension FavoritesVM: FavoritesVMInputProtocol {
     func viewDidLoad() {
-        
+        fetchFavoritesNews()
     }
     
     func fetchFavoritesNews() {
+        service.fetchFavorites { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let articles):
+                self.favoritesArticles = articles
+                self.output?.reloadData()
+            case .failure(let failure):
+                print(failure)
+            }
+        }
     }
     
     func removeNews(at index: Int) {
