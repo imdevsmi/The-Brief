@@ -46,6 +46,9 @@ extension FavoritesVM: FavoritesVMInputProtocol {
     }
     
     func removeNews(at index: Int) {
-        
+        favoritesArticles.remove(at: index)
+        service.updateFavorites(articles: favoritesArticles)
+        fetchFavoritesNews()
+        output?.showModal(title: "Removed from favorites", message: "The news was successfully deleted.")
     }
 }
