@@ -62,6 +62,7 @@ final class NewsCell: UITableViewCell {
         let image = UIImage(systemName: "heart")
         button.setImage(image, for: .normal)
         button.tintColor = .systemRed
+        button.isHidden = true
         button.addTarget(self, action: #selector(didTapFavorite), for: .touchUpInside)
         return button
     }()
@@ -125,13 +126,14 @@ private extension NewsCell {
     }
     
     func addViews() {
-        contentView.addSubview(newsImage)
-        contentView.addSubview(moreButton)
-        contentView.addSubview(newsLabel)
         contentView.addSubview(authorLabel)
+        contentView.addSubview(dateLabel)
+        contentView.addSubview(favoriteButton)
         contentView.addSubview(hourLabel)
         contentView.addSubview(hourSeperatorView)
-        contentView.addSubview(dateLabel)
+        contentView.addSubview(moreButton)
+        contentView.addSubview(newsImage)
+        contentView.addSubview(newsLabel)
         contentView.addSubview(separatorView)
         newsImage.addSubview(loadingIndicator)
     }
@@ -182,6 +184,11 @@ private extension NewsCell {
         loadingIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
+        favoriteButton.snp.makeConstraints { make in
+            make.centerY.equalTo(dateLabel)
+            make.trailing.equalTo(moreButton.snp.leading).offset(-12)
+            make.width.height.equalTo(24)
+        }
     }
 }
 
@@ -189,6 +196,7 @@ private extension NewsCell {
 
 extension NewsCell {
     func setup(with article: Article) {
+        self.article = article
         newsLabel.text = article.title
         authorLabel.text = article.author
         hourLabel.text = article.publishedAt?.formattedHourAndMinute() ?? "Unknown time"
@@ -213,7 +221,7 @@ extension NewsCell {
 // MARK: Objective Methods
 
 @objc private extension NewsCell {
-    func didTapMoreButton () {
+    @objc func didTapMoreButton() {
         guard let url = url, let shareUrl = URL(string: url) else { return }
         
         let browser = openBrowser()
@@ -231,10 +239,11 @@ extension NewsCell {
         let menu = UIMenu(title: "", children: [shareAction])
         moreButton.menu = menu
         moreButton.showsMenuAsPrimaryAction = true
+        favoriteButton.isHidden = false
     }
     
     func didTapFavorite() {
-        guard let article = article else { return }
+        guard article != nil else { return }
         
     }
 }
