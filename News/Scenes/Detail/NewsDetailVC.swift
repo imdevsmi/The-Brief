@@ -72,7 +72,7 @@ final class NewsDetailVC: UIViewController {
         label.text = "\(viewModel.article.content ?? "")\n\n\(viewModel.article.description ?? "")\n\n\(viewModel.article.content ?? "")\n\n\(viewModel.article.description ?? "")\n\n\(viewModel.article.content ?? "")\n\n\(viewModel.article.description ?? "")"
         label.textAlignment = .natural
         label.numberOfLines = 0
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .systemFont(ofSize: 14)
         label.textColor = .label
         
         return label
@@ -135,13 +135,21 @@ private extension NewsDetailVC {
         }
         
         stackView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView)
+            make.top.equalTo(scrollView)
+            make.leading.trailing.equalTo(scrollView)
+            make.bottom.equalTo(scrollView).inset(80)
             make.width.equalTo(scrollView.snp.width)
         }
         
         imageView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalTo(240)
+        }
+        
+        saveButton.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(12)
+            make.height.equalTo(44)
         }
     }
     
