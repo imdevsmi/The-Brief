@@ -57,16 +57,6 @@ final class NewsCell: UITableViewCell {
         return button
     }()
     
-    private lazy var favoriteButton: UIButton = {
-        let button = UIButton(type: .system)
-        let image = UIImage(systemName: "heart")
-        button.setImage(image, for: .normal)
-        button.tintColor = .systemRed
-        button.isHidden = true
-        button.addTarget(self, action: #selector(didTapFavorite), for: .touchUpInside)
-        return button
-    }()
-    
     private let newsLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .headline)
@@ -128,7 +118,6 @@ private extension NewsCell {
     func addViews() {
         contentView.addSubview(authorLabel)
         contentView.addSubview(dateLabel)
-        contentView.addSubview(favoriteButton)
         contentView.addSubview(hourLabel)
         contentView.addSubview(hourSeperatorView)
         contentView.addSubview(moreButton)
@@ -184,11 +173,6 @@ private extension NewsCell {
         loadingIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-        favoriteButton.snp.makeConstraints { make in
-            make.centerY.equalTo(dateLabel)
-            make.trailing.equalTo(moreButton.snp.leading).offset(-12)
-            make.width.height.equalTo(24)
-        }
     }
 }
 
@@ -239,7 +223,6 @@ extension NewsCell {
         let menu = UIMenu(title: "", children: [shareAction])
         moreButton.menu = menu
         moreButton.showsMenuAsPrimaryAction = true
-        favoriteButton.isHidden = false
     }
     
     func didTapFavorite() {
