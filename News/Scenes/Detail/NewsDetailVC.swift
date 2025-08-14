@@ -78,6 +78,16 @@ final class NewsDetailVC: UIViewController {
         return label
     }()
     
+    private lazy var saveButton: UIButton = {
+        let save = UIButton(type: .system)
+        save.setTitle(NSLocalizedString("Save", comment: ""), for: .normal)
+        save.titleLabel?.font = .preferredFont(forTextStyle: .body)
+        save.tintColor = .systemBlue
+        save.layer.cornerRadius = 8
+        save.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
+        return save
+    }()
+    
     // MARK: Inits
     init(viewModel: NewsDetailVM) {
         self.viewModel = viewModel
@@ -110,6 +120,7 @@ private extension NewsDetailVC {
     
     func addViews() {
         view.addSubview(scrollView)
+        view.addSubview(saveButton)
         scrollView.addSubview(stackView)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(imageView)
@@ -155,5 +166,9 @@ private extension NewsDetailVC {
         let activityVC = UIActivityViewController(activityItems: [shareUrl], applicationActivities: [openBrowser])
         
         present(activityVC, animated: true)
+    }
+    
+    func saveTapped() {
+        
     }
 }
