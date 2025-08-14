@@ -79,13 +79,29 @@ final class NewsDetailVC: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        let save = UIButton(type: .system)
-        save.setTitle(NSLocalizedString("Save", comment: ""), for: .normal)
-        save.titleLabel?.font = .preferredFont(forTextStyle: .body)
-        save.tintColor = .systemBlue
-        save.layer.cornerRadius = 8
-        save.addTarget(self, action: #selector(saveTapped), for: .touchUpInside)
-        return save
+        var config = UIButton.Configuration.plain()
+        config.title = "Save"
+        config.image = UIImage(systemName: "bookmark.fill")
+        config.imagePadding = 4
+        config.baseForegroundColor = .label
+        config.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 6, bottom: 6, trailing: 6)
+        config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var outgoing = incoming
+            outgoing.font = .systemFont(ofSize: 16, weight: .semibold)
+            return outgoing
+        }
+        
+        let button = UIButton(configuration: config, primaryAction: nil)
+        button.backgroundColor = .clear
+        button.layer.cornerRadius = 12
+        button.layer.borderWidth = 2
+        button.layer.borderColor = UIColor.blue.cgColor
+        
+        button.addAction(UIAction { _ in
+            self.saveTapped()
+        }, for: .touchUpInside)
+        
+        return button
     }()
     
     // MARK: Inits
@@ -149,7 +165,7 @@ private extension NewsDetailVC {
         saveButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(12)
-            make.height.equalTo(44)
+            make.height.equalTo(50)
         }
     }
     
