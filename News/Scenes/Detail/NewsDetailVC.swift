@@ -92,7 +92,7 @@ final class NewsDetailVC: UIViewController {
         }
         
         let button = UIButton(configuration: config, primaryAction: nil)
-        button.backgroundColor = .clear
+        button.backgroundColor = .systemBackground
         button.layer.cornerRadius = 12
         button.layer.borderWidth = 2
         button.layer.borderColor = UIColor.blue.cgColor
@@ -123,7 +123,6 @@ final class NewsDetailVC: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
     }
-    
 }
 
 // MARK: - Private Methods
@@ -163,7 +162,7 @@ private extension NewsDetailVC {
         }
         
         saveButton.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(60)
+            make.leading.trailing.equalToSuperview().inset(32)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(12)
             make.height.equalTo(50)
         }
