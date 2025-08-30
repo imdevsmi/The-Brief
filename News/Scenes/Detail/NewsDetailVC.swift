@@ -14,6 +14,7 @@ final class NewsDetailVC: UIViewController {
     
     //  MARK: Properties
     private let viewModel: NewsDetailVM
+    private let favoritesService: FavoritesServicesProtocol
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -105,9 +106,13 @@ final class NewsDetailVC: UIViewController {
     }()
     
     // MARK: Inits
-    init(viewModel: NewsDetailVM) {
+    init(viewModel: NewsDetailVM, favoritesService: FavoritesServicesProtocol = FavoriteService()) {
         self.viewModel = viewModel
+        self.favoritesService = favoritesService
         super.init(nibName: nil, bundle: nil)
+        if let favoriteService = favoritesService as? FavoriteService {
+            
+        }
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -117,12 +122,17 @@ final class NewsDetailVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupUI()
+        DispatchQueue.main.async {
+            self.checkIfArticleIsFavorited()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
     }
+    
+    
 }
 
 // MARK: - Private Methods
@@ -135,12 +145,8 @@ private extension NewsDetailVC {
     
     func addViews() {
         view.addSubview(scrollView)
-        view.addSubview(saveButton)
         scrollView.addSubview(stackView)
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(imageView)
-        stackView.addArrangedSubview(authorLabel)
-        stackView.addArrangedSubview(imageDescriptionLabel)
+        view.addSubview(saveButton)
     }
     
     func configureLayout() {
@@ -150,27 +156,61 @@ private extension NewsDetailVC {
         }
         
         stackView.snp.makeConstraints { make in
-            make.top.equalTo(scrollView)
-            make.leading.trailing.equalTo(scrollView)
-            make.bottom.equalTo(scrollView).inset(80)
+            make.top.equalTo(scrollView.snp.top)
+            make.leading.equalTo(scrollView.snp.leading)
+            make.trailing.equalTo(scrollView.snp.trailing)
+            make.bottom.equalTo(scrollView.snp.bottom).inset(80)
             make.width.equalTo(scrollView.snp.width)
         }
         
-        imageView.snp.makeConstraints { make in
-            make.width.equalToSuperview()
-            make.height.equalTo(240)
-        }
-        
         saveButton.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(32)
+            make.leading.trailing.equalTo(view).inset(60)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(12)
             make.height.equalTo(50)
+        }
+        
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(imageView)
+        stackView.addArrangedSubview(authorLabel)
+        stackView.addArrangedSubview(imageDescriptionLabel)
+        imageView.snp.makeConstraints { make in
+            make.height.equalTo(240)
         }
     }
     
     func setupNavigationBar() {
         let shareButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(shareTapped))
         navigationItem.rightBarButtonItem = shareButton
+    }
+    
+    func checkIfArticleIsFavorited() {
+        favoritesService.fetchFavorites { [weak self] result in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let articles):
+                    let isFavorited = articles.contains { $0.url == self.viewModel.article.url }
+                    self.updateSaveButtonAppearance(isFavorited: isFavorited)
+                case .failure:
+                    break
+                }
+            }
+        }
+    }
+    
+    func updateSaveButtonAppearance(isFavorited: Bool) {
+        var config = saveButton.configuration
+        if isFavorited {
+            config?.title = "Saved"
+            config?.image = UIImage(systemName: "bookmark.fill")
+            config?.baseForegroundColor = .systemBlue
+        } else {
+            config?.title = "Save"
+            config?.image = UIImage(systemName: "bookmark")
+            config?.baseForegroundColor = .label
+        }
+        saveButton.configuration = config
     }
 }
 
@@ -192,6 +232,18 @@ private extension NewsDetailVC {
     }
     
     func saveTapped() {
+        favoritesService.createFavoriteArticleDatabase()
         
+        favoritesService.saveFavoriteArtice(viewModel.article) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.updateSaveButtonAppearance(isFavorited: true)
+                    UserDefaults.standard.synchronize()
+                case .failure:
+                    self?.checkIfArticleIsFavorited()
+                }
+            }
+        }
     }
 }

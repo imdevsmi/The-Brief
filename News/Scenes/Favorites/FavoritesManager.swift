@@ -39,6 +39,7 @@ extension FavoritesManager: FavoritesManagerProtocol {
     func save<T: Codable>(item: T) {
         if let data = try? encoder.encode(item) {
             userDefaults.set(data, forKey: key)
+            userDefaults.synchronize()
         }
     }
     
@@ -51,7 +52,11 @@ extension FavoritesManager: FavoritesManagerProtocol {
                 completion(.failure(.error))
             }
         } else {
-            completion(.failure(.error))
+            if T.self == [Article].self {
+                completion(.success([] as! T))
+            } else {
+                completion(.failure(.error))
+            }
         }
     }
     

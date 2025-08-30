@@ -33,6 +33,12 @@ final class FavoritesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(favoritesUpdated), name: NSNotification.Name("FavoritesUpdated"), object: nil)
+    }
+
+    @objc func favoritesUpdated() {
+        viewModel.input?.fetchFavoritesNews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -103,7 +109,7 @@ extension FavoritesVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let detailVM: NewsDetailVM = .init(article: viewModel.favoritesArticles[indexPath.row])
-        let detailVC = NewsDetailVC(viewModel: detailVM)
+        let detailVC = NewsDetailVC(viewModel: detailVM, favoritesService: FavoriteService())
         navigationController?.pushViewController(detailVC, animated: true)
     }
 
