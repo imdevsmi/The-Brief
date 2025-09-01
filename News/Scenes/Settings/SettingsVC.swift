@@ -38,6 +38,7 @@ final class SettingsVC: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.output = self
+        self.viewModel.input = self.viewModel
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -137,10 +138,18 @@ extension SettingsVC: UITableViewDelegate {
 
 extension SettingsVC: SettingsVMOutputProtocol {
     func updateTheme(_ mode: Int) {
-        switch mode {
-        case 1: view.window?.overrideUserInterfaceStyle = .light
-        case 2: view.window?.overrideUserInterfaceStyle = .dark
-        default: view.window?.overrideUserInterfaceStyle = .unspecified
+        DispatchQueue.main.async { [weak self] in
+            let window = self?.view.window ?? UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first { $0.isKeyWindow }
+            
+            guard let window = window else { return }
+            switch mode {
+            case 1: window.overrideUserInterfaceStyle = .light
+            case 2: window.overrideUserInterfaceStyle = .dark
+            default: window.overrideUserInterfaceStyle = .unspecified
+            }
         }
     }
     
