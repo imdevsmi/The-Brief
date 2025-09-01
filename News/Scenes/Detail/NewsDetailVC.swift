@@ -70,14 +70,25 @@ final class NewsDetailVC: UIViewController {
     
     private lazy var imageDescriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(viewModel.article.content ?? "")\n\n\(viewModel.article.description ?? "")\n\n\(viewModel.article.content ?? "")\n\n\(viewModel.article.description ?? "")\n\n\(viewModel.article.content ?? "")\n\n\(viewModel.article.description ?? "")"
+        var fullContent = ""
+
+        if let content = viewModel.article.content, !content.isEmpty {
+            fullContent += content + "\n\n"
+        }
+
+        if let description = viewModel.article.description, !description.isEmpty {
+            fullContent += description
+        }
+
+        label.text = fullContent
         label.textAlignment = .natural
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 14)
         label.textColor = .label
-        
+
         return label
     }()
+
     
     private lazy var saveButton: UIButton = {
         var config = UIButton.Configuration.plain()
