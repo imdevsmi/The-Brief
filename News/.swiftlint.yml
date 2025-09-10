@@ -1,12 +1,12 @@
 # SwiftLint Configuration File
 
-excluded: # Bu klasörler lint kontrolünden hariç tutulur
+excluded:
   - Carthage
   - Pods
   - fastlane
   - DerivedData
 
-opt_in_rules: # Ekstra kurallar (iyi pratikler için)
+opt_in_rules:
   - empty_count
   - empty_string
   - explicit_init
@@ -19,7 +19,7 @@ opt_in_rules: # Ekstra kurallar (iyi pratikler için)
   - multiline_parameters
   - multiline_arguments
 
-disabled_rules: # Sıklıkla fazla katı olan kurallar
+disabled_rules:
   - force_cast
   - force_try
   - identifier_name
@@ -27,20 +27,20 @@ disabled_rules: # Sıklıkla fazla katı olan kurallar
   - type_body_length
   - function_body_length
 
-analyzer_rules: # Daha güçlü analiz yapan kurallar
+analyzer_rules:
   - unused_import
 
-line_length: 120 # Maksimum satır uzunluğu
+line_length: 120
 
-type_body_length: # Sınıfların çok büyümemesi için
+type_body_length:
   warning: 300
   error: 400
 
-function_body_length: # Fonksiyonlar için sınır
+function_body_length:
   warning: 60
   error: 100
 
-cyclomatic_complexity: # Fonksiyon karmaşıklığı
+cyclomatic_complexity: 
   warning: 10
   error: 20
 
