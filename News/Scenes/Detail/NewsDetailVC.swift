@@ -121,9 +121,6 @@ final class NewsDetailVC: UIViewController {
         self.viewModel = viewModel
         self.favoritesService = favoritesService
         super.init(nibName: nil, bundle: nil)
-        if let favoriteService = favoritesService as? FavoriteService {
-            
-        }
     }
     
     required init?(coder: NSCoder) { fatalError() }
