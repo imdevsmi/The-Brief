@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Network Service Protocol
 protocol NetworkServiceProtocol {
     func searchNews(searchString: String, page: Int, pageSize: Int, completion: @escaping (Result<NewsModel, NetworkError>) -> Void)
-    func fetchNews(country: String, page: Int, pageSize: Int, completion: @escaping (Result<NewsModel, NetworkError>) -> Void)
+    func fetchNews(country: String, page: Int, pageSize: Int, category: String?, completion: @escaping (Result<NewsModel, NetworkError>) -> Void)
 }
 
 // MARK: - Network Service
@@ -41,20 +41,29 @@ final class NetworkService: NetworkServiceProtocol {
     }
     
     // MARK: - Fetch News
-    func fetchNews(country: String, page: Int = 1, pageSize: Int = 20, completion: @escaping (Result<NewsModel, NetworkError>) -> Void) {
+    func fetchNews(country: String, page: Int = 1, pageSize: Int = 20, category: String? = nil, completion: @escaping (Result<NewsModel, NetworkError>) -> Void) {
+        
         var urlComponents = URLComponents(string: baseURL + "top-headlines")
-        urlComponents?.queryItems = [
+        var queryItems = [
             URLQueryItem(name: "country", value: country),
             URLQueryItem(name: "pageSize", value: "\(pageSize)"),
             URLQueryItem(name: "page", value: "\(page)"),
-            URLQueryItem(name: "apiKey", value: apiKey)]
-
+            URLQueryItem(name: "apiKey", value: apiKey)
+        ]
+        
+        if let category = category {
+            queryItems.append(URLQueryItem(name: "category", value: category))
+        }
+        
+        urlComponents?.queryItems = queryItems
+        
         guard let url = urlComponents?.url else {
             completion(.failure(.invalidRequest))
             return
         }
-
+        
         networkManager.request(url: url, method: .GET, headers: nil, completion: completion)
     }
+
     
 }
