@@ -9,7 +9,7 @@ import Foundation
 import Kingfisher
 
 enum Mode: Equatable {
-    case top
+    case top(category: String)
     case search(String)
 }
 
@@ -28,7 +28,8 @@ final class HomeVM {
     private let pageSize = 20
     
     private var page = 1
-    private var mode: Mode = .top
+    private var mode: Mode = .top(category: "general")
+    private var selectedCategory: String = "general"
     private var isLoading = false
     
     private let debounceInterval: TimeInterval = 0.5
@@ -57,7 +58,7 @@ extension HomeVM: HomeVMInputProtocol {
         debounceWorkItem?.cancel()
         let workItem = DispatchWorkItem { [weak self] in
             guard let self else { return }
-            self.mode = trimmed.isEmpty ? .top : .search(trimmed)
+            self.mode = trimmed.isEmpty ? .top(category: self.selectedCategory) : .search(trimmed)
             self.fetch(reset: true)
         }
         debounceWorkItem = workItem
@@ -69,11 +70,10 @@ extension HomeVM: HomeVMInputProtocol {
     }
     
     func more() {
-        if mode == .top, page > 2 { return }
+        if case .top(_) = mode, page > 2 { return }
         guard !isLoading else { return }
         fetch(reset: false)
     }
-    
 }
 
 private extension HomeVM {
@@ -102,10 +102,10 @@ private extension HomeVM {
             }
         }
         switch mode {
-        case .top:
-            newsService.fetchNews(country: "us", page: page, pageSize: 20, completion: completion)
+        case .top(let category):
+            newsService.fetchNews(country: "us", page: page, pageSize: pageSize, category: category, completion: completion)
         case .search(let query):
-            newsService.searchNews(searchString: query, page: page, pageSize: 20, completion: completion)
+            newsService.searchNews(searchString: query, page: page, pageSize: pageSize, completion: completion)
         }
     }
 }
