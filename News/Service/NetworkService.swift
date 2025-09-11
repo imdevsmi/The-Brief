@@ -18,7 +18,13 @@ protocol NetworkServiceProtocol {
 final class NetworkService: NetworkServiceProtocol {
     private let networkManager: NetworkManagerProtocol
     private let baseURL = "https://newsapi.org/v2/"
-    private let apiKey = "f907d94e65b7476382b15932fd726daf"
+    
+    private var apiKey: String {
+        guard let key = Bundle.main.object(forInfoDictionaryKey: "NewsAPIKey") as? String else {
+            fatalError("API Key not found in Info.plist")
+        }
+        return key
+    }
     
     init(networkManager: NetworkManagerProtocol = NetworkManager()) {
         self.networkManager = networkManager
@@ -61,9 +67,6 @@ final class NetworkService: NetworkServiceProtocol {
             completion(.failure(.invalidRequest))
             return
         }
-        
         networkManager.request(url: url, method: .GET, headers: nil, completion: completion)
     }
-
-    
 }

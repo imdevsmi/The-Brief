@@ -103,6 +103,7 @@ final class HomeVC: UIViewController {
 // MARK: - HomeVMOuputProtocol
 
 extension HomeVC: HomeVMOutputProtocol {
+    
     func didFail(with error: Error) { }
     
     func didBecomeEmpty(_ isEmpty: Bool) {
@@ -127,6 +128,7 @@ extension HomeVC: HomeVMOutputProtocol {
 // MARK: - Private Methods
 
 private extension HomeVC {
+    
     func configureView() {
         view.backgroundColor = .systemBackground
         navigationItem.searchController = searchController
@@ -196,9 +198,8 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else {
-            fatalError()
-        }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else { fatalError() }
+        
         let category = categories[indexPath.item]
         cell.configure(with: category.displayName, selected: indexPath == selectedIndexPath)
         return cell

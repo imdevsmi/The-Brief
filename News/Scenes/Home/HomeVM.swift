@@ -72,7 +72,7 @@ extension HomeVM: HomeVMInputProtocol {
     
     func more() {
         if case .top(_) = mode, page > 2 { return }
-        guard !isLoading else { return }
+        guard isLoading else { return }
         fetch(reset: false)
     }
     
@@ -111,6 +111,7 @@ private extension HomeVM {
         switch mode {
         case .top(let category):
             newsService.fetchNews(country: "us", page: page, pageSize: pageSize, category: category, completion: completion)
+            
         case .search(let query):
             newsService.searchNews(searchString: query, page: page, pageSize: pageSize, completion: completion)
         }
