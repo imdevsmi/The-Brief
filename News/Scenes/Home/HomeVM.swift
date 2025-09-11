@@ -17,6 +17,7 @@ protocol HomeVMInputProtocol: AnyObject {
     func search(term: String)
     func viewDidLoad()
     func more()
+    func changeCategory(to category: CategoryModel)
 }
 
 final class HomeVM {
@@ -73,6 +74,12 @@ extension HomeVM: HomeVMInputProtocol {
         if case .top(_) = mode, page > 2 { return }
         guard !isLoading else { return }
         fetch(reset: false)
+    }
+    
+    func changeCategory(to category: CategoryModel) {
+        selectedCategory = category.rawValue
+        mode = .top(category: selectedCategory)
+        fetch(reset: true)
     }
 }
 

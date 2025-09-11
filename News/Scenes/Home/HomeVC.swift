@@ -23,7 +23,10 @@ final class HomeVC: UIViewController {
     // MARK: - UI Elements
     
     private let viewModel: HomeVM
-    
+    private var categories = CategoryModel.allCases
+    private var selectedCategory: CategoryModel = .general
+    private var selectedIndexPath: IndexPath = IndexPath(item: 0, section: 0)
+
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController()
         searchController.searchBar.delegate = self
@@ -31,6 +34,21 @@ final class HomeVC: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         
         return searchController
+    }()
+    
+    private lazy var categoryCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 8
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
+        return collectionView
     }()
     
     private lazy var refreshControl: UIRefreshControl = {
@@ -117,13 +135,21 @@ private extension HomeVC {
     }
     
     func addViews() {
-        view.addSubview(tableView)
+        view.addSubview(categoryCollectionView)
         view.addSubview(emptyLabel)
+        view.addSubview(tableView)
     }
     
     func configureLayout() {
+        categoryCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(40)
+        }
+        
         tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(categoryCollectionView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         emptyLabel.snp.makeConstraints { make in
@@ -158,6 +184,40 @@ extension HomeVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         let urls = indexPaths.compactMap { viewModel.articles[$0.row].urlToImage }.compactMap(URL.init(string:))
         ImagePrefetcher(urls: urls).start()
+    }
+}
+
+// MARK: - UICollectionViewDataSource - UICollectionViewDelegateFlowLayout
+
+extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return categories.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else {
+            fatalError()
+        }
+        let category = categories[indexPath.item]
+        cell.configure(with: category.displayName, selected: indexPath == selectedIndexPath)
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let previousIndexPath = selectedIndexPath
+        selectedIndexPath = indexPath
+        collectionView.reloadItems(at: [previousIndexPath, selectedIndexPath])
+        selectedCategory = categories[selectedIndexPath.item]
+        viewModel.changeCategory(to: selectedCategory)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let category = categories[indexPath.item]
+        let label = UILabel()
+        label.text = category.displayName
+        label.sizeToFit()
+        return CGSize(width: label.frame.width + 24, height: 32) 
     }
 }
 
