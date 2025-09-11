@@ -4,6 +4,7 @@ News is a modern iOS app built with Swift and UIKit (programmatic) to deliver re
 	•	🗞️ Real-time news articles with title, image, author, and date
 	•	🔍 Detailed article screen with in-app Safari view
 	•	💡 Light/Dark Mode support
+    •   🏷️ Category-based news filtering (e.g., Business, Sports, Technology)
 	•	📱 Fully responsive UI with SnapKit
 	•	📷 Smooth image loading and caching via Kingfisher
 	•	🧩 Modular codebase with MVVM + Protocol based architecture
