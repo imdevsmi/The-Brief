@@ -24,8 +24,8 @@ News is a modern iOS app built with Swift and UIKit (programmatic) to deliver re
 	• Design -> SF Symbols, Dynamic Type
 
 ### ⚙️ Requirements
-	•	iOS 15.0+
-	•	Xcode 14+
+	•	iOS 17.0+
+	•	Xcode 16+
 	•	Swift 5.7+
 
 ### 📦 Installation
