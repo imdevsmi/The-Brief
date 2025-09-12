@@ -1,0 +1,48 @@
+/* Localizable.strings (Base / English) */
+
+"news_title" = "News";
+"settings_title" = "Settings";
+"search_placeholder" = "Search news...";
+"language_title" = "Language";
+"refresh" = "Refresh";
+"error_message" = "An error occurred";
+"no_news_found" = "No news found.";
+
+"category_general" = "General";
+"category_business" = "Business";
+"category_entertainment" = "Entertainment";
+"category_health" = "Health";
+"category_science" = "Science";
+"category_sports" = "Sports";
+"category_technology" = "Technology";
+
+"theme_auto" = "Auto";
+"theme_light" = "Light";
+"theme_dark" = "Dark";
+
+"delete" = "Delete";
+"alert_title_confirm" = "Are you sure?";
+"alert_message_remove_article" = "Do you want to remove this article from your favorites?";
+"cancel" = "Cancel";
+"remove" = "Remove";
+
+"tab_home" = "News";
+"tab_settings" = "Settings";
+"tab_favorites" = "Favorites";
+
+"theme_title" = "Theme";
+"notification_title" = "Notifications";
+"rate_us_title" = "Rate Us";
+"privacy_policy_title" = "Privacy Policy";
+"terms_of_use_title" = "Terms of Use";
+"version_title" = "Version";
+
+"save_button" = "Save";
+
+"time_just_now" = "Just now";
+"time_minute_ago" = "%dm ago";
+"time_hour_ago" = "%dh ago";
+"time_hour_minute_ago" = "%dh %dm ago";
+"time_day_ago" = "%dd ago";
+"time_week_ago" = "%dw ago";
+

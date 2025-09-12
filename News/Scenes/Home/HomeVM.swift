@@ -101,9 +101,6 @@ private extension HomeVM {
                 output?.didBecomeEmpty(articles.isEmpty)
                 
                 if !newsModel.articles.isEmpty { page += 1 }
-                print("page: \(page)")
-                print("articles count: \(articles.count)")
-                
             case .failure(let error):
                 output?.didFail(with: error)
             }

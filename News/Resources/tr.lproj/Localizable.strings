@@ -1,0 +1,47 @@
+/* Localizable.strings (Turkish) */
+
+"news_title" = "Haberler";
+"settings_title" = "Ayarlar";
+"search_placeholder" = "Haber ara...";
+"language_title" = "Dil";
+"refresh" = "Yenile";
+"error_message" = "Bir hata oluştu";
+"no_news_found" = "Haber bulunamadı.";
+
+"category_general" = "Genel";
+"category_business" = "İş";
+"category_entertainment" = "Eğlence";
+"category_health" = "Sağlık";
+"category_science" = "Bilim";
+"category_sports" = "Spor";
+"category_technology" = "Teknoloji";
+
+"theme_auto" = "Otomatik";
+"theme_light" = "Açık";
+"theme_dark" = "Koyu";
+
+"delete" = "Sil";
+"alert_title_confirm" = "Emin misiniz?";
+"alert_message_remove_article" = "Bu haberi favorilerinizden kaldırmak istiyor musunuz?";
+"cancel" = "İptal";
+"remove" = "Kaldır";
+
+"tab_home" = "Haberler";
+"tab_settings" = "Ayarlar";
+"tab_favorites" = "Favoriler";
+
+"theme_title" = "Tema";
+"notification_title" = "Bildirimler";
+"rate_us_title" = "Bizi Değerlendir";
+"privacy_policy_title" = "Gizlilik Politikası";
+"terms_of_use_title" = "Kullanım Şartları";
+"version_title" = "Sürüm";
+
+"save_button" = "Kaydet";
+
+"time_just_now" = "Az önce";
+"time_minute_ago" = "%dm önce";
+"time_hour_ago" = "%dh önce";
+"time_hour_minute_ago" = "%dh %dm önce";
+"time_day_ago" = "%dg önce";
+"time_week_ago" = "%dhf önce";

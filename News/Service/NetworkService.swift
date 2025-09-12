@@ -20,13 +20,13 @@ final class NetworkService: NetworkServiceProtocol {
     private let baseURL = "https://newsapi.org/v2/"
     
     private var apiKey: String {
-            guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
-                  let dict = NSDictionary(contentsOfFile: path),
-                  let key = dict["NewsAPIKey"] as? String else {
-                fatalError("API Key not found in Secrets.plist")
-            }
-            return key
+        guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+              let dict = NSDictionary(contentsOfFile: path),
+              let key = dict["NewsAPIKey"] as? String else {
+            fatalError("API Key not found in Secrets.plist")
         }
+        return key
+    }
     
     init(networkManager: NetworkManagerProtocol = NetworkManager()) {
         self.networkManager = networkManager
