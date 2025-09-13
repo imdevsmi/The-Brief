@@ -205,7 +205,6 @@ extension HomeVC: UITableViewDataSource {
 // MARK: - UICollectionViewDataSource - UICollectionViewDelegateFlowLayout
 
 extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categories.count
     }
@@ -224,6 +223,9 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
         collectionView.reloadItems(at: [previousIndexPath, selectedIndexPath])
         selectedCategory = categories[selectedIndexPath.item]
         viewModel.changeCategory(to: selectedCategory)
+        
+        searchController.searchBar.text = ""
+        viewModel.search(term: "")
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
