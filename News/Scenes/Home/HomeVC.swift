@@ -87,13 +87,17 @@ final class HomeVC: UIViewController {
         view.backgroundColor = .systemBackground
         configureView()
         viewModel.input?.viewDidLoad()
+        
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+        definesPresentationContext = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.hidesSearchBarWhenScrolling = true
         definesPresentationContext = true
     }
 
