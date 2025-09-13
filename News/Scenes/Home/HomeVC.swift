@@ -150,20 +150,15 @@ private extension HomeVC {
     }
     
     func addViews() {
-        view.addSubview(categoryCollectionView)
-        view.addSubview(emptyLabel)
         view.addSubview(tableView)
+        view.addSubview(emptyLabel)
+        categoryCollectionView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40)
+        tableView.tableHeaderView = categoryCollectionView
     }
-    
+
     func configureLayout() {
-        categoryCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(40)
-        }
-        
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(categoryCollectionView.snp.bottom)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.trailing.bottom.equalToSuperview()
         }
         
@@ -223,7 +218,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
         collectionView.reloadItems(at: [previousIndexPath, selectedIndexPath])
         selectedCategory = categories[selectedIndexPath.item]
         viewModel.changeCategory(to: selectedCategory)
-        
+        searchController.isActive = false
         searchController.searchBar.text = ""
         viewModel.search(term: "")
     }
