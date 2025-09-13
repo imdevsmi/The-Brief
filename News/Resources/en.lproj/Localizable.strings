@@ -1,11 +1,5 @@
 /* Localizable.strings (Base / English) */
 
-"news_title" = "News";
-"settings_title" = "Settings";
-"search_placeholder" = "Search news...";
-"language_title" = "Language";
-"refresh" = "Refresh";
-"error_message" = "An error occurred";
 "no_news_found" = "No news found.";
 
 "category_general" = "General";

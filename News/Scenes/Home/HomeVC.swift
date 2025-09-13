@@ -89,6 +89,15 @@ final class HomeVC: UIViewController {
         viewModel.input?.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
+    }
+
+    
     // MARK: Inits
     
     init(viewModel: HomeVM) {
