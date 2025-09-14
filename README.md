@@ -1,6 +1,6 @@
-The Brief is a modern iOS application built with Swift and UIKit (programmatic) to deliver real-time news articles from reliable sources.
-It provides a clean and intuitive user experience, optimized image rendering, and responsive layouts across all iOS devices.
-The project is structured with MVVM + Protocol architecture, ensuring scalability, maintainability and testability for long-term development.
+The Brief is a cutting-edge iOS application developed in Swift using a fully programmatic UIKit approach, delivering up-to-date news from trusted sources in a seamless and visually appealing interface. 
+The app leverages a robust MVVM + Protocol architecture for maintainable, testable and scalable code, while Kingfisher ensures smooth image loading and caching and SnapKit provides fully responsive, adaptive layouts. 
+Designed with performance, usability and modern iOS design principles in mind, The Brief exemplifies best practices in professional, modular UIKit development.
 
 # 🚀 Features
 	•	🗞️ Real-time news articles with title, image, author, and date
