@@ -32,7 +32,7 @@ The project is structured with MVVM + Protocol architecture, ensuring scalabilit
 	•	Swift 5.7+
 
 ### 📦 Installation
-  1. https://github.com/imdevsmi/News.git
+  1. https://github.com/imdevsmi/The-Brief.git
   2. Install dependencies via Swift Package Manager (Kingfisher, SnapKit).
   3. Open TheBrief.xcodeproj in Xcode.
   4. Build and run the project on your preferred simulator or device.
