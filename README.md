@@ -1,9 +1,12 @@
-News is a modern iOS app built with Swift and UIKit (programmatic) to deliver real-time news articles from various trusted sources. It offers a clean and intuitive user interface, smooth image rendering, and responsive layouts. The app follows the MVVM + Protocol architecture for better scalability, maintainability, and testability.
+The Brief is a modern iOS application built with Swift and UIKit (programmatic) to deliver real-time news articles from reliable sources.
+It provides a clean and intuitive user experience, optimized image rendering, and responsive layouts across all iOS devices.
+The project is structured with MVVM + Protocol architecture, ensuring scalability, maintainability and testability for long-term development.
 
 # 🚀 Features
 	•	🗞️ Real-time news articles with title, image, author, and date
 	•	🔍 Detailed article screen with in-app Safari view
 	•	💡 Light/Dark Mode support
+    •   🌍 Multi-language support (English 🇺🇸 & Turkish 🇹🇷)
     •   🏷️ Category-based news filtering (e.g., Business, Sports, Technology)
 	•	📱 Fully responsive UI with SnapKit
 	•	📷 Smooth image loading and caching via Kingfisher
@@ -30,5 +33,6 @@ News is a modern iOS app built with Swift and UIKit (programmatic) to deliver re
 
 ### 📦 Installation
   1. https://github.com/imdevsmi/News.git
-	2.	Install dependencies via Swift Package Manager (Kingfisher, SnapKit)
-	3.	Open News.xcodeproj and run.
+  2. Install dependencies via Swift Package Manager (Kingfisher, SnapKit).
+  3. Open TheBrief.xcodeproj in Xcode.
+  4. Build and run the project on your preferred simulator or device.
