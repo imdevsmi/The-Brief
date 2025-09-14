@@ -190,8 +190,10 @@ private extension SettingsVC {
     }
     
     func didToggleNotification(_ sender: UISwitch) {
-        viewModel.isNotificationEnabled = sender.isOn
-        viewModel.input?.updateNotification(isOn: sender.isOn)
+        let isOn = sender.isOn
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut) { sender.setOn(isOn, animated: true) }
+        viewModel.isNotificationEnabled = isOn
+        viewModel.input?.updateNotification(isOn: isOn)
         tableView.reloadData()
     }
     
