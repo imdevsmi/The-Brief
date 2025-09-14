@@ -8,9 +8,16 @@
 import Foundation
 import UserNotifications
 
+extension Notification.Name {
+    static let languageChanged = Notification.Name("languageChanged")
+}
+
 protocol SettingsVMInputProtocol: AnyObject {
     func themeMode() -> Int
     func updateThemeMode(_ mode: Int)
+    func currentLanguageIndex() -> Int
+    func currentLanguageName() -> String
+    func setLanguage(_ lang: String)
     func didSelect(item: SettingsModel)
     func updateNotification(isOn: Bool)
     func fetchNotificationStatus(_ completion: @escaping (Bool) -> Void)
@@ -18,19 +25,21 @@ protocol SettingsVMInputProtocol: AnyObject {
 
 final class SettingsVM {
     private let themeKey = "savedTheme"
+    private let languageKey = "appLanguage"
     
     weak var input: SettingsVMInputProtocol?
     weak var output: SettingsVMOutputProtocol?
     
     lazy var sections: [SettingsSection] = [
-        SettingsSection(title: "Appearance", items: [SettingsModel(title: "App Theme", iconName: "circle.righthalf.filled", type: .theme)]),
+        SettingsSection(title: "Appearance", items: [SettingsModel(title: "App Theme", iconName: "circle.righthalf.filled", type: .theme),
+                                                     SettingsModel(title: "Language", iconName: "globe", type: .language)]),
         
         SettingsSection(title: "Notifications", items: [SettingsModel(title: "Notifications", iconName: "bell.fill", type: .notification)]),
         
         SettingsSection(title: "General", items: [SettingsModel(title: "Rate us", iconName: "star.fill", type: .rateUs)]),
         
         SettingsSection(title: "Legal", items: [SettingsModel(title: "Privacy Policy", iconName: "text.document.fill", type: .privacyPolicy),
-            SettingsModel(title: "Terms of Use", iconName: "checkmark.shield.fill", type: .termsOfUse)])
+                                                SettingsModel(title: "Terms of Use", iconName: "checkmark.shield.fill", type: .termsOfUse)])
     ]
 }
 
@@ -42,6 +51,21 @@ extension SettingsVM: SettingsVMInputProtocol {
     func updateThemeMode(_ mode: Int) {
         UserDefaults.standard.set(mode, forKey: themeKey)
         output?.updateTheme(mode)
+    }
+    
+    func currentLanguageIndex() -> Int {
+        let lang = UserDefaults.standard.string(forKey: languageKey) ?? "en"
+        return lang == "tr" ? 0 : 1
+    }
+    
+    func currentLanguageName() -> String {
+        let lang = UserDefaults.standard.string(forKey: languageKey) ?? "en"
+        return lang == "tr" ? "Türkçe" : "English"
+    }
+    
+    func setLanguage(_ lang: String) {
+        UserDefaults.standard.set(lang, forKey: languageKey)
+        NotificationCenter.default.post(name: .languageChanged, object: nil)
     }
     
     func didSelect(item: SettingsModel) {

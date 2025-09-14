@@ -9,6 +9,7 @@ import Foundation
 
 enum SettingsType {
     case theme
+    case language
     case notification
     case rateUs
     case privacyPolicy

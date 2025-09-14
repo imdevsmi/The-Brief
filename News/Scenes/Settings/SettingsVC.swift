@@ -80,8 +80,14 @@ extension SettingsVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
+        
         cell.tintColor = .label
+        cell.accessoryView = nil
+        cell.accessoryType = .none
+        cell.selectionStyle = .none
+        cell.textLabel?.textAlignment = .natural
+        cell.imageView?.image = nil
         
         let section = viewModel.sections[indexPath.section]
         let item = section.items[indexPath.row]
@@ -98,6 +104,11 @@ extension SettingsVC: UITableViewDataSource {
             segmentedControl.addTarget(self, action: #selector(didChangeTheme(_:)), for: .valueChanged)
             cell.accessoryView = segmentedControl
             
+        case .language:
+            cell.selectionStyle = .default
+            cell.accessoryType = .disclosureIndicator
+            cell.detailTextLabel?.text = viewModel.input?.currentLanguageName()
+
         case .notification:
             let switcher = UISwitch()
             viewModel.input?.fetchNotificationStatus { switcher.isOn = $0 }
@@ -122,8 +133,25 @@ extension SettingsVC: UITableViewDataSource {
 extension SettingsVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = viewModel.sections[indexPath.section].items[indexPath.row]
-        viewModel.input?.didSelect(item: item)
+        
+        switch item.type {
+        case .language:
+            toggleLanguage()
+            
+        default:
+            viewModel.input?.didSelect(item: item)
+        }
+        
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+private extension SettingsVC {
+    func toggleLanguage() {
+        let currentIndex = viewModel.input?.currentLanguageIndex() ?? 0
+        let newLang = currentIndex == 0 ? "en" : "tr"
+        viewModel.input?.setLanguage(newLang)
+        tableView.reloadData()
     }
 }
 
@@ -131,6 +159,7 @@ extension SettingsVC: UITableViewDelegate {
     func didChangeTheme(_ sender: UISegmentedControl) {
         viewModel.input?.updateThemeMode(sender.selectedSegmentIndex)
     }
+    
     func didToggleNotification(_ sender: UISwitch) {
         viewModel.input?.updateNotification(isOn: sender.isOn)
     }
@@ -154,7 +183,7 @@ extension SettingsVC: SettingsVMOutputProtocol {
     }
     
     func updateNotification(_ isAuthorized: Bool) {
-        print("Notification \(isAuthorized ? "On" : "Off")")
+        
     }
     
     func openURL(_ url: String) {
