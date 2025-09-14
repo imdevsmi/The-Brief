@@ -15,6 +15,8 @@ protocol SplashVCProtocol: AnyObject {
 final class SplashVC: UIViewController {
     
     // MARK: Properties
+    private var splashVM: SplashVM
+    weak var input: SplashVCProtocol?
     
     private let stackView: UIStackView = {
         let stack = UIStackView()
@@ -44,11 +46,7 @@ final class SplashVC: UIViewController {
         return label
     }()
     
-    private var splashVM: SplashVM
-    weak var input: SplashVCProtocol?
-    
     // MARK: Inits
-    
     init(viewModel: SplashVM = .init()){
         self.splashVM = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -72,7 +70,6 @@ final class SplashVC: UIViewController {
 }
 
 // MARK: - Private Methods
-
 private extension SplashVC {
     func setupUI() {
         view.backgroundColor = .systemBackground
@@ -99,12 +96,10 @@ private extension SplashVC {
 }
 
 // MARK: Output Protocol
-
 extension SplashVC: SplashVCProtocol {
     func toMainScene() {
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
-              let window = sceneDelegate.window else { return }
-        
+              let window = sceneDelegate.window else {return }
         let homeVC = HomeVC(viewModel: HomeVM())
         let navVC = UINavigationController(rootViewController: homeVC)
         window.rootViewController = navVC

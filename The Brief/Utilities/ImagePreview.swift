@@ -9,8 +9,8 @@ import SnapKit
 import UIKit
 
 final class ImagePreview: UIViewController {
-    // MARK: Properties
     
+    // MARK: Properties
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.maximumZoomScale = 4.0
@@ -49,7 +49,6 @@ final class ImagePreview: UIViewController {
     private var dismissThreshold: CGFloat = 100
     
     // MARK: Inits
-    
     init(imageURL: String?) {
         self.imageURL = imageURL
         if let imageURL = imageURL {
@@ -58,9 +57,7 @@ final class ImagePreview: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { fatalError() }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +68,6 @@ final class ImagePreview: UIViewController {
 }
 
 // MARK: - Private Methods
-
 private extension ImagePreview {
     func configureView() {
         view.backgroundColor = .black
@@ -116,11 +112,8 @@ private extension ImagePreview {
 }
 
 // MARK: - Objective Methods
-
 @objc private extension ImagePreview {
-    func dismissView() {
-        dismiss(animated: true, completion: nil)
-    }
+    func dismissView() { dismiss(animated: true, completion: nil) }
     
     func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
         let scale = scrollView.zoomScale == 1.0 ? 2.0 : 1.0
@@ -165,32 +158,18 @@ private extension ImagePreview {
 }
 
 // MARK: - UIScrollViewDelegate
-
 extension ImagePreview: UIScrollViewDelegate {
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        imageView
-    }
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? { return imageView }
 
-    func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        centerImage()
-    }
+    func scrollViewDidZoom(_ scrollView: UIScrollView) { centerImage(in: scrollView) }
 
-    private func centerImage() {
+    private func centerImage(in scrollView: UIScrollView) {
         let boundsSize = scrollView.bounds.size
-        var frameToCenter = imageView.frame
+        var frame = imageView.frame
+        frame.origin.x = frame.width < boundsSize.width  ? (boundsSize.width - frame.width) / 2 : 0
+        frame.origin.y = frame.height < boundsSize.height ? (boundsSize.height - frame.height) / 2 : 0
 
-        if frameToCenter.size.width < boundsSize.width {
-            frameToCenter.origin.x = (boundsSize.width - frameToCenter.size.width) / 2
-        } else {
-            frameToCenter.origin.x = 0
-        }
-
-        if frameToCenter.size.height < boundsSize.height {
-            frameToCenter.origin.y = (boundsSize.height - frameToCenter.size.height) / 2
-        } else {
-            frameToCenter.origin.y = 0
-        }
-
-        imageView.frame = frameToCenter
+        imageView.frame = frame
     }
 }
+

@@ -20,7 +20,6 @@ protocol SettingsVMOutputProtocol: AnyObject {
 final class SettingsVC: UIViewController {
     
     // MARK: Properties
-    
     private let viewModel: SettingsVM
     
     private lazy var tableView: UITableView = {
@@ -33,7 +32,6 @@ final class SettingsVC: UIViewController {
     }()
     
     // MARK: Inits
-    
     init(viewModel: SettingsVM = SettingsVM()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -54,11 +52,10 @@ final class SettingsVC: UIViewController {
         setupUI()
         
         NotificationCenter.default.addObserver(self, selector: #selector(languageDidChange), name: .languageChanged, object: nil)
-        title = NSLocalizedString("tab_settings", comment: "Ayarlar")
     }
 }
 
-// MARK: Private Methods
+// MARK: - UI Setup
 private extension SettingsVC {
     func setupUI() {
         view.backgroundColor = .systemGroupedBackground
@@ -77,15 +74,11 @@ private extension SettingsVC {
     }
 }
 
-// MARK: Data Source- TableViewDelegate
+// MARK: Data Source - TableViewDelegate
 extension SettingsVC: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.sections.count
-    }
+    func numberOfSections(in tableView: UITableView) -> Int { viewModel.sections.count }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.sections[section].items.count
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { viewModel.sections[section].items.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
@@ -164,15 +157,14 @@ extension SettingsVC: UITableViewDelegate {
         switch item.type {
         case .language:
             toggleLanguage()
-            
         default:
             viewModel.input?.didSelect(item: item)
         }
-        
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
+// MARK: - Private Methods
 private extension SettingsVC {
     func toggleLanguage() {
         let currentIndex = viewModel.input?.currentLanguageIndex() ?? 0
@@ -184,24 +176,7 @@ private extension SettingsVC {
     }
 }
 
-@objc private extension SettingsVC {
-    func didChangeTheme(_ sender: UISegmentedControl) {
-        viewModel.input?.updateThemeMode(sender.selectedSegmentIndex)
-    }
-    
-    func didToggleNotification(_ sender: UISwitch) {
-        let isOn = sender.isOn
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut) { sender.setOn(isOn, animated: true) }
-        viewModel.isNotificationEnabled = isOn
-        viewModel.input?.updateNotification(isOn: isOn)
-        tableView.reloadData()
-    }
-    
-    func languageDidChange() {
-        tableView.reloadData()
-    }
-}
-
+// MARK: - SettingsVMOutputProtocol Conformance
 extension SettingsVC: SettingsVMOutputProtocol {
     func updateTheme(_ mode: Int) {
         DispatchQueue.main.async { [weak self] in
@@ -219,9 +194,7 @@ extension SettingsVC: SettingsVMOutputProtocol {
         }
     }
     
-    func updateNotification(_ isAuthorized: Bool) {
-        
-    }
+    func updateNotification(_ isAuthorized: Bool) { }
     
     func openURL(_ url: String) {
         guard let urlToOpen = URL(string: url) else { return }
@@ -231,8 +204,23 @@ extension SettingsVC: SettingsVMOutputProtocol {
     }
     
     func showReview() {
-        if let scn = view.window?.windowScene {
-            SKStoreReviewController.requestReview(in: scn)
-        }
+        if let scn = view.window?.windowScene { SKStoreReviewController.requestReview(in: scn) }
     }
+}
+
+// MARK: - Objective Methods
+@objc private extension SettingsVC {
+    func didChangeTheme(_ sender: UISegmentedControl) {
+        viewModel.input?.updateThemeMode(sender.selectedSegmentIndex)
+    }
+    
+    func didToggleNotification(_ sender: UISwitch) {
+        let isOn = sender.isOn
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseInOut) { sender.setOn(isOn, animated: true) }
+        viewModel.isNotificationEnabled = isOn
+        viewModel.input?.updateNotification(isOn: isOn)
+        tableView.reloadData()
+    }
+    
+    func languageDidChange() { tableView.reloadData() }
 }

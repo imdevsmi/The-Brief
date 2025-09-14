@@ -36,10 +36,6 @@ final class FavoritesVC: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(favoritesUpdated), name: NSNotification.Name("FavoritesUpdated"), object: nil)
     }
-
-    @objc func favoritesUpdated() {
-        viewModel.input?.fetchFavoritesNews()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -75,6 +71,7 @@ private extension FavoritesVC {
     }
 }
 
+// MARK: - FavoritesVCOutputProtocol
 extension FavoritesVC: FavoritesVCOutputProtocol {
     func reloadData() {
         DispatchQueue.main.async {
@@ -125,5 +122,12 @@ extension FavoritesVC: UITableViewDelegate {
             completion(true)
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
+// MARK: Objective Methods
+@objc private extension FavoritesVC {
+    func favoritesUpdated() {
+        viewModel.input?.fetchFavoritesNews()
     }
 }

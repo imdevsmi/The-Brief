@@ -8,7 +8,6 @@
 import Foundation
 
 // MARK: - HTTPMethod Enum
-
 enum HTTPMethod: String {
     case GET
     case POST
@@ -17,7 +16,6 @@ enum HTTPMethod: String {
 }
 
 // MARK: - Network Manager Protocol
-
 protocol NetworkManagerProtocol {
     func request<T: Codable>(url: URL, method: HTTPMethod, headers: [String: String]?, completion: @escaping (Result<T, NetworkError>) -> Void)
 }

@@ -49,6 +49,7 @@ final class SettingsVM {
     ]
 }
 
+// MARK: - SettingsVMInputProtocol
 extension SettingsVM: SettingsVMInputProtocol {
     func themeMode() -> Int {
         UserDefaults.standard.integer(forKey: themeKey)

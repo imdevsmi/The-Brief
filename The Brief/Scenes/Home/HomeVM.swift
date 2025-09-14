@@ -23,7 +23,6 @@ protocol HomeVMInputProtocol: AnyObject {
 final class HomeVM {
     
     // MARK: Properties
-    
     private let newsService: NetworkServiceProtocol
     private(set) var articles: [Article] = []
     private let pageSize = 20
@@ -40,7 +39,6 @@ final class HomeVM {
     weak var output: HomeVMOutputProtocol?
     
     // MARK: Init
-    
     init(service: NetworkServiceProtocol = NetworkService()) {
         newsService = service
         input = self
@@ -50,7 +48,6 @@ final class HomeVM {
 }
 
 // MARK: - HomeVMInputProtocol
-
 extension HomeVM: HomeVMInputProtocol {
     
     func search(term: String) {
@@ -66,9 +63,7 @@ extension HomeVM: HomeVMInputProtocol {
         DispatchQueue.main.asyncAfter(deadline: .now() + debounceInterval, execute: workItem)
     }
     
-    func viewDidLoad() {
-        fetch(reset: true)
-    }
+    func viewDidLoad() { fetch(reset: true) }
     
     func more() {
         if case .top(_) = mode, page > 2 { return }
@@ -84,7 +79,6 @@ extension HomeVM: HomeVMInputProtocol {
 }
 
 private extension HomeVM {
-    
     func fetch(reset: Bool) {
         guard !isLoading else { return }
         isLoading = true

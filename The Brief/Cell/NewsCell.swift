@@ -191,17 +191,12 @@ extension NewsCell {
         }
     }
 
-    func cancel() {
-        newsImage.kf.cancelDownloadTask()
-    }
+    func cancel() { newsImage.kf.cancelDownloadTask() }
 
-    func clear() {
-        newsImage.image = nil
-    }
+    func clear() { newsImage.image = nil }
 }
 
 // MARK: Objective Methods
-
 @objc private extension NewsCell {
     @objc func didTapMoreButton() {
         guard let url = url, let shareUrl = URL(string: url) else { return }
@@ -225,6 +220,5 @@ extension NewsCell {
     
     func didTapFavorite() {
         guard article != nil else { return }
-        
     }
 }

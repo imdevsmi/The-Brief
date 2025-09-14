@@ -14,7 +14,6 @@ protocol NetworkServiceProtocol {
 }
 
 // MARK: - Network Service
-
 final class NetworkService: NetworkServiceProtocol {
     private let networkManager: NetworkManagerProtocol
     private let baseURL = "https://newsapi.org/v2/"
@@ -28,9 +27,7 @@ final class NetworkService: NetworkServiceProtocol {
         return key
     }
     
-    init(networkManager: NetworkManagerProtocol = NetworkManager()) {
-        self.networkManager = networkManager
-    }
+    init(networkManager: NetworkManagerProtocol = NetworkManager()) { self.networkManager = networkManager }
     
     // MARK: - Search News
     func searchNews(searchString: String, page: Int = 1, pageSize: Int = 20, completion: @escaping (Result<NewsModel, NetworkError>) -> Void) {
@@ -59,12 +56,9 @@ final class NetworkService: NetworkServiceProtocol {
             URLQueryItem(name: "apiKey", value: apiKey)
         ]
         
-        if let category = category {
-            queryItems.append(URLQueryItem(name: "category", value: category))
-        }
-        
+        if let category = category { queryItems.append(URLQueryItem(name: "category", value: category)) }
+
         urlComponents?.queryItems = queryItems
-        
         guard let url = urlComponents?.url else {
             completion(.failure(.invalidRequest))
             return

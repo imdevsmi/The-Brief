@@ -10,20 +10,19 @@ import UIKit
 final class MainTabBarController: UITabBarController {
 
     // MARK: - Lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabs()
+        NotificationCenter.default.addObserver(self, selector: #selector(languageDidChange), name: .languageChanged, object: nil)
     }
 }
 
 // MARK: - Private Methods
-
 private extension MainTabBarController {
     func setupTabs() {
-        let homeVC = createNav(with: "News", and: UIImage(systemName: "newspaper.fill"), viewController: HomeVC(viewModel: HomeVM()))
-        let settingsVC = createNav(with: "Settings", and: UIImage(systemName: "gear"), viewController: SettingsVC())
-        let favoritesVC = createNav(with: "Favorites", and: UIImage(systemName: "bookmark.fill"), viewController: FavoritesVC())
+        let homeVC = createNav(with: L("tab_home"), and: UIImage(systemName: "newspaper.fill"), viewController: HomeVC(viewModel: HomeVM()))
+        let settingsVC = createNav(with: L("tab_settings"), and: UIImage(systemName: "gear"), viewController: SettingsVC())
+        let favoritesVC = createNav(with: L("tab_favorites"), and: UIImage(systemName: "bookmark.fill"), viewController: FavoritesVC())
         
         setViewControllers([homeVC, favoritesVC, settingsVC], animated: false)
         
@@ -63,4 +62,9 @@ private extension MainTabBarController {
         
         return nav
     }
+}
+
+// MARK: Objective Methods
+@objc private extension MainTabBarController {
+    func languageDidChange() { setupTabs() }
 }

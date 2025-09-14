@@ -11,7 +11,6 @@ import UIKit
 
 
 // MARK: - HomeVMOutputProtocol
-
 protocol HomeVMOutputProtocol: AnyObject {
     func didFail(with error: Error)
     func didBecomeEmpty(_ isEmpty: Bool)
@@ -21,7 +20,6 @@ protocol HomeVMOutputProtocol: AnyObject {
 final class HomeVC: UIViewController {
     
     // MARK: - UI Elements
-    
     private let viewModel: HomeVM
     private var categories = CategoryModel.allCases
     private var selectedCategory: CategoryModel = .general
@@ -80,7 +78,6 @@ final class HomeVC: UIViewController {
     }()
     
     // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -103,7 +100,6 @@ final class HomeVC: UIViewController {
 
     
     // MARK: Inits
-    
     init(viewModel: HomeVM) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -114,9 +110,7 @@ final class HomeVC: UIViewController {
 }
 
 // MARK: - HomeVMOuputProtocol
-
 extension HomeVC: HomeVMOutputProtocol {
-    
     func didFail(with error: Error) { }
     
     func didBecomeEmpty(_ isEmpty: Bool) {
@@ -129,9 +123,7 @@ extension HomeVC: HomeVMOutputProtocol {
     func didUpdateArticles(_ articles: [Article], append: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            if self.refreshControl.isRefreshing {
-                self.refreshControl.endRefreshing()
-            }
+            if self.refreshControl.isRefreshing { self.refreshControl.endRefreshing() }
             self.tableView.reloadData()
             self.emptyLabel.isHidden = !articles.isEmpty
         }
@@ -139,9 +131,7 @@ extension HomeVC: HomeVMOutputProtocol {
 }
 
 // MARK: - Private Methods
-
 private extension HomeVC {
-    
     func configureView() {
         view.backgroundColor = .systemBackground
         navigationItem.searchController = searchController
@@ -168,20 +158,9 @@ private extension HomeVC {
     }
 }
 
-// MARK: Objective Methods
-
-@objc private extension HomeVC {
-    func refreshData() {
-        viewModel.input?.more()
-    }
-}
-
 // MARK: - UITableViewDataSource
-
 extension HomeVC: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.articles.count
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { viewModel.articles.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseIdentifier, for: indexPath) as? NewsCell else {
@@ -198,11 +177,8 @@ extension HomeVC: UITableViewDataSource {
 }
 
 // MARK: - UICollectionViewDataSource - UICollectionViewDelegateFlowLayout
-
 extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categories.count
-    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { return categories.count }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else { fatalError() }
@@ -233,7 +209,6 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 }
 
 // MARK: - UITableViewDelegate
-
 extension HomeVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -252,14 +227,18 @@ extension HomeVC: UITableViewDelegate {
 
 
 // MARK: - UISearchBarDelegate
-
 extension HomeVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange text: String) {
         if text.isEmpty { viewModel.search(term: "") }
         else if text.count >= 3 { viewModel.search(term: text) }
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        viewModel.search(term: "")
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) { viewModel.search(term: "") }
+}
+
+// MARK: Objective Methods
+@objc private extension HomeVC {
+    func refreshData() {
+        viewModel.input?.more()
     }
 }

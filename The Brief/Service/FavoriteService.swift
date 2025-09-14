@@ -17,9 +17,7 @@ protocol FavoritesServicesProtocol {
 final class FavoriteService {
     let manager: FavoritesManagerProtocol
     
-    init(manager: FavoritesManagerProtocol = FavoritesManager(key: .favoritesArticle)) {
-        self.manager = manager
-    }
+    init(manager: FavoritesManagerProtocol = FavoritesManager(key: .favoritesArticle)) { self.manager = manager }
 }
 
 // MARK: - FavoritesServicesProtocol Conformance
@@ -42,13 +40,9 @@ extension FavoriteService: FavoritesServicesProtocol {
         }
     }
     
-    func fetchFavorites(completion: @escaping (Result<[Article], FavoritesError>) -> Void) {
-        manager.fetchAll(completion: completion)
-    }
+    func fetchFavorites(completion: @escaping (Result<[Article], FavoritesError>) -> Void) { manager.fetchAll(completion: completion) }
     
-    func updateFavorites(articles: [Article]) {
-        manager.save(item: articles)
-    }
+    func updateFavorites(articles: [Article]) { manager.save(item: articles) }
     
     func createFavoriteArticleDatabase() {
         manager.fetchAll { [weak self] (result: Result<[Article], FavoritesError>) in

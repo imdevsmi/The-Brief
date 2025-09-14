@@ -72,13 +72,8 @@ final class NewsDetailVC: UIViewController {
         let label = UILabel()
         var fullContent = ""
 
-        if let content = viewModel.article.content, !content.isEmpty {
-            fullContent += content + "\n\n"
-        }
-
-        if let description = viewModel.article.description, !description.isEmpty {
-            fullContent += description
-        }
+        if let content = viewModel.article.content, !content.isEmpty { fullContent += content + "\n\n" }
+        if let description = viewModel.article.description, !description.isEmpty { fullContent += description }
 
         label.text = fullContent
         label.textAlignment = .natural

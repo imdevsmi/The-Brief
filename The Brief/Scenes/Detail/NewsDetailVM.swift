@@ -14,22 +14,8 @@ protocol NewsDetailVMInputProtocol {
 final class NewsDetailVM {
     
     // MARK: Properties
-    
     let article: Article
     
     // MARK: Inits
-    
-    init(article: Article) {
-        self.article = article
-    }
-}
-
-private extension NewsDetailVM {
-    
-}
-
-extension NewsDetailVM: NewsDetailVMInputProtocol {
-    func shareArticle() {
-        
-    }
+    init(article: Article) { self.article = article }
 }
