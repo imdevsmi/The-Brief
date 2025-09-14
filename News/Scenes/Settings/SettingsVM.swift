@@ -65,6 +65,7 @@ extension SettingsVM: SettingsVMInputProtocol {
     
     func setLanguage(_ lang: String) {
         UserDefaults.standard.set(lang, forKey: languageKey)
+        UserDefaults.standard.synchronize()
         NotificationCenter.default.post(name: .languageChanged, object: nil)
     }
     

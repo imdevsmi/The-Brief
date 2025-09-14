@@ -47,6 +47,9 @@ final class SettingsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(languageDidChange), name: .languageChanged, object: nil)
+        title = NSLocalizedString("tab_settings", comment: "Ayarlar")
     }
 }
 
@@ -99,33 +102,51 @@ extension SettingsVC: UITableViewDataSource {
         
         switch item.type {
         case .theme:
-            let segmentedControl = UISegmentedControl(items: ["Auto", "Light", "Dark"])
+            cell.textLabel?.text = L("theme_title")
+            let segmentedControl = UISegmentedControl(items: [L("theme_auto"), L("theme_light"), L("theme_dark")])
             segmentedControl.selectedSegmentIndex = viewModel.input?.themeMode() ?? 0
             segmentedControl.addTarget(self, action: #selector(didChangeTheme(_:)), for: .valueChanged)
             cell.accessoryView = segmentedControl
+            cell.selectionStyle = .none
             
         case .language:
-            cell.selectionStyle = .default
-            cell.accessoryType = .disclosureIndicator
+            cell.textLabel?.text = L("language_title")
             cell.detailTextLabel?.text = viewModel.input?.currentLanguageName()
-
+            cell.accessoryType = .disclosureIndicator
+            cell.selectionStyle = .default
+            
         case .notification:
+            cell.textLabel?.text = L("notification_title")
             let switcher = UISwitch()
             viewModel.input?.fetchNotificationStatus { switcher.isOn = $0 }
             switcher.addTarget(self, action: #selector(didToggleNotification), for: .valueChanged)
             cell.accessoryView = switcher
+            cell.selectionStyle = .none
             
-        case .rateUs, .privacyPolicy, .termsOfUse:
-            cell.selectionStyle = .default
+        case .rateUs:
+            cell.textLabel?.text = L("rate_us_title")
             cell.accessoryType = .disclosureIndicator
+            cell.selectionStyle = .default
+            
+        case .privacyPolicy:
+            cell.textLabel?.text = L("privacy_policy_title")
+            cell.accessoryType = .disclosureIndicator
+            cell.selectionStyle = .default
+            
+        case .termsOfUse:
+            cell.textLabel?.text = L("terms_of_use_title")
+            cell.accessoryType = .disclosureIndicator
+            cell.selectionStyle = .default
             
         case .version:
-            cell.imageView?.image = nil
-            cell.backgroundColor = .clear
-            cell.isUserInteractionEnabled = false
+            cell.textLabel?.text = L("version_title")
             cell.textLabel?.textAlignment = .center
             cell.textLabel?.textColor = .secondaryLabel
+            cell.backgroundColor = .clear
+            cell.isUserInteractionEnabled = false
+            cell.accessoryView = nil
         }
+        
         return cell
     }
 }
@@ -151,6 +172,8 @@ private extension SettingsVC {
         let currentIndex = viewModel.input?.currentLanguageIndex() ?? 0
         let newLang = currentIndex == 0 ? "en" : "tr"
         viewModel.input?.setLanguage(newLang)
+        UserDefaults.standard.set(newLang, forKey: "appLanguage")
+        NotificationCenter.default.post(name: .languageChanged, object: nil)
         tableView.reloadData()
     }
 }
@@ -162,6 +185,10 @@ private extension SettingsVC {
     
     func didToggleNotification(_ sender: UISwitch) {
         viewModel.input?.updateNotification(isOn: sender.isOn)
+    }
+    
+    func languageDidChange() {
+        tableView.reloadData()
     }
 }
 
