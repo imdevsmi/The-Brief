@@ -26,9 +26,15 @@ protocol SettingsVMInputProtocol: AnyObject {
 final class SettingsVM {
     private let themeKey = "savedTheme"
     private let languageKey = "appLanguage"
-    
+    private let notificationKey = "userNotificationEnabled"
+
     weak var input: SettingsVMInputProtocol?
     weak var output: SettingsVMOutputProtocol?
+    
+    var isNotificationEnabled: Bool {
+        get { UserDefaults.standard.bool(forKey: notificationKey) }
+        set { UserDefaults.standard.set(newValue, forKey: notificationKey) }
+    }
     
     lazy var sections: [SettingsSection] = [
         SettingsSection(title: "Appearance", items: [SettingsModel(title: "App Theme", iconName: "circle.righthalf.filled", type: .theme),
@@ -79,6 +85,8 @@ extension SettingsVM: SettingsVMInputProtocol {
     }
     
     func updateNotification(isOn: Bool) {
+        isNotificationEnabled = isOn
+        
         guard isOn else {
             output?.updateNotification(false)
             return
@@ -93,8 +101,10 @@ extension SettingsVM: SettingsVMInputProtocol {
     
     func fetchNotificationStatus(_ completion: @escaping (Bool) -> Void) {
         UNUserNotificationCenter.current().getNotificationSettings { status in
+            let systemAuthorized = status.authorizationStatus == .authorized
+            let switchState = self.isNotificationEnabled && systemAuthorized
             DispatchQueue.main.async {
-                completion(status.authorizationStatus == .authorized)
+                completion(switchState)
             }
         }
     }

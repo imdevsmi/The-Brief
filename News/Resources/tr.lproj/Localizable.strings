@@ -10,7 +10,7 @@
 "category_sports" = "Spor";
 "category_technology" = "Teknoloji";
 
-"theme_auto" = "Otomatik";
+"theme_auto" = "Sistem";
 "theme_light" = "Açık";
 "theme_dark" = "Koyu";
 
@@ -27,7 +27,7 @@
 "theme_title" = "Tema";
 "language_title" = "Dil";
 "notification_title" = "Bildirimler";
-"rate_us_title" = "Bizi Değerlendir";
+"rate_us_title" = "Bize Oy Verin";
 "privacy_policy_title" = "Gizlilik Politikası";
 "terms_of_use_title" = "Kullanım Şartları";
 "version_title" = "Sürüm";

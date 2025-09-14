@@ -39,6 +39,11 @@ final class SettingsVC: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.viewModel.output = self
         self.viewModel.input = self.viewModel
+        
+        viewModel.input?.fetchNotificationStatus { [weak self] isAuthorized in
+            self?.viewModel.isNotificationEnabled = isAuthorized
+            self?.tableView.reloadData()
+        }
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -118,7 +123,9 @@ extension SettingsVC: UITableViewDataSource {
         case .notification:
             cell.textLabel?.text = L("notification_title")
             let switcher = UISwitch()
-            viewModel.input?.fetchNotificationStatus { switcher.isOn = $0 }
+            viewModel.input?.fetchNotificationStatus { isEnabled in
+                switcher.isOn = isEnabled
+            }
             switcher.addTarget(self, action: #selector(didToggleNotification), for: .valueChanged)
             cell.accessoryView = switcher
             cell.selectionStyle = .none
@@ -146,7 +153,6 @@ extension SettingsVC: UITableViewDataSource {
             cell.isUserInteractionEnabled = false
             cell.accessoryView = nil
         }
-        
         return cell
     }
 }
@@ -184,7 +190,9 @@ private extension SettingsVC {
     }
     
     func didToggleNotification(_ sender: UISwitch) {
+        viewModel.isNotificationEnabled = sender.isOn
         viewModel.input?.updateNotification(isOn: sender.isOn)
+        tableView.reloadData()
     }
     
     func languageDidChange() {
