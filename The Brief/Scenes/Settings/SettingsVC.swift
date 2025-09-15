@@ -50,9 +50,9 @@ final class SettingsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(languageDidChange), name: .languageChanged, object: nil)
+        observeNotifications()
     }
+    deinit { NotificationCenter.default.removeObserver(self, name: .languageChanged, object: nil) }
 }
 
 // MARK: - UI Setup
@@ -151,6 +151,8 @@ private extension SettingsVC {
         NotificationCenter.default.post(name: .languageChanged, object: nil)
         tableView.reloadData()
     }
+    
+    func observeNotifications() { NotificationCenter.default.addObserver(self, selector: #selector(languageDidChange), name: .languageChanged, object: nil) }
 }
 
 // MARK: - SettingsVMOutputProtocol Conformance
