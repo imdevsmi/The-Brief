@@ -14,7 +14,6 @@ enum SettingsType {
     case rateUs
     case privacyPolicy
     case termsOfUse
-    case version
 }
 
 struct SettingsModel {

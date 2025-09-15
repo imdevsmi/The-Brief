@@ -137,14 +137,6 @@ extension SettingsVC: UITableViewDataSource {
             cell.textLabel?.text = L("terms_of_use_title")
             cell.accessoryType = .disclosureIndicator
             cell.selectionStyle = .default
-            
-        case .version:
-            cell.textLabel?.text = L("version_title")
-            cell.textLabel?.textAlignment = .center
-            cell.textLabel?.textColor = .secondaryLabel
-            cell.backgroundColor = .clear
-            cell.isUserInteractionEnabled = false
-            cell.accessoryView = nil
         }
         return cell
     }
