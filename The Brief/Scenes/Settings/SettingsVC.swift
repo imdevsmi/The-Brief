@@ -182,16 +182,12 @@ extension SettingsVC: SettingsVMOutputProtocol {
         present(safariVC, animated: true)
     }
     
-    func showReview() {
-        if let scn = view.window?.windowScene { SKStoreReviewController.requestReview(in: scn) }
-    }
+    func showReview() { if let scn = view.window?.windowScene { SKStoreReviewController.requestReview(in: scn) } }
 }
 
 // MARK: - Objective Methods
 @objc private extension SettingsVC {
-    func didChangeTheme(_ sender: UISegmentedControl) {
-        viewModel.input?.updateThemeMode(sender.selectedSegmentIndex)
-    }
+    func didChangeTheme(_ sender: UISegmentedControl) { viewModel.input?.updateThemeMode(sender.selectedSegmentIndex) }
     
     func didToggleNotification(_ sender: UISwitch) {
         let isOn = sender.isOn

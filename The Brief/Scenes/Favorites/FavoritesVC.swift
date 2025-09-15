@@ -33,14 +33,15 @@ final class FavoritesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(favoritesUpdated), name: NSNotification.Name("FavoritesUpdated"), object: nil)
+        observeNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.input?.fetchFavoritesNews()
     }
+    
+    deinit { NotificationCenter.default.removeObserver(self, name: NSNotification.Name("FavoritesUpdated"), object: nil) }
     
     // MARK: - Init
     init(viewModel: FavoritesVM = FavoritesVM()) {
@@ -60,23 +61,23 @@ private extension FavoritesVC {
         setupLayout()
     }
     
-    func setupConstraints() {
-        view.addSubview(tableView)
-    }
+    func setupConstraints() { view.addSubview(tableView) }
     
     func setupLayout() {
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
+    
+    func observeNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(favoritesUpdated), name: NSNotification.Name("FavoritesUpdated"), object: nil)
+    }
 }
 
 // MARK: - FavoritesVCOutputProtocol
 extension FavoritesVC: FavoritesVCOutputProtocol {
     func reloadData() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        DispatchQueue.main.async { self.tableView.reloadData() }
     }
 
     func showModal(title: String, message: String) {
@@ -89,14 +90,10 @@ extension FavoritesVC: FavoritesVCOutputProtocol {
 
 // MARK: - UITableViewDataSource
 extension FavoritesVC: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.favoritesArticles.count
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return viewModel.favoritesArticles.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseIdentifier, for: indexPath) as? NewsCell else {
-            return UITableViewCell()
-        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseIdentifier, for: indexPath) as? NewsCell else { return UITableViewCell() }
         cell.setup(with: viewModel.favoritesArticles[indexPath.row])
         return cell
     }
@@ -127,7 +124,5 @@ extension FavoritesVC: UITableViewDelegate {
 
 // MARK: Objective Methods
 @objc private extension FavoritesVC {
-    func favoritesUpdated() {
-        viewModel.input?.fetchFavoritesNews()
-    }
+    func favoritesUpdated() { viewModel.input?.fetchFavoritesNews() }
 }
