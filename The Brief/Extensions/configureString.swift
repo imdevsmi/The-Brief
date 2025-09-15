@@ -24,20 +24,20 @@ extension String {
 
         switch true {
         case week > 0:
-            return "\(week)w ago"
+            return String(format: L("time_week_ago"), week)
         case day > 0:
-            return "\(day)d ago"
+            return String(format: L("time_day_ago"), day)
         case hour > 0 && minute > 0:
-            return "\(hour)h \(minute)m ago"
+            return String(format: L("time_hour_minute_ago"), hour, minute)
         case hour > 0:
-            return "\(hour)h ago"
+            return String(format: L("time_hour_ago"), hour)
         case minute > 0:
-            return "\(minute)m ago"
+            return String(format: L("time_minute_ago"), minute)
         default:
-            return "Just now"
+            return L("time_just_now")
         }
     }
-    
+
     func formattedHourAndMinute() -> String? {
         let isoFormatter = ISO8601DateFormatter()
         guard let date = isoFormatter.date(from: self) else { return nil }

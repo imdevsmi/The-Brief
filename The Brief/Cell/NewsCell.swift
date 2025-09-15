@@ -181,8 +181,8 @@ extension NewsCell {
         self.article = article
         newsLabel.text = article.title
         authorLabel.text = article.author
-        hourLabel.text = article.publishedAt?.formattedHourAndMinute() ?? "Unknown time"
-        dateLabel.text = article.publishedAt?.timeAgoSinceDate() ?? "Unknown time"
+        hourLabel.text = article.publishedAt?.formattedHourAndMinute()
+        dateLabel.text = article.publishedAt?.timeAgoSinceDate()
         url = article.url
         
         loadingIndicator.startAnimating()
@@ -218,7 +218,5 @@ extension NewsCell {
         moreButton.showsMenuAsPrimaryAction = true
     }
     
-    func didTapFavorite() {
-        guard article != nil else { return }
-    }
+    func didTapFavorite() { guard article != nil else { return } }
 }
