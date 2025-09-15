@@ -16,7 +16,6 @@ final class NewsCell: UITableViewCell {
     private var article: Article?
     
     // MARK: Inits
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 24, leading: 16, bottom: 24, trailing: 16)
@@ -26,7 +25,6 @@ final class NewsCell: UITableViewCell {
     required init?(coder: NSCoder) { fatalError() }
     
     // MARK: Properties
-    
     private lazy var newsImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -40,6 +38,7 @@ final class NewsCell: UITableViewCell {
     private lazy var loadingIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
         indicator.hidesWhenStopped = true
+        
         return indicator
     }()
     
@@ -106,7 +105,6 @@ final class NewsCell: UITableViewCell {
 }
 
 // MARK: - Private Methods
-
 private extension NewsCell {
     func setupUI() {
         addViews()
@@ -175,7 +173,6 @@ private extension NewsCell {
 }
 
 // MARK: - Public Methods
-
 extension NewsCell {
     func setup(with article: Article) {
         self.article = article
