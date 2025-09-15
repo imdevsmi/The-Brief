@@ -1,6 +1,7 @@
 /* Localizable.strings (Turkish) */
 
 "no_news_found" = "Haber bulunamadı.";
+"search_news" = "Haber Ara...";
 
 "category_general" = "Genel";
 "category_business" = "İş";
@@ -30,7 +31,6 @@
 "rate_us_title" = "Bize Oy Verin";
 "privacy_policy_title" = "Gizlilik Politikası";
 "terms_of_use_title" = "Kullanım Şartları";
-"version_title" = "Sürüm";
 
 "save_button" = "Kaydet";
 
@@ -40,3 +40,5 @@
 "time_hour_minute_ago" = "%dh %dm önce";
 "time_day_ago" = "%dg önce";
 "time_week_ago" = "%dhf önce";
+
+"share_text" = "Paylaş";

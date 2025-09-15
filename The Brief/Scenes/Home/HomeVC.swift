@@ -28,7 +28,7 @@ final class HomeVC: UIViewController {
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController()
         searchController.searchBar.delegate = self
-        searchController.searchBar.placeholder = "Search News"
+        searchController.searchBar.placeholder = L("search_news")
         searchController.obscuresBackgroundDuringPresentation = false
         
         return searchController
@@ -57,7 +57,7 @@ final class HomeVC: UIViewController {
     
     private lazy var emptyLabel: UILabel = {
         let label = UILabel()
-        label.text = "No news found."
+        label.text = L("no_news_found")
         label.textAlignment = .center
         label.textColor = .secondaryLabel
         label.isHidden = true
