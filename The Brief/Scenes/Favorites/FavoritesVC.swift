@@ -109,10 +109,10 @@ extension FavoritesVC: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (_, _, completion) in
-            let alert = UIAlertController(title: "Are you sure?", message: "Do you want to remove this article from your favorites?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            alert.addAction(UIAlertAction(title: "Remove", style: .destructive) { _ in
+        let deleteAction = UIContextualAction(style: .destructive, title: L("delete")) { [weak self] (_, _, completion) in
+            let alert = UIAlertController( title: L("alert_title_confirm"), message: L("alert_message_remove_article"), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: L("cancel"), style: .cancel))
+            alert.addAction(UIAlertAction(title: L("remove"), style: .destructive) { _ in
                 self?.viewModel.input?.removeNews(at: indexPath.row)
             })
             self?.present(alert, animated: true)

@@ -52,6 +52,5 @@ extension FavoritesVM: FavoritesVMInputProtocol {
         favoritesArticles.remove(at: index)
         service.updateFavorites(articles: favoritesArticles)
         output?.reloadData()
-        output?.showModal(title: "Removed from favorites", message: "The news was successfully deleted.")
     }
 }
