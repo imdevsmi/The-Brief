@@ -95,26 +95,17 @@ extension SettingsVC: UITableViewDataSource {
         
         cell.textLabel?.text = item.title
         cell.textLabel?.textColor = .label
-        cell.textLabel?.textAlignment = .natural
         cell.imageView?.image = UIImage(systemName: item.iconName)
         
         switch item.type {
         case .theme:
-            cell.textLabel?.text = L("theme_title")
             let segmentedControl = UISegmentedControl(items: [L("theme_auto"), L("theme_light"), L("theme_dark")])
             segmentedControl.selectedSegmentIndex = viewModel.input?.themeMode() ?? 0
             segmentedControl.addTarget(self, action: #selector(didChangeTheme(_:)), for: .valueChanged)
             cell.accessoryView = segmentedControl
             cell.selectionStyle = .none
             
-        case .language:
-            cell.textLabel?.text = L("language_title")
-            cell.detailTextLabel?.text = viewModel.input?.currentLanguageName()
-            cell.accessoryType = .disclosureIndicator
-            cell.selectionStyle = .default
-            
         case .notification:
-            cell.textLabel?.text = L("notification_title")
             let switcher = UISwitch()
             viewModel.input?.fetchNotificationStatus { isEnabled in
                 switcher.isOn = isEnabled
@@ -123,21 +114,15 @@ extension SettingsVC: UITableViewDataSource {
             cell.accessoryView = switcher
             cell.selectionStyle = .none
             
-        case .rateUs:
-            cell.textLabel?.text = L("rate_us_title")
-            cell.accessoryType = .disclosureIndicator
-            cell.selectionStyle = .default
+        case .language:
+            cell.detailTextLabel?.text = viewModel.input?.currentLanguageName()
+            fallthrough
             
-        case .privacyPolicy:
-            cell.textLabel?.text = L("privacy_policy_title")
-            cell.accessoryType = .disclosureIndicator
-            cell.selectionStyle = .default
-            
-        case .termsOfUse:
-            cell.textLabel?.text = L("terms_of_use_title")
+        case .rateUs, .privacyPolicy, .termsOfUse:
             cell.accessoryType = .disclosureIndicator
             cell.selectionStyle = .default
         }
+        
         return cell
     }
 }
