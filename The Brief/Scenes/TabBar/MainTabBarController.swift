@@ -14,8 +14,11 @@ final class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         self.delegate = self
         setupTabs()
-        NotificationCenter.default.addObserver(self, selector: #selector(languageDidChange), name: .languageChanged, object: nil)
+        observeNotifications()
     }
+    
+    // MARK: - Deinit
+    deinit { NotificationCenter.default.removeObserver(self, name: .languageChanged, object: nil) }
 }
 
 // MARK: - Private Methods
@@ -62,6 +65,11 @@ private extension MainTabBarController {
         viewController.title = title
         
         return nav
+    }
+
+    // MARK: - NotificationCenter
+    func observeNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(languageDidChange), name: .languageChanged, object: nil)
     }
 }
 
