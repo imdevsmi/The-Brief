@@ -87,7 +87,7 @@ final class NewsDetailVC: UIViewController {
     
     private lazy var saveButton: UIButton = {
         var config = UIButton.Configuration.plain()
-        config.title = "Save"
+        config.title = L("save_button_title")
         config.image = UIImage(systemName: "bookmark.fill")
         config.imagePadding = 4
         config.baseForegroundColor = .label
@@ -205,11 +205,11 @@ private extension NewsDetailVC {
     func updateSaveButtonAppearance(isFavorited: Bool) {
         var config = saveButton.configuration
         if isFavorited {
-            config?.title = "Saved"
+            config?.title = L("saved_button_title")
             config?.image = UIImage(systemName: "bookmark.fill")
             config?.baseForegroundColor = .systemBlue
         } else {
-            config?.title = "Save"
+            config?.title = L("save_button_title")
             config?.image = UIImage(systemName: "bookmark")
             config?.baseForegroundColor = .label
         }

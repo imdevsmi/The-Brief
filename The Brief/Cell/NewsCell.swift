@@ -199,7 +199,7 @@ extension NewsCell {
         guard let url = url, let shareUrl = URL(string: url) else { return }
         
         let browser = openBrowser()
-        let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { _ in
+        let shareAction = UIAction(title: L("share_text"), image: UIImage(systemName: "square.and.arrow.up")) { _ in
             let browserVC = UIActivityViewController(activityItems: [shareUrl], applicationActivities: [browser])
 
             if let topController = UIApplication.shared.connectedScenes
@@ -209,7 +209,6 @@ extension NewsCell {
                 topController.present(browserVC, animated: true)
             }
         }
-        
         let menu = UIMenu(title: "", children: [shareAction])
         moreButton.menu = menu
         moreButton.showsMenuAsPrimaryAction = true
