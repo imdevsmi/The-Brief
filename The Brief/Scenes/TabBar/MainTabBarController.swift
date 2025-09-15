@@ -12,6 +12,7 @@ final class MainTabBarController: UITabBarController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.delegate = self
         setupTabs()
         NotificationCenter.default.addObserver(self, selector: #selector(languageDidChange), name: .languageChanged, object: nil)
     }
@@ -64,7 +65,15 @@ private extension MainTabBarController {
     }
 }
 
-// MARK: Objective Methods
+// MARK: - UITabBarControllerDelegate
+extension MainTabBarController: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if let nav = viewController as? UINavigationController,
+           let homeVC = nav.viewControllers.first as? HomeVC { homeVC.scrollToTop() }
+    }
+}
+
+// MARK: - Objective Methods
 @objc private extension MainTabBarController {
     func languageDidChange() { setupTabs() }
 }

@@ -163,9 +163,7 @@ extension HomeVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { viewModel.articles.count }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseIdentifier, for: indexPath) as? NewsCell else {
-            fatalError()
-        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsCell.reuseIdentifier, for: indexPath) as? NewsCell else { fatalError() }
         cell.setup(with: viewModel.articles[indexPath.row])
         return cell
     }
@@ -240,5 +238,12 @@ extension HomeVC: UISearchBarDelegate {
 @objc private extension HomeVC {
     func refreshData() {
         viewModel.input?.more()
+    }
+}
+
+extension HomeVC {
+    func scrollToTop() {
+        if tableView.numberOfRows(inSection: 0) > 0 { tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true) }
+        categoryCollectionView.setContentOffset(.zero, animated: true)
     }
 }
