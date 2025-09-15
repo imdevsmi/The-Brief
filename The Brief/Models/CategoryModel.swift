@@ -12,20 +12,13 @@ enum CategoryModel: String, Codable, CaseIterable {
     
     var displayName: String {
         switch self {
-        case .general:
-            return "general"
-        case .business:
-            return "business"
-        case .entertainment:
-            return "entertainment"
-        case .health:
-            return "health"
-        case .science:
-            return "science"
-        case .sports:
-            return "sports"
-        case .technology:
-            return "technology"
+        case .general: return L("category_general")
+        case .business: return L("category_business")
+        case .entertainment: return L("category_entertainment")
+        case .health: return L("category_health")
+        case .science: return L("category_science")
+        case .sports: return L("category_sports")
+        case .technology: return L("category_technology")
         }
     }
 }
