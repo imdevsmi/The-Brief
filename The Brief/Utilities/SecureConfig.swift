@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Info {
+struct SecureConfig {
     static var bannerID: String {
         guard let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
               let dict = NSDictionary(contentsOfFile: path),

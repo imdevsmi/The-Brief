@@ -27,7 +27,7 @@ final class NetworkService: NetworkServiceProtocol {
             URLQueryItem(name: "q", value: searchString),
             URLQueryItem(name: "page", value: "\(page)"),
             URLQueryItem(name: "pageSize", value: "\(pageSize)"),
-            URLQueryItem(name: "apiKey", value: Info.apiKey)]
+            URLQueryItem(name: "apiKey", value: SecureConfig.apiKey)]
         
         guard let url = urlComponents?.url else {
             completion(.failure(.invalidRequest))
@@ -44,7 +44,7 @@ final class NetworkService: NetworkServiceProtocol {
             URLQueryItem(name: "country", value: country),
             URLQueryItem(name: "pageSize", value: "\(pageSize)"),
             URLQueryItem(name: "page", value: "\(page)"),
-            URLQueryItem(name: "apiKey", value: Info.apiKey)]
+            URLQueryItem(name: "apiKey", value: SecureConfig.apiKey)]
         
         if let category = category { queryItems.append(URLQueryItem(name: "category", value: category)) }
 

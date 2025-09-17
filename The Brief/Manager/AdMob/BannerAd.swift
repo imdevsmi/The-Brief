@@ -17,7 +17,7 @@ final class BannerAdView: UIView {
         let adSize = currentOrientationAnchoredAdaptiveBanner(width: viewWidth)
         let banner = BannerView(frame: .zero)
         
-        banner.adUnitID = Info.bannerID
+        banner.adUnitID = SecureConfig.bannerID
         banner.adSize = adSize
         banner.rootViewController = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
