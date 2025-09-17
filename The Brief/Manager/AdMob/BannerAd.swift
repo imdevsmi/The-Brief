@@ -23,6 +23,7 @@ final class BannerAdView: UIView {
             .flatMap { $0.windows }
             .first { $0.isKeyWindow }?.rootViewController
         banner.delegate = self
+        
         return banner
     }()
     

@@ -67,28 +67,22 @@ final class SettingsVC: UIViewController {
 private extension SettingsVC {
     func setupUI() {
         view.backgroundColor = .systemGroupedBackground
+        view.addSubview(bannerView)
+        view.addSubview(tableView)
+        
         setupConstraints()
-        setupLayout()
     }
     
     func setupConstraints() {
-        view.addSubview(tableView)
-        view.addSubview(bannerView)
-    }
-    
-    func setupLayout() {
-        tableView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.bottom.equalTo(bannerView.snp.top)
-        }
-    }
-    
-    func bannerUI() {
         bannerView.snp.makeConstraints { make in
-            make.bottom.equalTo(tabBarController?.tabBar.snp.top ?? view.safeAreaLayoutGuide.snp.bottom).offset(-4)
             make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-4)
             make.width.equalToSuperview()
-            make.height.equalTo(60)
+            make.height.equalTo(100)
+        }
+        tableView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(bannerView.snp.top)
         }
     }
 }
