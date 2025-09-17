@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7D7329C52DDB01910017B200 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7D7329C42DDB01910017B200 /* Kingfisher */; };
+		7D9FB9F12E789F7500319306 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 7D9FB9F02E789F7500319306 /* GoogleMobileAds */; };
 		7DAF87022DDA2A9100FBFEF0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7DAF87012DDA2A9100FBFEF0 /* SnapKit */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D9FB9F12E789F7500319306 /* GoogleMobileAds in Frameworks */,
 				7D7329C52DDB01910017B200 /* Kingfisher in Frameworks */,
 				7DAF87022DDA2A9100FBFEF0 /* SnapKit in Frameworks */,
 			);
@@ -88,6 +90,7 @@
 			packageProductDependencies = (
 				7DAF87012DDA2A9100FBFEF0 /* SnapKit */,
 				7D7329C42DDB01910017B200 /* Kingfisher */,
+				7D9FB9F02E789F7500319306 /* GoogleMobileAds */,
 			);
 			productName = News;
 			productReference = 7DAF86E52DDA292100FBFEF0 /* The Brief.app */;
@@ -122,6 +125,7 @@
 				7DAF87002DDA2A9100FBFEF0 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				7D7329C32DDB01910017B200 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				7D74D7FF2E71ADE800217E10 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				7D9FB9EF2E789F7500319306 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7DAF86E62DDA292100FBFEF0 /* Products */;
@@ -407,6 +411,14 @@
 				version = 0.61.0;
 			};
 		};
+		7D9FB9EF2E789F7500319306 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.11.0;
+			};
+		};
 		7DAF87002DDA2A9100FBFEF0 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -422,6 +434,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7D7329C32DDB01910017B200 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		7D9FB9F02E789F7500319306 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7D9FB9EF2E789F7500319306 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 		7DAF87012DDA2A9100FBFEF0 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

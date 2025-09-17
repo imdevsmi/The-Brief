@@ -5,10 +5,11 @@
 //  Created by Sami Gündoğan on 20.05.2025.
 //
 
-import UIKit
+import GoogleMobileAds
 import SafariServices
 import SnapKit
 import StoreKit
+import UIKit
 
 protocol SettingsVMOutputProtocol: AnyObject {
     func updateTheme(_ mode: Int)
@@ -29,6 +30,13 @@ final class SettingsVC: UIViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         return tableView
+    }()
+    
+    private lazy var bannerView: BannerAdView = {
+        let view = BannerAdView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
     }()
     
     // MARK: Inits
@@ -65,11 +73,22 @@ private extension SettingsVC {
     
     func setupConstraints() {
         view.addSubview(tableView)
+        view.addSubview(bannerView)
     }
     
     func setupLayout() {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+            make.bottom.equalTo(bannerView.snp.top)
+        }
+    }
+    
+    func bannerUI() {
+        bannerView.snp.makeConstraints { make in
+            make.bottom.equalTo(tabBarController?.tabBar.snp.top ?? view.safeAreaLayoutGuide.snp.bottom).offset(-4)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(60)
         }
     }
 }
