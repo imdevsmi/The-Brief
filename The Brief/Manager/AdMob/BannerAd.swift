@@ -10,7 +10,8 @@ import SnapKit
 import UIKit
 
 final class BannerAdView: UIView {
-
+    
+    // MARK: - Properties
     private lazy var bannerView: BannerView = {
         let viewWidth = UIScreen.main.bounds.width
         let adSize = currentOrientationAnchoredAdaptiveBanner(width: viewWidth)
@@ -26,13 +27,14 @@ final class BannerAdView: UIView {
         return banner
     }()
     
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupBanner()
     }
-    
     required init?(coder: NSCoder) { fatalError() }
     
+    // MARK: - Setup Methods
     private func setupBanner() {
         addSubview(bannerView)
         bannerView.snp.makeConstraints { make in
@@ -42,6 +44,7 @@ final class BannerAdView: UIView {
         bannerView.load(Request())
     }
     
+    // MARK: - Public Methods
     func reloadAd() {
         bannerView.load(Request())
     }
