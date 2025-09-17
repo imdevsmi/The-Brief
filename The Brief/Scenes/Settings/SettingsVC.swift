@@ -78,7 +78,7 @@ private extension SettingsVC {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-4)
             make.width.equalToSuperview()
-            make.height.equalTo(100)
+            make.height.equalTo(64)
         }
         tableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()

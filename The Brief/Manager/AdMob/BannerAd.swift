@@ -22,7 +22,6 @@ final class BannerAdView: UIView {
             .compactMap { $0 as? UIWindowScene }
             .flatMap { $0.windows }
             .first { $0.isKeyWindow }?.rootViewController
-        banner.delegate = self
         
         return banner
     }()
@@ -32,10 +31,7 @@ final class BannerAdView: UIView {
         setupBanner()
     }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupBanner()
-    }
+    required init?(coder: NSCoder) { fatalError() }
     
     private func setupBanner() {
         addSubview(bannerView)
@@ -48,16 +44,5 @@ final class BannerAdView: UIView {
     
     func reloadAd() {
         bannerView.load(Request())
-    }
-}
-
-// MARK: - BannerViewDelegate
-extension BannerAdView: BannerViewDelegate {
-    func bannerViewDidReceiveAd(_ bannerView: BannerView) {
-        print("✅ Banner yüklendi")
-    }
-    
-    func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
-        print("❌ Banner yüklenemedi: \(error.localizedDescription)")
     }
 }
