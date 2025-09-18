@@ -28,31 +28,25 @@ private extension MainTabBarController {
         let settingsVC = createNav(with: L("tab_settings"), and: UIImage(systemName: "gear"), viewController: SettingsVC())
         let favoritesVC = createNav(with: L("tab_favorites"), and: UIImage(systemName: "bookmark.fill"), viewController: FavoritesVC())
         
-        setViewControllers([homeVC, favoritesVC, settingsVC], animated: false)
+        setViewControllers([homeVC, favoritesVC, settingsVC], animated: true)
         
         tabBar.tintColor = .systemBlue
         tabBar.unselectedItemTintColor = .systemGray3
         tabBar.backgroundColor = .clear
+        tabBar.isTranslucent = true
+        tabBar.alpha = 0.95
         
-        let blurEffect = UIBlurEffect(style: .systemChromeMaterial)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = tabBar.bounds
-        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        tabBar.insertSubview(blurView, at: 0)
+        let glassView = LiquidGlassView(frame: tabBar.bounds, blurStyle: .systemChromeMaterial, shineColors: nil, shineDuration: 8)
+        glassView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tabBar.insertSubview(glassView, at: 0)
         
         let appearance = UITabBarAppearance()
         appearance.configureWithTransparentBackground()
-        appearance.backgroundEffect = blurEffect
-        appearance.shadowColor = UIColor.systemGray4
         appearance.stackedLayoutAppearance.selected.iconColor = .systemBlue
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.systemBlue]
         
         tabBar.standardAppearance = appearance
-        tabBar.scrollEdgeAppearance = appearance
-        tabBar.layer.shadowOffset = CGSize(width: 0, height: -1)
-        tabBar.layer.shadowRadius = 6
-        tabBar.layer.shadowColor = UIColor.black.cgColor
-        tabBar.layer.shadowOpacity = 0.05
+        tabBar.layer.shadowOpacity = 0
         tabBar.layer.masksToBounds = false
     }
     
