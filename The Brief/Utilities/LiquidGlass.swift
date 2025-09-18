@@ -24,6 +24,10 @@ final class LiquidGlassView: UIView {
         self.shineDuration = shineDuration
         self.blurStyle = blurStyle
         super.init(frame: frame)
+        
+        setupUI()
+        setupShine()
+        animateShine()
     }
     required init?(coder: NSCoder) { fatalError() }
 }
@@ -50,6 +54,6 @@ private extension LiquidGlassView {
         animation.toValue = bounds.width
         animation.duration = shineDuration
         animation.repeatCount = .infinity
-        
+        shineLayer.add(animation, forKey: "shineMove")
     }
 }
