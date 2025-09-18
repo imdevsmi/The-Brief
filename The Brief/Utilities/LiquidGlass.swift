@@ -15,6 +15,7 @@ final class LiquidGlassView: UIView {
     var shineDuration: CFTimeInterval
     
     private let blurView: UIVisualEffectView
+    private let shineLayer = CAGradientLayer()
     
     // MARK: - Init
     init(frame: CGRect, blurStyle: UIBlurEffect.Style = .systemThinMaterialLight, shineColors: [CGColor]? = nil, shineDuration: CFTimeInterval = 5) {
@@ -36,7 +37,11 @@ private extension LiquidGlassView {
     }
     
     func setupShine() {
-        
+        shineLayer.colors = shineColors
+        shineLayer.startPoint = CGPoint(x: 0, y: 0.5)
+        shineLayer.endPoint = CGPoint(x: 1, y: 0.5)
+        shineLayer.frame = bounds
+        layer.addSublayer(shineLayer)
     }
     
     func animateShine() {
