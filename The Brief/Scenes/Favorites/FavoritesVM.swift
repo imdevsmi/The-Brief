@@ -31,9 +31,7 @@ final class FavoritesVM {
 
 // MARK: - Lifecycle
 extension FavoritesVM: FavoritesVMInputProtocol {
-    func viewDidLoad() {
-        fetchFavoritesNews()
-    }
+    func viewDidLoad() { fetchFavoritesNews() }
     
     func fetchFavoritesNews() {
         service.fetchFavorites { [weak self] result in

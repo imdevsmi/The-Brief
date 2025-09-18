@@ -45,7 +45,5 @@ final class BannerAdView: UIView {
     }
     
     // MARK: - Public Methods
-    func reloadAd() {
-        bannerView.load(Request())
-    }
+    func reloadAd() { bannerView.load(Request()) }
 }

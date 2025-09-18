@@ -38,7 +38,6 @@ final class NetworkService: NetworkServiceProtocol {
     
     // MARK: - Fetch News
     func fetchNews(country: String, page: Int = 1, pageSize: Int = 20, category: String? = nil, completion: @escaping (Result<NewsModel, NetworkError>) -> Void) {
-        
         var urlComponents = URLComponents(string: baseURL + "top-headlines")
         var queryItems = [
             URLQueryItem(name: "country", value: country),

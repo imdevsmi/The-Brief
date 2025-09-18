@@ -8,10 +8,6 @@
 import Foundation
 import UserNotifications
 
-extension Notification.Name {
-    static let languageChanged = Notification.Name("languageChanged")
-}
-
 protocol SettingsVMInputProtocol: AnyObject {
     func themeMode() -> Int
     func updateThemeMode(_ mode: Int)
@@ -46,9 +42,7 @@ final class SettingsVM {
 
 // MARK: - SettingsVMInputProtocol
 extension SettingsVM: SettingsVMInputProtocol {
-    func themeMode() -> Int {
-        UserDefaults.standard.integer(forKey: themeKey)
-    }
+    func themeMode() -> Int { UserDefaults.standard.integer(forKey: themeKey) }
     
     func updateThemeMode(_ mode: Int) {
         UserDefaults.standard.set(mode, forKey: themeKey)
@@ -89,9 +83,7 @@ extension SettingsVM: SettingsVMInputProtocol {
         }
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
-            DispatchQueue.main.async {
-                self?.output?.updateNotification(granted)
-            }
+            DispatchQueue.main.async { self?.output?.updateNotification(granted) }
         }
     }
     
@@ -99,9 +91,7 @@ extension SettingsVM: SettingsVMInputProtocol {
         UNUserNotificationCenter.current().getNotificationSettings { status in
             let systemAuthorized = status.authorizationStatus == .authorized
             let switchState = self.isNotificationEnabled && systemAuthorized
-            DispatchQueue.main.async {
-                completion(switchState)
-            }
+            DispatchQueue.main.async { completion(switchState) }
         }
     }
 }

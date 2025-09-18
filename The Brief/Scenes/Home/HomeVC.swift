@@ -52,6 +52,7 @@ final class HomeVC: UIViewController {
     private lazy var refreshControl: UIRefreshControl = {
         let refresh = UIRefreshControl()
         refresh.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        
         return refresh
     }()
     
@@ -218,9 +219,7 @@ extension HomeVC: UITableViewDelegate {
         if indexPath.row == viewModel.articles.count - 1 { viewModel.more() }
     }
     
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        (cell as? NewsCell)?.cancel()
-    }
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) { (cell as? NewsCell)?.cancel() }
 }
 
 
@@ -236,9 +235,7 @@ extension HomeVC: UISearchBarDelegate {
 
 // MARK: Objective Methods
 @objc private extension HomeVC {
-    func refreshData() {
-        viewModel.input?.more()
-    }
+    func refreshData() { viewModel.input?.more() }
 }
 
 extension HomeVC {

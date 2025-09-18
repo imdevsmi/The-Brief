@@ -51,9 +51,7 @@ final class ImagePreview: UIViewController {
     // MARK: Inits
     init(imageURL: String?) {
         self.imageURL = imageURL
-        if let imageURL = imageURL {
-            imageView.setImage(with: imageURL, placeholder: UIImage(systemName: "photo"))
-        }
+        if let imageURL = imageURL { imageView.setImage(with: imageURL, placeholder: UIImage(systemName: "photo")) }
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -78,8 +76,8 @@ private extension ImagePreview {
     }
     
     func addViews() {
-        view.addSubview(scrollView)
         scrollView.addSubview(imageView)
+        view.addSubview(scrollView)
         view.addSubview(closeButton)
     }
     
@@ -138,9 +136,7 @@ private extension ImagePreview {
             originalPosition = view.center
             
         case .changed:
-            if translation.y > 0 {
-                view.center = CGPoint(x: originalPosition!.x, y: originalPosition!.y + translation.y)
-            }
+            if translation.y > 0 { view.center = CGPoint(x: originalPosition!.x, y: originalPosition!.y + translation.y) }
             
         case .ended:
             if translation.y > dismissThreshold {
@@ -150,7 +146,6 @@ private extension ImagePreview {
                     self.view.center = self.originalPosition!
                 }
             }
-            
         default:
             break
         }

@@ -8,11 +8,6 @@
 import Foundation
 import Kingfisher
 
-enum Mode: Equatable {
-    case top(category: String)
-    case search(String)
-}
-
 protocol HomeVMInputProtocol: AnyObject {
     func search(term: String)
     func viewDidLoad()
@@ -43,13 +38,11 @@ final class HomeVM {
         newsService = service
         input = self
     }
-    
     deinit { debounceWorkItem?.cancel() }
 }
 
 // MARK: - HomeVMInputProtocol
 extension HomeVM: HomeVMInputProtocol {
-    
     func search(term: String) {
         let trimmed = term.trimmingCharacters(in: .whitespacesAndNewlines)
         

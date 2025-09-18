@@ -125,17 +125,13 @@ final class NewsDetailVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupUI()
-        DispatchQueue.main.async {
-            self.checkIfArticleIsFavorited()
-        }
+        checkIfArticleIsFavorited()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
     }
-    
-    
 }
 
 // MARK: - Private Methods
@@ -147,8 +143,8 @@ private extension NewsDetailVC {
     }
     
     func addViews() {
-        view.addSubview(scrollView)
         scrollView.addSubview(stackView)
+        view.addSubview(scrollView)
         view.addSubview(saveButton)
     }
     
@@ -157,7 +153,6 @@ private extension NewsDetailVC {
             make.top.bottom.equalToSuperview()
             make.leading.trailing.equalTo(view.layoutMarginsGuide)
         }
-        
         stackView.snp.makeConstraints { make in
             make.top.equalTo(scrollView.snp.top)
             make.leading.equalTo(scrollView.snp.leading)
@@ -165,13 +160,11 @@ private extension NewsDetailVC {
             make.bottom.equalTo(scrollView.snp.bottom).inset(80)
             make.width.equalTo(scrollView.snp.width)
         }
-        
         saveButton.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view).inset(60)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(12)
             make.height.equalTo(50)
         }
-        
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(authorLabel)

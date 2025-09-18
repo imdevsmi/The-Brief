@@ -8,13 +8,8 @@
 import Foundation
 
 enum SettingsType {
-    case theme
-    case language
-    case notification
-    case rateUs
-    case privacyPolicy
-    case termsOfUse
-
+    case theme, language, notification, rateUs, privacyPolicy, termsOfUse
+    
     var titleKey: String {
         switch self {
         case .theme: return "theme_title"
@@ -47,7 +42,6 @@ enum SettingsType {
 
 struct SettingsModel {
     let type: SettingsType
-    
     var title: String { return L(type.titleKey) }
     var iconName: String { return type.iconName }
 }
@@ -55,4 +49,8 @@ struct SettingsModel {
 struct SettingsSection {
     let title: String
     let items: [SettingsModel]
+}
+
+extension Notification.Name {
+    static let languageChanged = Notification.Name("languageChanged")
 }

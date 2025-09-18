@@ -98,8 +98,7 @@ private extension SplashVC {
 // MARK: Output Protocol
 extension SplashVC: SplashVCProtocol {
     func toMainScene() {
-        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
-              let window = sceneDelegate.window else {return }
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate, let window = sceneDelegate.window else {return }
         let homeVC = HomeVC(viewModel: HomeVM())
         let navVC = UINavigationController(rootViewController: homeVC)
         window.rootViewController = navVC

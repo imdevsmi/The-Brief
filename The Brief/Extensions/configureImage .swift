@@ -35,12 +35,7 @@ extension UIImageView {
                 if value.cacheType == .none {
                     self.alpha = 0
                     self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-                    UIView.animate(withDuration: 0.4,
-                                   delay: 0,
-                                   usingSpringWithDamping: 0.75,
-                                   initialSpringVelocity: 0.8,
-                                   options: [.curveEaseOut],
-                                   animations: {
+                    UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.8, options: [.curveEaseOut], animations: {
                         self.alpha = 1
                         self.transform = .identity
                     })

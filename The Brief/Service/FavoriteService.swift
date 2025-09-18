@@ -16,7 +16,6 @@ protocol FavoritesServicesProtocol {
 
 final class FavoriteService {
     let manager: FavoritesManagerProtocol
-    
     init(manager: FavoritesManagerProtocol = FavoritesManager(key: .favoritesArticle)) { self.manager = manager }
 }
 
@@ -28,9 +27,7 @@ extension FavoriteService: FavoritesServicesProtocol {
             
             switch result {
             case .success(var articles):
-                if (articles.firstIndex(where: { $0.url == article.url }) != nil) {
-                    return
-                }
+                if (articles.firstIndex(where: { $0.url == article.url }) != nil) { return }
                 articles.append(article)
                 self.manager.save(item: articles)
                 completion(.success(()))

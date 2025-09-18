@@ -62,16 +62,13 @@ private extension MainTabBarController {
     }
 
     // MARK: - NotificationCenter
-    func observeNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(languageDidChange), name: .languageChanged, object: nil)
-    }
+    func observeNotifications() { NotificationCenter.default.addObserver(self, selector: #selector(languageDidChange), name: .languageChanged, object: nil) }
 }
 
 // MARK: - UITabBarControllerDelegate
 extension MainTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if let nav = viewController as? UINavigationController,
-           let homeVC = nav.viewControllers.first as? HomeVC { homeVC.scrollToTop() }
+        if let nav = viewController as? UINavigationController, let homeVC = nav.viewControllers.first as? HomeVC { homeVC.scrollToTop() }
     }
 }
 
