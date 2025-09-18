@@ -26,3 +26,25 @@ final class LiquidGlassView: UIView {
     }
     required init?(coder: NSCoder) { fatalError() }
 }
+
+// MARK: - Private Extensions
+private extension LiquidGlassView {
+    func setupUI() {
+        blurView.frame = bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        addSubview(blurView)
+    }
+    
+    func setupShine() {
+        
+    }
+    
+    func animateShine() {
+        let animation = CABasicAnimation(keyPath: "transform.translation.x")
+        animation.fromValue = -bounds.width
+        animation.toValue = bounds.width
+        animation.duration = shineDuration
+        animation.repeatCount = .infinity
+        
+    }
+}
