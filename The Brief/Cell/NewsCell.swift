@@ -198,7 +198,7 @@ extension NewsCell {
     @objc func didTapMoreButton() {
         guard let url = url, let shareUrl = URL(string: url) else { return }
         
-        let browser = openBrowser()
+        let browser = OpenBrowser()
         let shareAction = UIAction(title: L("share_text"), image: UIImage(systemName: "square.and.arrow.up")) { _ in
             let browserVC = UIActivityViewController(activityItems: [shareUrl], applicationActivities: [browser])
 

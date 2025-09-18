@@ -228,7 +228,7 @@ private extension NewsDetailVC {
     func shareTapped() {
         guard let urlString = viewModel.article.url, let shareUrl = URL(string: urlString) else { return }
         
-        let openBrowser = openBrowser()
+        let openBrowser = OpenBrowser()
         let activityVC = UIActivityViewController(activityItems: [shareUrl], applicationActivities: [openBrowser])
         
         present(activityVC, animated: true)

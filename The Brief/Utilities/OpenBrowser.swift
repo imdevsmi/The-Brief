@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class openBrowser: UIActivity {
+final class OpenBrowser: UIActivity {
     
     // MARK: - Properties
     private var url: URL?
