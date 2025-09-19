@@ -8,12 +8,7 @@
 import Foundation
 
 enum NetworkError: Error {
-    case invalidRequest
-    case requestFailed
-    case requestFailedWithStatusCode(Int)
-    case decodingError
-    case noData
-    case customError(Error)
+    case invalidRequest, requestFailed, requestFailedWithStatusCode(Int), decodingError, noData, customError(Error)
 
     var localizedDescription: String {
         switch self {

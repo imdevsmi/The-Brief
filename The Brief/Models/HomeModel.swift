@@ -8,6 +8,5 @@
 import Foundation
 
 enum Mode: Equatable {
-    case top(category: String)
-    case search(String)
+    case top(category: String), search(String)
 }
