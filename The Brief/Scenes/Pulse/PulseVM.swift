@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+protocol PulseVMInputProtocol: AnyObject {
+    
+}
+
+final class PulseVM {
+    
+}

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Kingfisher
 
 protocol HomeVMInputProtocol: AnyObject {
     func search(term: String)

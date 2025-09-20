@@ -5,4 +5,13 @@
 //  Created by Sami Gündoğan on 20.09.2025.
 //
 
-import Foundation
+import SnapKit
+import UIKit
+
+protocol PulseVCOutputProtocol: AnyObject {
+    
+}
+
+final class PulseVC: UIViewController {
+    
+}
