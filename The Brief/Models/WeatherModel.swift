@@ -24,13 +24,13 @@ struct Current: Codable {
     let condition: Condition
 }
 
+struct Forecast: Codable {
+    let forecastday: [ForecastDay]
+}
+
 struct Condition: Codable {
     let text: String
     let icon: String
-}
-
-struct Forecast: Codable {
-    let forecastday: [ForecastDay]
 }
 
 struct ForecastDay: Codable {
