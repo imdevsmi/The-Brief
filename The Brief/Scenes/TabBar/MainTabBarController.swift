@@ -27,8 +27,9 @@ private extension MainTabBarController {
         let homeVC = createNav(with: L("tab_home"), and: UIImage(systemName: "newspaper.fill"), viewController: HomeVC(viewModel: HomeVM()))
         let settingsVC = createNav(with: L("tab_settings"), and: UIImage(systemName: "gear"), viewController: SettingsVC())
         let favoritesVC = createNav(with: L("tab_favorites"), and: UIImage(systemName: "bookmark.fill"), viewController: FavoritesVC())
+        let pulseVC = createNav(with: L("tab_pulse"), and: UIImage(systemName: "chart.line.uptrend.xyaxis"), viewController: PulseVC())
         
-        setViewControllers([homeVC, favoritesVC, settingsVC], animated: true)
+        setViewControllers([homeVC, favoritesVC, pulseVC, settingsVC], animated: true)
         
         tabBar.tintColor = .systemBlue
         tabBar.unselectedItemTintColor = .systemGray3
