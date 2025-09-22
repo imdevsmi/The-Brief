@@ -17,7 +17,7 @@ protocol HomeVMInputProtocol: AnyObject {
 final class HomeVM {
     
     // MARK: Properties
-    private let newsService: NetworkServiceProtocol
+    private let newsService: NewsAPIServiceProtocol
     private(set) var articles: [Article] = []
     private let pageSize = 20
     
@@ -33,7 +33,7 @@ final class HomeVM {
     weak var output: HomeVMOutputProtocol?
     
     // MARK: Init
-    init(service: NetworkServiceProtocol = NetworkService()) {
+    init(service: NewsAPIServiceProtocol = NewsAPIService()) {
         newsService = service
         input = self
     }
