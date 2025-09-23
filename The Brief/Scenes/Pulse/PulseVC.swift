@@ -9,7 +9,7 @@ import SnapKit
 import UIKit
 
 protocol PulseVCOutputProtocol: AnyObject {
-    
+    func didUpdateWeather(_ model: WeatherUIModel)
 }
 
 final class PulseVC: UIViewController {

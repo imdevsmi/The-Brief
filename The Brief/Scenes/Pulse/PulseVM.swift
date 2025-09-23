@@ -8,9 +8,15 @@
 import Foundation
 
 protocol PulseVMInputProtocol: AnyObject {
-    
+    func fetchWeather(for city: String)
 }
 
-final class PulseVM {
+final class PulseVM: PulseVMInputProtocol {
     
+    
+    
+    
+    func fetchWeather(for city: String) {
+        
+    }
 }
