@@ -7,13 +7,13 @@
 
 import Foundation
 
-// MARK: - Network Service Protocol
+// MARK: - News API Protocol
 protocol NewsAPIServiceProtocol {
     func searchNews(searchString: String, page: Int, pageSize: Int, completion: @escaping (Result<NewsModel, NetworkError>) -> Void)
     func fetchNews(country: String, page: Int, pageSize: Int, category: String?, completion: @escaping (Result<NewsModel, NetworkError>) -> Void)
 }
 
-// MARK: - Network Service
+// MARK: - News API Service
 final class NewsAPIService: NewsAPIServiceProtocol {
     private let networkManager: NetworkManagerProtocol
     private let baseURL = "https://newsapi.org/v2/"
