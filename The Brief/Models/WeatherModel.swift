@@ -14,21 +14,18 @@ struct WeatherResponse: Codable {
     let alerts: Alerts
 }
 
-// MARK: - Location
 struct Location: Codable {
     let name: String
     let region: String
     let country: String
 }
 
-// MARK: - Current
 struct Current: Codable {
     let temp_c: Double
     let condition: Condition
     let air_quality: AirQuality
 }
 
-// MARK: - AirQuality
 struct AirQuality: Codable {
     let co: Double
     let no2: Double
@@ -39,28 +36,23 @@ struct AirQuality: Codable {
     let gb_defra_index: Int
 }
 
-// MARK: - Forecast
 struct Forecast: Codable { let forecastday: [ForecastDay] }
 
-// MARK: - ForecastDay
 struct ForecastDay: Codable {
     let date: String
     let day: Day
 }
 
-// MARK: - Day
 struct Day: Codable {
     let maxtemp_c: Double
     let mintemp_c: Double
 }
 
-// MARK: - Condition
 struct Condition: Codable {
     let text: String
     let icon: String
 }
 
-// MARK: - Alerts
 struct Alerts: Codable { let alert: [Alert] }
 
 struct Alert: Codable {
