@@ -7,3 +7,7 @@
 
 import Foundation
 
+protocol WeatherAPIService {
+    func fetchWeather(city: String, completion: @escaping (Result<WeatherResponse, NetworkError>) -> Void)
+}
+
