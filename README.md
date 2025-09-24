@@ -4,6 +4,8 @@ Designed with performance, usability and modern iOS design principles in mind, T
 
 # 🚀 Features
 	•	🗞️ Real-time news articles with title, image, author, and date
+	•   🌤️ Real-time weather information with city search and forecast display
+	•   💹 Live currency exchange rates and stock market updates
 	•	🔍 Detailed article screen with in-app Safari view
 	•	💡 Light/Dark Mode support
     •   🌍 Multi-language support (English 🇺🇸 & Turkish 🇹🇷)
@@ -29,10 +31,9 @@ Designed with performance, usability and modern iOS design principles in mind, T
 ### ⚙️ Requirements
 	•	iOS 17.0+
 	•	Xcode 16+
-	•	Swift 5.7+
+	•	Swift 6.0+
 
 ### 📦 Installation
   1. https://github.com/imdevsmi/The-Brief.git
   2. Install dependencies via Swift Package Manager (Kingfisher, SnapKit).
   3. Open TheBrief.xcodeproj in Xcode.
-  4. Build and run the project on your preferred simulator or device.
