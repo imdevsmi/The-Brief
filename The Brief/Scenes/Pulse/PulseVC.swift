@@ -16,7 +16,6 @@ final class PulseVC: UIViewController {
     
     private let viewModel: PulseVM
     
-    // MARK: - UI Elements
     private lazy var searchController: UISearchController = {
         let sc = UISearchController()
         sc.searchBar.delegate = self
@@ -30,12 +29,10 @@ final class PulseVC: UIViewController {
         return card
     }()
     
-    
     init(viewModel: PulseVM = PulseVM()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.output = self
-        self.viewModel.input = self.viewModel
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -53,7 +50,6 @@ final class PulseVC: UIViewController {
         definesPresentationContext = true
         
         view.addSubview(weatherCard)
-        
         weatherCard.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
@@ -77,9 +73,8 @@ extension PulseVC: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange text: String) {
-        if text.isEmpty { }
+        if text.isEmpty { return }
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) { }
 }
