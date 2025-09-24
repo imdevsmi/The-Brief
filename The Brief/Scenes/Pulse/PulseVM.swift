@@ -13,11 +13,12 @@ protocol PulseVMInputProtocol: AnyObject {
 
 final class PulseVM: PulseVMInputProtocol {
     
-    private unowned let output: PulseVCOutputProtocol
+    weak var output: PulseVCOutputProtocol?
+    weak var input: PulseVMInputProtocol?
+    
     private let weatherService: WeatherAPIServiceProtocol
     
-    init(output: PulseVCOutputProtocol, weatherService: WeatherAPIServiceProtocol = WeatherService()) {
-        self.output = output
+    init(weatherService: WeatherAPIServiceProtocol = WeatherService()) {
         self.weatherService = weatherService
     }
     
@@ -27,7 +28,9 @@ final class PulseVM: PulseVMInputProtocol {
             case .success(let response):
                 let model = self?.mapToUIModel(response: response)
                 if let model = model {
-                    DispatchQueue.main.async { self?.output.didUpdateWeather(model) }
+                    DispatchQueue.main.async {
+                        self?.output?.didUpdateWeather(model)
+                    }
                 }
             case .failure(let error):
                 print("Weather fetch error:", error.localizedDescription)
@@ -44,7 +47,9 @@ final class PulseVM: PulseVMInputProtocol {
         let iconURL = "https:\(response.current.condition.icon)"
         let aqi = response.current.air_quality.us_epa_index
         
-        let alerts = response.alerts.alert.map { WeatherAlert(headline: $0.headline, severity: $0.severity) }
+        let alerts = response.alerts.alert.map {
+            WeatherAlert(headline: $0.headline, severity: $0.severity)
+        }
         
         return WeatherUIModel(city: city, temp: temp, condition: condition, min: min, max: max, iconURL: iconURL, airQualityIndex: aqi, alerts: alerts)
     }
