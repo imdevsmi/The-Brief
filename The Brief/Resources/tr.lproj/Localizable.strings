@@ -3,6 +3,8 @@
 "no_news_found" = "Haber bulunamadı.";
 "search_news" = "Haber Ara...";
 
+"search_city" = "Şehir Ara...";
+
 "category_general" = "Genel";
 "category_business" = "İş";
 "category_entertainment" = "Eğlence";

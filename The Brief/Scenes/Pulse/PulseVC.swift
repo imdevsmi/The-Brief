@@ -5,8 +5,8 @@
 //  Created by Sami Gündoğan on 20.09.2025.
 //
 
-import SnapKit
 import UIKit
+import SnapKit
 
 protocol PulseVCOutputProtocol: AnyObject {
     func didUpdateWeather(_ model: WeatherUIModel)
@@ -16,18 +16,13 @@ final class PulseVC: UIViewController {
     
     private let viewModel: PulseVM
     
-    private lazy var searchField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Şehir girin..."
-        textField.borderStyle = .roundedRect
-        return textField
-    }()
-    
-    private lazy var searchButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Ara", for: .normal)
-        button.addTarget(self, action: #selector(didTapSearch), for: .touchUpInside)
-        return button
+    // MARK: - UI Elements
+    private lazy var searchController: UISearchController = {
+        let sc = UISearchController()
+        sc.searchBar.delegate = self
+        sc.searchBar.placeholder = L("search_city")
+        sc.obscuresBackgroundDuringPresentation = false
+        return sc
     }()
     
     private lazy var weatherCard: WeatherCardView = {
@@ -35,7 +30,7 @@ final class PulseVC: UIViewController {
         return card
     }()
     
-
+    
     init(viewModel: PulseVM = PulseVM()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -53,37 +48,38 @@ final class PulseVC: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemGroupedBackground
         
-        view.addSubview(searchField)
-        view.addSubview(searchButton)
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+        definesPresentationContext = true
+        
         view.addSubview(weatherCard)
         
-        searchField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalTo(searchButton.snp.leading).offset(-8)
-            make.height.equalTo(40)
-        }
-        
-        searchButton.snp.makeConstraints { make in
-            make.centerY.equalTo(searchField)
-            make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(60)
-        }
-        
         weatherCard.snp.makeConstraints { make in
-            make.top.equalTo(searchField.snp.bottom).offset(16)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
     }
-    
-    @objc private func didTapSearch() {
-        guard let city = searchField.text, !city.isEmpty else { return }
-        viewModel.input?.fetchWeather(for: city)
-    }
 }
 
+// MARK: - PulseVCOutputProtocol
 extension PulseVC: PulseVCOutputProtocol {
     func didUpdateWeather(_ model: WeatherUIModel) {
         weatherCard.configure(with: model)
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension PulseVC: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let city = searchBar.text?.trimmingCharacters(in: .whitespaces), !city.isEmpty else { return }
+        viewModel.input?.fetchWeather(for: city)
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange text: String) {
+        if text.isEmpty { }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
     }
 }

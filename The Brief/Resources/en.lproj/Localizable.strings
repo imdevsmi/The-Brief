@@ -3,6 +3,8 @@
 "no_news_found" = "No news found.";
 "search_news" = "Search News...";
 
+"search_city" = "Search City...";
+
 "category_general" = "General";
 "category_business" = "Business";
 "category_entertainment" = "Entertainment";
