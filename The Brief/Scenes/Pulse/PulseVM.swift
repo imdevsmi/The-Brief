@@ -13,8 +13,13 @@ protocol PulseVMInputProtocol: AnyObject {
 
 final class PulseVM: PulseVMInputProtocol {
     
+    private unowned let output: PulseVCOutputProtocol
+    private let weatherService: WeatherAPIServiceProtocol
     
-    
+    init(output: PulseVCOutputProtocol, weatherService: WeatherAPIServiceProtocol = WeatherService()) {
+        self.output = output
+        self.weatherService = weatherService
+    }
     
     func fetchWeather(for city: String) {
         
