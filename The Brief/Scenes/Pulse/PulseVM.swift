@@ -13,6 +13,7 @@ protocol PulseVMInputProtocol: AnyObject {
 
 final class PulseVM: PulseVMInputProtocol {
 
+    // MARK: - Properties
     weak var output: PulseVCOutputProtocol?
     weak var input: PulseVMInputProtocol?
     
@@ -20,9 +21,7 @@ final class PulseVM: PulseVMInputProtocol {
     private let debounceInterval: TimeInterval = 0.5
     private var debounceWorkItem: DispatchWorkItem?
 
-    init(weatherService: WeatherAPIServiceProtocol = WeatherService()) {
-        self.weatherService = weatherService
-    }
+    init(weatherService: WeatherAPIServiceProtocol = WeatherService()) { self.weatherService = weatherService }
 
     
     func fetchWeather(for city: String) {
@@ -54,9 +53,7 @@ final class PulseVM: PulseVMInputProtocol {
                     iconURL: fixedIconURL
                 )
                 
-                DispatchQueue.main.async {
-                    self.output?.didUpdateWeather(model)
-                }
+                DispatchQueue.main.async { self.output?.didUpdateWeather(model) }
             case .failure(let error):
                 print("Weather fetch error:", error.localizedDescription)
             }

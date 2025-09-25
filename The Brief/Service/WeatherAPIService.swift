@@ -12,8 +12,8 @@ protocol WeatherAPIServiceProtocol {
     func fetchWeather(city: String, completion: @escaping (Result<WeatherResponse, NetworkError>) -> Void)
 }
 
-// MARK: -Weather Service
 final class WeatherService: WeatherAPIServiceProtocol {
+    // MARK: - Properties
     private let networkManager: NetworkManagerProtocol
     private let baseURL = "https://api.weatherapi.com/v1/"
     
@@ -27,14 +27,12 @@ final class WeatherService: WeatherAPIServiceProtocol {
             URLQueryItem(name: "q", value: city),
             URLQueryItem(name: "days", value: "1"),
             URLQueryItem(name: "aqi", value: "no"),
-            URLQueryItem(name: "alerts", value: "no")
-        ]
+            URLQueryItem(name: "alerts", value: "no")]
         
         guard let url = urlComponents?.url else {
             completion(.failure(.invalidRequest))
             return
         }
-        print("Weather API URL:", url.absoluteString)
         networkManager.request(url: url, method: .GET, headers: nil, completion: completion)
     }
 }

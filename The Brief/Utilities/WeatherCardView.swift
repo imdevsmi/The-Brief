@@ -9,6 +9,7 @@ import SnapKit
 import UIKit
 
 final class WeatherCardView: UIView {
+    // MARK: - Properties
     private let iconImageView = UIImageView()
     private let cityLabel = UILabel()
     private let tempLabel = UILabel()
@@ -54,8 +55,6 @@ final class WeatherCardView: UIView {
                 guard let self = self, let data = data else { return }
                 DispatchQueue.main.async { self.iconImageView.image = UIImage(data: data) }
             }.resume()
-        } else {
-            iconImageView.image = nil
-        }
+        } else { iconImageView.image = nil }
     }
 }

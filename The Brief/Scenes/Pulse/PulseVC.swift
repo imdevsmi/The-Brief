@@ -13,7 +13,7 @@ protocol PulseVCOutputProtocol: AnyObject {
 }
 
 final class PulseVC: UIViewController {
-    
+    //MARK: - Properties
     private let viewModel: PulseVM
     
     private lazy var searchController: UISearchController = {
@@ -21,11 +21,13 @@ final class PulseVC: UIViewController {
         sc.searchBar.delegate = self
         sc.searchBar.placeholder = L("search_city")
         sc.obscuresBackgroundDuringPresentation = false
+        
         return sc
     }()
     
     private lazy var weatherCard: WeatherCardView = {
         let card = WeatherCardView()
+        
         return card
     }()
     

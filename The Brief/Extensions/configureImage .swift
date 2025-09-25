@@ -21,8 +21,7 @@ extension UIImageView {
             .cacheOriginalImage,
             .transition(.fade(0.3)),
             .memoryCacheExpiration(.seconds(300)),
-            .backgroundDecode
-        ]
+            .backgroundDecode]
         
         if let targetSize {
             let processor = ResizingImageProcessor(referenceSize: targetSize, mode: .aspectFill)
@@ -43,9 +42,7 @@ extension UIImageView {
             case .failure:
                 break
             }
-            DispatchQueue.main.async {
-                completion?()
-            }
+            DispatchQueue.main.async { completion?() }
         }
     }
 }
