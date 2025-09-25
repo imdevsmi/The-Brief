@@ -31,6 +31,27 @@ final class WeatherCardView: UIView {
         return label
     }()
     
+    private let rangeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .secondaryLabel
+        return label
+    }()
+    
+    private let aqiLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .label
+        return label
+    }()
+    
+    private let alertsLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 12)
+        label.numberOfLines = 0
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
