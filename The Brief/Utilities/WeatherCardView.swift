@@ -91,5 +91,47 @@ final class WeatherCardView: UIView {
         cityLabel.text = "\(model.city) - \(model.condition)"
         tempLabel.text = model.temp
         rangeLabel.text = "En düşük \(model.min)°, En yüksek \(model.max)°"
+        
+        if let aqi = model.airQualityIndex {
+            aqiLabel.text = "Hava Kalitesi: \(aqi)"
+            switch aqi {
+            case 0...50: aqiLabel.textColor = .systemGreen
+            case 51...100: aqiLabel.textColor = .systemYellow
+            case 101...150: aqiLabel.textColor = .systemOrange
+            case 151...200: aqiLabel.textColor = .systemRed
+            case 201...300: aqiLabel.textColor = .purple
+            default: aqiLabel.textColor = .brown
+            }
+        } else {
+            aqiLabel.text = ""
+        }
+        
+        if !model.alerts.isEmpty {
+            alertsLabel.text = model.alerts
+                .map { "\($0.severity.uppercased()): \($0.headline)" }
+                .joined(separator: "\n")
+            
+            if let severity = model.alerts.first?.severity.lowercased() {
+                switch severity {
+                case "severe":
+                    alertsLabel.textColor = .systemRed
+                case "moderate":
+                    alertsLabel.textColor = .systemOrange
+                default:
+                    alertsLabel.textColor = .systemYellow
+                }
+            }
+        } else {
+            alertsLabel.text = ""
+        }
+        
+        if let url = URL(string: model.iconURL) {
+            URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
+                guard let self = self, let data = data else { return }
+                DispatchQueue.main.async { self.iconImageView.image = UIImage(data: data) }
+            }.resume()
+        } else {
+            iconImageView.image = nil
+        }
     }
 }
