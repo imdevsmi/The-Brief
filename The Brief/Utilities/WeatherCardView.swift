@@ -88,6 +88,8 @@ final class WeatherCardView: UIView {
     }
     
     func configure(with model: WeatherUIModel) {
-        
+        cityLabel.text = "\(model.city) - \(model.condition)"
+        tempLabel.text = model.temp
+        rangeLabel.text = "En düşük \(model.min)°, En yüksek \(model.max)°"
     }
 }
