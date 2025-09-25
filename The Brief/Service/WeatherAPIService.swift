@@ -26,13 +26,15 @@ final class WeatherService: WeatherAPIServiceProtocol {
             URLQueryItem(name: "key", value: SecureConfig.weatherApiKey),
             URLQueryItem(name: "q", value: city),
             URLQueryItem(name: "days", value: "1"),
-            URLQueryItem(name: "aqi", value: "yes"),
-            URLQueryItem(name: "alerts", value: "yes")]
+            URLQueryItem(name: "aqi", value: "no"),
+            URLQueryItem(name: "alerts", value: "no")
+        ]
         
         guard let url = urlComponents?.url else {
             completion(.failure(.invalidRequest))
             return
         }
+        print("Weather API URL:", url.absoluteString)
         networkManager.request(url: url, method: .GET, headers: nil, completion: completion)
     }
 }

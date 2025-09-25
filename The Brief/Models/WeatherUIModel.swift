@@ -11,11 +11,7 @@ struct WeatherUIModel {
     let city: String
     let temp: String
     let condition: String
-    let min: String
-    let max: String
     let iconURL: String
-    let airQualityIndex: Int?
-    let alerts: [WeatherAlert]
 }
 
 struct WeatherAlert {

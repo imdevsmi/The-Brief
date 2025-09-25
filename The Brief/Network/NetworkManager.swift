@@ -35,6 +35,10 @@ final class NetworkManager: NetworkManagerProtocol {
             }
             
             guard (200...299).contains(httpResponse.statusCode) else {
+                print("Status code:", httpResponse.statusCode)
+                if let data = data, let string = String(data: data, encoding: .utf8) {
+                    print("Response data:", string)
+                }
                 completion(.failure(.requestFailedWithStatusCode(httpResponse.statusCode)))
                 return
             }
@@ -48,6 +52,10 @@ final class NetworkManager: NetworkManagerProtocol {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decodedData))
             } catch {
+                print("Decoding error:", error.localizedDescription)
+                if let string = String(data: data, encoding: .utf8) {
+                    print("Raw data:", string)
+                }
                 completion(.failure(.decodingError))
             }
         }

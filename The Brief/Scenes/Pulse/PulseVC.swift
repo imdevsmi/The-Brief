@@ -53,6 +53,7 @@ final class PulseVC: UIViewController {
         weatherCard.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
+            make.height.greaterThanOrEqualTo(80)
         }
     }
 }
@@ -67,13 +68,14 @@ extension PulseVC: PulseVCOutputProtocol {
 // MARK: - UISearchBarDelegate
 extension PulseVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("Search button clicked with text:", searchBar.text ?? "")
         guard let city = searchBar.text?.trimmingCharacters(in: .whitespaces), !city.isEmpty else { return }
-        viewModel.input?.fetchWeather(for: city)
+        viewModel.fetchWeather(for: city)
         searchBar.resignFirstResponder()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange text: String) {
-        if text.isEmpty { return }
+        print("Text changed:", text)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) { }
