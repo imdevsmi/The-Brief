@@ -23,14 +23,22 @@ final class WeatherCardView: UIView {
     required init?(coder: NSCoder) { fatalError() }
 
     private func setupUI() {
-        backgroundColor = .systemBackground
+        backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 12
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.15
+        layer.shadowColor = UIColor.label.cgColor
+        layer.shadowOpacity = 0.1
         layer.shadowRadius = 6
         layer.shadowOffset = CGSize(width: 0, height: 3)
-
-        let vStack = UIStackView(arrangedSubviews: [cityLabel, tempLabel])
+        
+        cityLabel.font = .systemFont(ofSize: 18, weight: .semibold)
+        conditionLabel.font = .systemFont(ofSize: 14, weight: .regular)
+        tempLabel.font = .systemFont(ofSize: 16, weight: .medium)
+        
+        tempLabel.textColor = .label
+        cityLabel.textColor = .label
+        conditionLabel.textColor = .secondaryLabel
+        
+        let vStack = UIStackView(arrangedSubviews: [cityLabel, tempLabel, conditionLabel])
         vStack.axis = .vertical
         vStack.spacing = 6
         vStack.alignment = .leading
