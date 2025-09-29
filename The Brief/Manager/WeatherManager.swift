@@ -7,8 +7,22 @@
 
 import Foundation
 
+protocol WeatherManagerProtocol {
+    func saveCity(_ city: String)
+    func loadCity() -> String?
+    func clearCity()
+}
 
-
-final class WeatherManager {
+final class WeatherManager: WeatherManagerProtocol {
+    func saveCity(_ city: String) {
+        
+    }
     
+    func loadCity() -> String? {
+        
+    }
+    
+    func clearCity() {
+        
+    }
 }
