@@ -9,6 +9,7 @@ import Foundation
 
 protocol PulseVMInputProtocol: AnyObject {
     func fetchWeather(for city: String)
+    func loadLastCity()
 }
 
 final class PulseVM: PulseVMInputProtocol {
@@ -18,11 +19,18 @@ final class PulseVM: PulseVMInputProtocol {
     weak var input: PulseVMInputProtocol?
     
     private let weatherService: WeatherAPIServiceProtocol
+    private let storage: WeatherManagerProtocol
     private let debounceInterval: TimeInterval = 0.5
     private var debounceWorkItem: DispatchWorkItem?
-
-    init(weatherService: WeatherAPIServiceProtocol = WeatherService()) { self.weatherService = weatherService }
-
+    
+    init(
+        weatherService: WeatherAPIServiceProtocol = WeatherService(),
+        storage: WeatherManagerProtocol = WeatherManager()
+    ) {
+        self.weatherService = weatherService
+        self.storage = storage
+    }
+    
     
     func fetchWeather(for city: String) {
         print("FetchWeather called for city:", city)
@@ -37,12 +45,20 @@ final class PulseVM: PulseVMInputProtocol {
         debounceWorkItem = workItem
         DispatchQueue.main.asyncAfter(deadline: .now() + debounceInterval, execute: workItem)
     }
-
+    
+    // MARK: - Load last city
+    func loadLastCity() {
+        if let lastCity = storage.loadCity() {
+            fetchWeather(for: lastCity)
+        }
+    }
+    
     private func callWeatherAPI(for city: String) {
         weatherService.fetchWeather(city: city) { [weak self] result in
             switch result {
             case .success(let response):
                 guard let self = self else { return }
+                self.storage.saveCity(response.location.name)
                 let iconURL = response.current.condition.icon
                 let fixedIconURL = iconURL.hasPrefix("http") ? iconURL : "https:\(iconURL)"
                 
