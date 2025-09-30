@@ -27,7 +27,7 @@ final class NewsDetailVC: UIViewController {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.spacing = 12
-        stack.distribution = .fillEqually
+        stack.distribution = .fillProportionally
         
         return stack
     }()
