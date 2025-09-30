@@ -28,7 +28,6 @@ final class PulseVM: PulseVMInputProtocol {
         self.storage = storage
     }
     
-    
     func fetchWeather(for city: String) {
         let trimmedCity = city.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedCity.isEmpty else { return }

@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.windowScene = windowScene
         let homeVC = HomeVC(viewModel: HomeVM())
-        let navigationController = UINavigationController(rootViewController: homeVC)
+        _ = UINavigationController(rootViewController: homeVC)
         window.rootViewController = MainTabBarController()
         window.makeKeyAndVisible()
         

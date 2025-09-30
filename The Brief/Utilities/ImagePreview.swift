@@ -167,4 +167,3 @@ extension ImagePreview: UIScrollViewDelegate {
         imageView.frame = frame
     }
 }
-
