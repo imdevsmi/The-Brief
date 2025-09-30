@@ -39,6 +39,8 @@
 "save_button_title" = "Save";
 "saved_button_title" = "Saved";
 
+"view_news" = "View News";
+
 "time_just_now" = "Just now";
 "time_minute_ago" = "%dm ago";
 "time_hour_ago" = "%dh ago";

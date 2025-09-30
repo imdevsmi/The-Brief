@@ -23,6 +23,16 @@ final class NewsDetailVC: UIViewController {
         return scrollView
     }()
     
+    private let actionButtonsStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 12
+        stack.distribution = .fillEqually
+        
+        return stack
+    }()
+    
+    
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -72,20 +82,19 @@ final class NewsDetailVC: UIViewController {
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
         var fullContent = ""
-
+        
         if let content = viewModel.article.content, !content.isEmpty { fullContent += content + "\n\n" }
         if let description = viewModel.article.description, !description.isEmpty { fullContent += description }
-
+        
         label.text = fullContent
         label.textAlignment = .natural
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 14)
         label.textColor = .label
-
+        
         return label
     }()
 
-    
     private lazy var saveButton: UIButton = {
         var config = UIButton.Configuration.plain()
         config.title = L("save_button_title")
@@ -109,6 +118,21 @@ final class NewsDetailVC: UIViewController {
             self.saveTapped()
         }, for: .touchUpInside)
         
+        return button
+    }()
+    
+    private lazy var openInSafariButton: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.title = L("view_news")
+        config.image = UIImage(systemName: "safari")
+        config.imagePadding = 6
+        config.baseBackgroundColor = .systemBlue
+        config.baseForegroundColor = .white
+        
+        let button = UIButton(configuration: config)
+        button.layer.cornerRadius = 12
+        button.clipsToBounds = true
+        button.addAction(UIAction(handler: { [weak self] _ in self?.openInSafari() }), for: .touchUpInside)
         return button
     }()
     
@@ -146,7 +170,11 @@ private extension NewsDetailVC {
     func addViews() {
         scrollView.addSubview(stackView)
         view.addSubview(scrollView)
-        view.addSubview(saveButton)
+        view.addSubview(actionButtonsStack)
+        
+        actionButtonsStack.addArrangedSubview(openInSafariButton)
+        actionButtonsStack.addArrangedSubview(saveButton)
+        
     }
     
     func configureLayout() {
@@ -161,17 +189,17 @@ private extension NewsDetailVC {
             make.bottom.equalTo(scrollView.snp.bottom).inset(80)
             make.width.equalTo(scrollView.snp.width)
         }
-        saveButton.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view).inset(60)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(12)
-            make.height.equalTo(50)
-        }
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(authorLabel)
         stackView.addArrangedSubview(contentLabel)
         imageView.snp.makeConstraints { make in
             make.height.equalTo(240)
+        }
+        actionButtonsStack.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(view).inset(16)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(12)
+            make.height.equalTo(50)
         }
     }
     
@@ -242,5 +270,11 @@ private extension NewsDetailVC {
                 }
             }
         }
+    }
+    
+    func openInSafari(){
+        guard let urlString = viewModel.article.url,
+              let url = URL(string: urlString) else { return }
+        UIApplication.shared.open(url)
     }
 }

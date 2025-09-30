@@ -38,6 +38,8 @@
 "save_button_title" = "Kaydet";
 "saved_button_title" = "Kaydedildi";
 
+"view_news" = "Haberi Görüntüle";
+
 "time_just_now" = "Az önce";
 "time_minute_ago" = "%dm önce";
 "time_hour_ago" = "%dh önce";
