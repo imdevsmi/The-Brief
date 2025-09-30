@@ -19,6 +19,7 @@ final class PulseVC: UIViewController {
     private lazy var weatherCard: WeatherCardView = {
         let card = WeatherCardView()
         card.searchBar.delegate = self
+        
         return card
     }()
     
@@ -53,24 +54,18 @@ final class PulseVC: UIViewController {
 
 // MARK: - PulseVCOutputProtocol
 extension PulseVC: PulseVCOutputProtocol {
-    func didUpdateWeather(_ model: WeatherUIModel) {
-        weatherCard.configure(with: model)
-    }
+    func didUpdateWeather(_ model: WeatherUIModel) { weatherCard.configure(with: model) }
 }
 
 // MARK: - UISearchBarDelegate
 extension PulseVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("Search button clicked with text:", searchBar.text ?? "")
         guard let city = searchBar.text?.trimmingCharacters(in: .whitespaces), !city.isEmpty else { return }
         viewModel.fetchWeather(for: city)
         searchBar.text = nil
         searchBar.resignFirstResponder()
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange text: String) {
-        print("Text changed:", text)
-    }
-    
+    func searchBar(_ searchBar: UISearchBar, textDidChange text: String) { }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) { }
 }

@@ -9,8 +9,8 @@ import SnapKit
 import UIKit
 
 final class WeatherCardView: UIView {
-    // MARK: - Properties
     
+    // MARK: - Properties
     let searchBar = UISearchBar()
     private let iconImageView = UIImageView()
     private let cityLabel = UILabel()
@@ -35,13 +35,11 @@ final class WeatherCardView: UIView {
         searchBar.placeholder = L("search_city")
         searchBar.searchBarStyle = .minimal
         searchBar.isTranslucent = false
+        
         let textField = searchBar.searchTextField
         textField.backgroundColor = .tertiarySystemBackground
         textField.textColor = .label
-        textField.attributedPlaceholder = NSAttributedString(
-            string: L("search_city"),
-            attributes: [.foregroundColor: UIColor.secondaryLabel]
-        )
+        textField.attributedPlaceholder = NSAttributedString(string: L("search_city"), attributes: [.foregroundColor: UIColor.secondaryLabel])
         textField.layer.cornerRadius = 10
         textField.layer.masksToBounds = true
         textField.layer.borderWidth = 1
@@ -70,9 +68,7 @@ final class WeatherCardView: UIView {
         mainStack.spacing = 12
         
         addSubview(mainStack)
-        mainStack.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(16)
-        }
+        mainStack.snp.makeConstraints { make in make.edges.equalToSuperview().inset(16) }
         iconImageView.snp.makeConstraints { make in make.width.height.equalTo(60) }
     }
     

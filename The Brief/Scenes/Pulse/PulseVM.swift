@@ -23,18 +23,13 @@ final class PulseVM: PulseVMInputProtocol {
     private let debounceInterval: TimeInterval = 0.5
     private var debounceWorkItem: DispatchWorkItem?
     
-    init(
-        weatherService: WeatherAPIServiceProtocol = WeatherService(),
-        storage: WeatherManagerProtocol = WeatherManager()
-    ) {
+    init(weatherService: WeatherAPIServiceProtocol = WeatherService(), storage: WeatherManagerProtocol = WeatherManager()) {
         self.weatherService = weatherService
         self.storage = storage
     }
     
     
     func fetchWeather(for city: String) {
-        print("FetchWeather called for city:", city)
-
         let trimmedCity = city.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedCity.isEmpty else { return }
 
@@ -48,9 +43,7 @@ final class PulseVM: PulseVMInputProtocol {
     
     // MARK: - Load last city
     func loadLastCity() {
-        if let lastCity = storage.loadCity() {
-            fetchWeather(for: lastCity)
-        }
+        if let lastCity = storage.loadCity() { fetchWeather(for: lastCity) }
     }
     
     private func callWeatherAPI(for city: String) {
@@ -62,12 +55,7 @@ final class PulseVM: PulseVMInputProtocol {
                 let iconURL = response.current.condition.icon
                 let fixedIconURL = iconURL.hasPrefix("http") ? iconURL : "https:\(iconURL)"
                 
-                let model = WeatherUIModel(
-                    city: response.location.name,
-                    temp: "\(Int(response.current.temp_c))°C",
-                    condition: response.current.condition.text,
-                    iconURL: fixedIconURL
-                )
+                let model = WeatherUIModel(city: response.location.name, temp: "\(Int(response.current.temp_c))°C", condition: response.current.condition.text, iconURL: fixedIconURL)
                 
                 DispatchQueue.main.async { self.output?.didUpdateWeather(model) }
             case .failure(let error):
