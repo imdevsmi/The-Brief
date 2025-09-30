@@ -16,18 +16,9 @@ final class PulseVC: UIViewController {
     //MARK: - Properties
     private let viewModel: PulseVM
     
-    private lazy var searchController: UISearchController = {
-        let sc = UISearchController()
-        sc.searchBar.delegate = self
-        sc.searchBar.placeholder = L("search_city")
-        sc.obscuresBackgroundDuringPresentation = false
-        
-        return sc
-    }()
-    
     private lazy var weatherCard: WeatherCardView = {
         let card = WeatherCardView()
-        
+        card.searchBar.delegate = self
         return card
     }()
     
@@ -48,15 +39,14 @@ final class PulseVC: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemGroupedBackground
         
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
         
         view.addSubview(weatherCard)
         weatherCard.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.height.greaterThanOrEqualTo(80)
+            make.height.greaterThanOrEqualTo(140)
         }
     }
 }

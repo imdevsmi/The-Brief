@@ -10,6 +10,8 @@ import UIKit
 
 final class WeatherCardView: UIView {
     // MARK: - Properties
+    
+    let searchBar = UISearchBar()
     private let iconImageView = UIImageView()
     private let cityLabel = UILabel()
     private let tempLabel = UILabel()
@@ -30,6 +32,10 @@ final class WeatherCardView: UIView {
         layer.shadowRadius = 6
         layer.shadowOffset = CGSize(width: 0, height: 3)
         
+        searchBar.placeholder = L("search_city")
+        searchBar.searchBarStyle = .minimal
+        searchBar.isTranslucent = true
+        
         cityLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         conditionLabel.font = .systemFont(ofSize: 14, weight: .regular)
         tempLabel.font = .systemFont(ofSize: 16, weight: .medium)
@@ -47,12 +53,18 @@ final class WeatherCardView: UIView {
         hStack.axis = .horizontal
         hStack.alignment = .center
         hStack.spacing = 12
-
-        addSubview(hStack)
-        hStack.snp.makeConstraints { make in make.edges.equalToSuperview().inset(16) }
+        
+        let mainStack = UIStackView(arrangedSubviews: [searchBar, hStack])
+        mainStack.axis = .vertical
+        mainStack.spacing = 12
+        
+        addSubview(mainStack)
+        mainStack.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(16)
+        }
         iconImageView.snp.makeConstraints { make in make.width.height.equalTo(60) }
     }
-
+    
     func configure(with model: WeatherUIModel) {
         cityLabel.text = model.city
         tempLabel.text = model.temp
