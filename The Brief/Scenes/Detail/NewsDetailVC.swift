@@ -65,10 +65,11 @@ final class NewsDetailVC: UIViewController {
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         imageView.addGestureRecognizer(gesture)
+        
         return imageView
     }()
     
-    private lazy var imageDescriptionLabel: UILabel = {
+    private lazy var contentLabel: UILabel = {
         let label = UILabel()
         var fullContent = ""
 
@@ -168,7 +169,7 @@ private extension NewsDetailVC {
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(authorLabel)
-        stackView.addArrangedSubview(imageDescriptionLabel)
+        stackView.addArrangedSubview(contentLabel)
         imageView.snp.makeConstraints { make in
             make.height.equalTo(240)
         }
