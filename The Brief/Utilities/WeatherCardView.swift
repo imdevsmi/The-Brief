@@ -34,7 +34,18 @@ final class WeatherCardView: UIView {
         
         searchBar.placeholder = L("search_city")
         searchBar.searchBarStyle = .minimal
-        searchBar.isTranslucent = true
+        searchBar.isTranslucent = false
+        let textField = searchBar.searchTextField
+        textField.backgroundColor = .tertiarySystemBackground
+        textField.textColor = .label
+        textField.attributedPlaceholder = NSAttributedString(
+            string: L("search_city"),
+            attributes: [.foregroundColor: UIColor.secondaryLabel]
+        )
+        textField.layer.cornerRadius = 10
+        textField.layer.masksToBounds = true
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.separator.cgColor
         
         cityLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         conditionLabel.font = .systemFont(ofSize: 14, weight: .regular)
