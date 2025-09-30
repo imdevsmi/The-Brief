@@ -64,6 +64,7 @@ extension PulseVC: UISearchBarDelegate {
         print("Search button clicked with text:", searchBar.text ?? "")
         guard let city = searchBar.text?.trimmingCharacters(in: .whitespaces), !city.isEmpty else { return }
         viewModel.fetchWeather(for: city)
+        searchBar.text = nil
         searchBar.resignFirstResponder()
     }
     
