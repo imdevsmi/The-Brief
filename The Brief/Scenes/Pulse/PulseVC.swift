@@ -23,6 +23,15 @@ final class PulseVC: UIViewController {
         return card
     }()
     
+    private let weatherTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Hava Durumu"
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.textColor = .label
+        
+        return label
+    }()
+    
     init(viewModel: PulseVM = PulseVM()) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -43,9 +52,15 @@ final class PulseVC: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
         
+        view.addSubview(weatherTitleLabel)
+        weatherTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            make.leading.equalToSuperview().inset(16)
+        }
+        
         view.addSubview(weatherCard)
         weatherCard.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            make.top.equalTo(weatherTitleLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.greaterThanOrEqualTo(140)
         }
