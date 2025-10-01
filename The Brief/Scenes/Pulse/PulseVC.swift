@@ -25,7 +25,7 @@ final class PulseVC: UIViewController {
     
     private let weatherTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hava Durumu"
+        label.text = L("weather_title")
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         label.textColor = .label
         
