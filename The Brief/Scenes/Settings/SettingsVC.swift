@@ -134,8 +134,15 @@ extension SettingsVC: UITableViewDataSource {
         case .rateUs, .privacyPolicy, .termsOfUse:
             cell.accessoryType = .disclosureIndicator
             cell.selectionStyle = .default
+            
+        case .version:
+            cell.textLabel?.text = viewModel.input?.appVersion()
+            cell.textLabel?.textColor = .secondaryLabel
+            cell.textLabel?.textAlignment = .center
+            cell.imageView?.image = nil
+            cell.backgroundColor = .clear
+            cell.textLabel?.snp.remakeConstraints { make in make.center.equalToSuperview() }
         }
-        
         return cell
     }
 }

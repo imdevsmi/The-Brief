@@ -17,6 +17,7 @@ protocol SettingsVMInputProtocol: AnyObject {
     func didSelect(item: SettingsModel)
     func updateNotification(isOn: Bool)
     func fetchNotificationStatus(_ completion: @escaping (Bool) -> Void)
+    func appVersion() -> String
 }
 
 final class SettingsVM {
@@ -36,8 +37,9 @@ final class SettingsVM {
         SettingsSection(title: "Appearance", items: [SettingsModel(type: .theme), SettingsModel(type: .language)]),
         SettingsSection(title: "Notifications", items: [SettingsModel(type: .notification)]),
         SettingsSection(title: "General", items: [SettingsModel(type: .rateUs)]),
-        SettingsSection(title: "Legal", items: [SettingsModel(type: .privacyPolicy),SettingsModel(type: .termsOfUse)])
-    ] 
+        SettingsSection(title: "Legal", items: [SettingsModel(type: .privacyPolicy),SettingsModel(type: .termsOfUse)]),
+        SettingsSection(title: "About", items: [SettingsModel(type: .version)])
+    ]
 }
 
 // MARK: - SettingsVMInputProtocol
@@ -93,5 +95,11 @@ extension SettingsVM: SettingsVMInputProtocol {
             let switchState = self.isNotificationEnabled && systemAuthorized
             DispatchQueue.main.async { completion(switchState) }
         }
+    }
+    
+    func appVersion() -> String {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
+        let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
+        return "Version \(version) (\(build))"
     }
 }
