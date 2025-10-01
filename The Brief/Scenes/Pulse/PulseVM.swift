@@ -42,7 +42,8 @@ final class PulseVM: PulseVMInputProtocol {
     
     // MARK: - Load last city
     func loadLastCity() {
-        if let lastCity = storage.loadCity() { fetchWeather(for: lastCity) }
+        let city = storage.loadCity() ?? "İstanbul"
+        fetchWeather(for: city)
     }
     
     private func callWeatherAPI(for city: String) {
