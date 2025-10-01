@@ -71,7 +71,7 @@ final class PulseVC: UIViewController {
         weatherCard.snp.makeConstraints { make in
             make.top.equalTo(weatherTitleLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.height.greaterThanOrEqualTo(140)
+            make.height.equalTo(200)
         }
         separatorView.snp.makeConstraints { make in
             make.top.equalTo(weatherCard.snp.bottom).offset(16)
