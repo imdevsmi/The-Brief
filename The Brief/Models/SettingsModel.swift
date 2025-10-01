@@ -8,7 +8,7 @@
 import Foundation
 
 enum SettingsType {
-    case theme, language, notification, rateUs, privacyPolicy, termsOfUse
+    case theme, language, notification, rateUs, privacyPolicy, termsOfUse, version
     
     var titleKey: String {
         switch self {
@@ -18,6 +18,7 @@ enum SettingsType {
         case .rateUs: return "rate_us_title"
         case .privacyPolicy: return "privacy_policy_title"
         case .termsOfUse: return "terms_of_use_title"
+        case .version: return "version_title"
         }
     }
     
@@ -29,6 +30,7 @@ enum SettingsType {
         case .rateUs: return "star.fill"
         case .privacyPolicy: return "lock.fill"
         case .termsOfUse: return "doc.text.fill"
+        case .version: return "info.circle"
         }
     }
     
