@@ -26,6 +26,7 @@ final class PulseVC: UIViewController {
     private let weatherTitleLabel: UILabel = {
         let label = UILabel()
         label.text = L("weather_title")
+        label.textAlignment = .center
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         label.textColor = .label
         
@@ -55,7 +56,7 @@ final class PulseVC: UIViewController {
         view.addSubview(weatherTitleLabel)
         weatherTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            make.leading.equalToSuperview().inset(16)
+            make.centerX.equalToSuperview()
         }
         
         view.addSubview(weatherCard)
