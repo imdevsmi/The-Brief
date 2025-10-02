@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+protocol FinanceAPIServiceProtocol {
+    
+}
+
+final class FinanceAPIService: FinanceAPIServiceProtocol {
+    
+}
