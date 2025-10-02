@@ -27,11 +27,20 @@ struct SecureConfig {
     }
     
     static var weatherApiKey: String {
-            guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
-                  let dict = NSDictionary(contentsOfFile: path),
-                  let key = dict["WeatherAPIKey"] as? String else {
-                fatalError("WeatherAPIKey not found in Secrets.plist")
-            }
-            return key
+        guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+              let dict = NSDictionary(contentsOfFile: path),
+              let key = dict["WeatherAPIKey"] as? String else {
+            fatalError("WeatherAPIKey not found in Secrets.plist")
         }
+        return key
+    }
+    
+    static var financeApiKey: String {
+        guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+              let dict = NSDictionary(contentsOfFile: path),
+              let key = dict["FinanceAPIKey"] as? String else {
+            fatalError("FinanceAPIKey not found in Secrets.plist")
+        }
+        return key
+    }
 }
