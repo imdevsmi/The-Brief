@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct FinanceRatesResponse: Codable {
+    let rates: [String: FinanceRate]
+}
+
+struct FinanceRate: Codable {
+    let bid: String
+    let offer: String
+}
