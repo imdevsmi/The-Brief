@@ -21,7 +21,7 @@ final class WeatherService: WeatherAPIServiceProtocol {
     
     // MARK: - Fetch Weather
     func fetchWeather(city: String, completion: @escaping (Result<WeatherResponse, NetworkError>) -> Void) {
-        var urlComponents = URLComponents(string: baseURL + "forecast.json")
+        var urlComponents = URLComponents(string: baseURL + "current.json")
         urlComponents?.queryItems = [
             URLQueryItem(name: "key", value: SecureConfig.weatherApiKey),
             URLQueryItem(name: "q", value: city),
