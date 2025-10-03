@@ -8,5 +8,9 @@
 import Foundation
 
 final class TwelveDataFinanceService {
+    private let networkManager: NetworkManagerProtocol
+    private let baseURL = "https://api.twelvedata.com"
+    private let apiKey = SecureConfig.twelveDataApiKey
     
+    init(networkManager: NetworkManagerProtocol = NetworkManager()) { self.networkManager = networkManager }
 }

@@ -43,4 +43,13 @@ struct SecureConfig {
         }
         return key
     }
+    
+    static var twelveDataApiKey: String {
+        guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+              let dict = NSDictionary(contentsOfFile: path),
+              let key = dict["TwelveDataAPIKey"] as? String else {
+            fatalError("TwelveDataAPIKey not found in Secrets.plist")
+        }
+        return key
+    }
 }
