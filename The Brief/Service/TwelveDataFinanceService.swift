@@ -45,5 +45,13 @@ final class TwelveDataFinanceService: FinanceAPIServiceProtocol{
                 group.leave()
             }
         }
+        
+        group.notify(queue: .main) {
+            if !errors.isEmpty && results.isEmpty {
+                completion(.failure(errors.first!))
+            } else {
+                completion(.success(results))
+            }
+        }
     }
 }
