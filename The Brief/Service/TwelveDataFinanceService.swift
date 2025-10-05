@@ -30,15 +30,12 @@ final class TwelveDataFinanceService: FinanceAPIServiceProtocol{
                 group.leave()
                 continue
             }
+            
             networkManager.request(url: url, method: .GET, headers: nil) { (result: Result<TwelveDataQuoteResponse, NetworkError>) in
                 switch result {
                 case .success(let response):
-                    let uiModel = FinanceUIModel(
-                        pair: response.symbol,
-                        bid: response.bid ?? response.price ?? "-",
-                        offer: response.ask ?? response.price ?? "-"
-                    )
-                    results.append(uiModel)
+                    let UiModel = FinanceUIModel(pair: response.symbol, bid: response.bid ?? response.price ?? "-", offer: response.ask ?? response.price ?? "-")
+                    results.append(UiModel)
                 case .failure(let error):
                     errors.append(error)
                 }
