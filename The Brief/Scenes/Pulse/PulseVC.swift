@@ -17,12 +17,7 @@ final class PulseVC: UIViewController {
     private let viewModel: PulseVM
     private let financeService: FinanceAPIServiceProtocol = TwelveDataFinanceService()
     private let financeCard = FinanceCardView()
-    private lazy var weatherCard: WeatherCardView = {
-        let card = WeatherCardView()
-        card.searchBar.delegate = self
-        
-        return card
-    }()
+    private let weatherCard = WeatherCardView()
     
     private let weatherTitleLabel: UILabel = {
         let label = UILabel()
