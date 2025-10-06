@@ -20,6 +20,19 @@ final class FinanceCardView: UIView {
     required init?(coder: NSCoder) { fatalError() }
     
     private func SetupUI() {
+        backgroundColor = .secondarySystemBackground
+        layer.cornerRadius = 12
+        layer.masksToBounds = true
         
+        titleLabel.text = L("finance_title")
+        titleLabel.font = .boldSystemFont(ofSize: 18)
+        titleLabel.textAlignment = .center
+        
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.alignment = .fill
+        
+        addSubview(titleLabel)
+        addSubview(stackView)
     }
 }
