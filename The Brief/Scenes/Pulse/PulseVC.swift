@@ -39,6 +39,16 @@ final class PulseVC: UIViewController {
         
         return view
     }()
+    
+    private let financeTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = L("finance_title")
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.textColor = .label
+        
+        return label
+    }()
 
     init(viewModel: PulseVM = PulseVM()) {
         self.viewModel = viewModel
@@ -60,6 +70,7 @@ final class PulseVC: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
         
+        view.addSubview(financeTitleLabel)
         view.addSubview(separatorView)
         view.addSubview(weatherCard)
         view.addSubview(weatherTitleLabel)
@@ -77,6 +88,10 @@ final class PulseVC: UIViewController {
             make.top.equalTo(weatherCard.snp.bottom).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(5)
+        }
+        financeTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(separatorView.snp.bottom).offset(16)
+            make.centerX.equalToSuperview()
         }
     }
 }
