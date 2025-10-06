@@ -47,6 +47,14 @@ final class FinanceCardView: UIView {
     }
     
     private func configure(with models: [FinanceUIModel]){
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
+        for model in models {
+            let label = UILabel()
+            label.text = "\(model.pair): \(model.bid) / \(model.offer)"
+            label.font = .systemFont(ofSize: 16)
+            label.textColor = .label
+            stackView.addArrangedSubview(label)
+        }
     }
 }
