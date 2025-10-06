@@ -15,6 +15,11 @@ final class FinanceCardView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        SetupUI()
     }
     required init?(coder: NSCoder) { fatalError() }
+    
+    private func SetupUI() {
+        
+    }
 }
