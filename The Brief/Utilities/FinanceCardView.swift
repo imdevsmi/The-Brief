@@ -19,7 +19,7 @@ final class FinanceCardView: UIView {
     }
     required init?(coder: NSCoder) { fatalError() }
     
-    private func SetupUI() {
+    private func SetupUI(){
         backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 12
         layer.masksToBounds = true
@@ -44,5 +44,9 @@ final class FinanceCardView: UIView {
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(12)
         }
+    }
+    
+    private func configure(with models: [FinanceUIModel]){
+        
     }
 }
