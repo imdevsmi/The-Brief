@@ -15,7 +15,7 @@ protocol PulseVCOutputProtocol: AnyObject {
 final class PulseVC: UIViewController {
     //MARK: - Properties
     private let viewModel: PulseVM
-    
+    private let financeService: FinanceAPIServiceProtocol = TwelveDataFinanceService()
     private let financeCard = FinanceCardView()
     private lazy var weatherCard: WeatherCardView = {
         let card = WeatherCardView()
