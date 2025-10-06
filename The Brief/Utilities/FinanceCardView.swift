@@ -34,5 +34,15 @@ final class FinanceCardView: UIView {
         
         addSubview(titleLabel)
         addSubview(stackView)
+        
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(12)
+            make.centerX.equalToSuperview()
+        }
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview().inset(12)
+        }
     }
 }
