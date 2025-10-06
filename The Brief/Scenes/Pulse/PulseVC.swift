@@ -16,6 +16,7 @@ final class PulseVC: UIViewController {
     //MARK: - Properties
     private let viewModel: PulseVM
     
+    private let financeCard = FinanceCardView()
     private lazy var weatherCard: WeatherCardView = {
         let card = WeatherCardView()
         card.searchBar.delegate = self
@@ -62,6 +63,7 @@ final class PulseVC: UIViewController {
         super.viewDidLoad()
         setupUI()
         viewModel.loadLastCity()
+        fetchFinanceRates()
     }
     
     private func setupUI() {
@@ -93,6 +95,10 @@ final class PulseVC: UIViewController {
             make.top.equalTo(separatorView.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
         }
+    }
+    
+    private func fetchFinanceRates() {
+        
     }
 }
 
