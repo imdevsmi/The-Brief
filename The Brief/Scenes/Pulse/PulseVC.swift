@@ -67,6 +67,7 @@ final class PulseVC: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
         
+        view.addSubview(financeCard)
         view.addSubview(financeTitleLabel)
         view.addSubview(separatorView)
         view.addSubview(weatherCard)
@@ -89,6 +90,11 @@ final class PulseVC: UIViewController {
         financeTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(separatorView.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
+        }
+        financeCard.snp.makeConstraints { make in
+            make.top.equalTo(financeTitleLabel.snp.bottom).offset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.height.equalTo(200)
         }
     }
     
