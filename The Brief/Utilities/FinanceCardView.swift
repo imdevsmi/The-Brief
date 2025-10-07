@@ -35,7 +35,7 @@ final class FinanceCardView: UIView {
         }
     }
     
-    private func configure(with models: [FinanceUIModel]){
+    func configure(with models: [FinanceUIModel]){
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         for model in models {

@@ -100,7 +100,14 @@ final class PulseVC: UIViewController {
     
     private func fetchFinanceRates() {
         financeService.fetchRates(pairs: ["EUR/USD", "GBP/USD", "USD/TRY"]) { [weak self] result in
-            
+            switch result {
+            case .success(let rates):
+                DispatchQueue.main.async {
+                    self?.financeCard.configure(with: rates)
+                }
+            case .failure(let error):
+                print("Finance fetch error:", error)
+            }
         }
     }
 }
