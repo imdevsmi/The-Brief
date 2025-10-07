@@ -99,7 +99,9 @@ final class PulseVC: UIViewController {
     }
     
     private func fetchFinanceRates() {
-        
+        financeService.fetchRates(pairs: ["EUR/USD", "GBP/USD", "USD/TRY"]) { [weak self] result in
+            
+        }
     }
 }
 
