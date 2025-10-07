@@ -70,6 +70,7 @@ final class PulseVC: UIViewController {
         view.addSubview(separatorView)
         view.addSubview(weatherCard)
         view.addSubview(weatherTitleLabel)
+        weatherCard.searchBar.delegate = self
         
         weatherTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
