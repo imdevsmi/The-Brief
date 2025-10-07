@@ -13,7 +13,14 @@ protocol FinanceAPIServiceProtocol {
 }
 
 final class FinanceAPIService: FinanceAPIServiceProtocol {
+    
+    private let networkManager: NetworkManagerProtocol
+    private let apiKey = SecureConfig.financeApiKey
+    private let baseURL = "https://data.fixer.io/api/latest"
+    
+    init(networkManager: NetworkManagerProtocol = NetworkManager()) { self.networkManager = networkManager }
+    
     func fetchRates(pairs: [String], completion: @escaping (Result<[FinanceUIModel], NetworkError>) -> Void) {
-        <#code#>
+        
     }
 }
