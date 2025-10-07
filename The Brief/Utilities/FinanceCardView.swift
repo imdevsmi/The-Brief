@@ -22,7 +22,10 @@ final class FinanceCardView: UIView {
     private func SetupUI(){
         backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 12
-        layer.masksToBounds = true
+        layer.shadowColor = UIColor.label.cgColor
+        layer.shadowOpacity = 0.1
+        layer.shadowRadius = 6
+        layer.shadowOffset = CGSize(width: 0, height: 3)
         
         stackView.axis = .vertical
         stackView.spacing = 8

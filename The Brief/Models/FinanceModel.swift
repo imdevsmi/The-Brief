@@ -8,10 +8,8 @@
 import Foundation
 
 struct FinanceRatesResponse: Codable {
-    let rates: [String: FinanceRate]
-}
-
-struct FinanceRate: Codable {
-    let bid: String
-    let offer: String
+    let success: Bool
+    let base: String
+    let date: String
+    let rates: [String: Double]
 }
