@@ -15,7 +15,6 @@ protocol PulseVCOutputProtocol: AnyObject {
 final class PulseVC: UIViewController {
     //MARK: - Properties
     private let viewModel: PulseVM
-    private let financeService: FinanceAPIServiceProtocol = TwelveDataFinanceService()
     private let financeCard = FinanceCardView()
     private let weatherCard = WeatherCardView()
     
@@ -58,7 +57,6 @@ final class PulseVC: UIViewController {
         super.viewDidLoad()
         setupUI()
         viewModel.loadLastCity()
-        fetchFinanceRates()
     }
     
     private func setupUI() {
@@ -95,19 +93,6 @@ final class PulseVC: UIViewController {
             make.top.equalTo(financeTitleLabel.snp.bottom).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(200)
-        }
-    }
-    
-    private func fetchFinanceRates() {
-        financeService.fetchRates(pairs: ["EUR/USD", "GBP/USD", "USD/TRY"]) { [weak self] result in
-            switch result {
-            case .success(let rates):
-                DispatchQueue.main.async {
-                    self?.financeCard.configure(with: rates)
-                }
-            case .failure(let error):
-                print("Finance fetch error:", error)
-            }
         }
     }
 }
