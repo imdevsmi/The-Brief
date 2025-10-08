@@ -19,12 +19,14 @@ final class PulseVM: PulseVMInputProtocol {
     weak var input: PulseVMInputProtocol?
     
     private let weatherService: WeatherAPIServiceProtocol
+    private let financeService: FinanceAPIServiceProtocol
     private let storage: WeatherManagerProtocol
     private let debounceInterval: TimeInterval = 0.5
     private var debounceWorkItem: DispatchWorkItem?
     
-    init(weatherService: WeatherAPIServiceProtocol = WeatherService(), storage: WeatherManagerProtocol = WeatherManager()) {
+    init(weatherService: WeatherAPIServiceProtocol = WeatherService(), financeService: FinanceAPIServiceProtocol = FinanceAPIService(), storage: WeatherManagerProtocol = WeatherManager()) {
         self.weatherService = weatherService
+        self.financeService = financeService
         self.storage = storage
     }
     // MARK: - fetch Weather
