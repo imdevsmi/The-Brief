@@ -20,14 +20,14 @@ final class PulseVM: PulseVMInputProtocol {
     
     private let weatherService: WeatherAPIServiceProtocol
     private let financeService: FinanceAPIServiceProtocol
-    private let storage: WeatherManagerProtocol
+    private let weatherStorage: WeatherManagerProtocol
     private let debounceInterval: TimeInterval = 0.5
     private var debounceWorkItem: DispatchWorkItem?
     
     init(weatherService: WeatherAPIServiceProtocol = WeatherService(), financeService: FinanceAPIServiceProtocol = FinanceAPIService(), storage: WeatherManagerProtocol = WeatherManager()) {
         self.weatherService = weatherService
         self.financeService = financeService
-        self.storage = storage
+        self.weatherStorage = storage
     }
     // MARK: - fetch Weather
     func fetchWeather(for city: String) {
@@ -44,7 +44,7 @@ final class PulseVM: PulseVMInputProtocol {
     
     // MARK: - Load last city
     func loadLastCity() {
-        let city = storage.loadCity() ?? "İstanbul"
+        let city = weatherStorage.loadCity() ?? "İstanbul"
         fetchWeather(for: city)
     }
     
@@ -53,7 +53,7 @@ final class PulseVM: PulseVMInputProtocol {
             switch result {
             case .success(let response):
                 guard let self = self else { return }
-                self.storage.saveCity(response.location.name)
+                self.weatherStorage.saveCity(response.location.name)
                 let iconURL = response.current.condition.icon
                 let fixedIconURL = iconURL.hasPrefix("http") ? iconURL : "https:\(iconURL)"
                 
