@@ -23,7 +23,7 @@ struct SecureConfig {
               let key = dict["NewsAPIKey"] as? String else {
             fatalError("NewsAPIKey not found in Secrets.plist")
         }
-        return key
+        return key.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     static var weatherApiKey: String {
@@ -32,7 +32,7 @@ struct SecureConfig {
               let key = dict["WeatherAPIKey"] as? String else {
             fatalError("WeatherAPIKey not found in Secrets.plist")
         }
-        return key
+        return key.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
     static var financeApiKey: String {
@@ -41,15 +41,6 @@ struct SecureConfig {
               let key = dict["FinanceAPIKey"] as? String else {
             fatalError("FinanceAPIKey not found in Secrets.plist")
         }
-        return key
-    }
-    
-    static var twelveDataApiKey: String {
-        guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
-              let dict = NSDictionary(contentsOfFile: path),
-              let key = dict["TwelveDataAPIKey"] as? String else {
-            fatalError("TwelveDataAPIKey not found in Secrets.plist")
-        }
-        return key
+        return key.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

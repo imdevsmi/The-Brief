@@ -13,23 +13,27 @@ protocol FinanceAPIServiceProtocol {
 }
 
 final class FinanceAPIService: FinanceAPIServiceProtocol {
-    
+    // MARK: - Properties
     private let networkManager: NetworkManagerProtocol
-    private let apiKey = SecureConfig.financeApiKey
+    private let apiKey = SecureConfig.financeApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
     private let baseURL = "https://data.fixer.io/api/latest"
     
     init(networkManager: NetworkManagerProtocol = NetworkManager()) { self.networkManager = networkManager }
     
     func fetchRates(pairs: [String], completion: @escaping (Result<[FinanceUIModel], NetworkError>) -> Void) {
-        let symbols = pairs
-            .flatMap { $0.split(separator: "/").map(String.init) }
-            .filter { $0 != "USD" }
-            .joined(separator: ",")
+        var allCurrencies = Set<String>()
+        for pair in pairs {
+            let components = pair.split(separator: "/").map(String.init)
+            if components.count == 2 {
+                if components[0] != "EUR" { allCurrencies.insert(components[0]) }
+                if components[1] != "EUR" { allCurrencies.insert(components[1]) }
+            }
+        }
         
+        let symbols = allCurrencies.joined(separator: ",")
         var urlComponents = URLComponents(string: baseURL)
         urlComponents?.queryItems = [
             URLQueryItem(name: "access_key", value: apiKey),
-            URLQueryItem(name: "base", value: "USD"),
             URLQueryItem(name: "symbols", value: symbols)
         ]
         
@@ -40,28 +44,35 @@ final class FinanceAPIService: FinanceAPIServiceProtocol {
         networkManager.request(url: url, method: .GET, headers: nil) { (result: Result<FinanceRatesResponse, NetworkError>) in
             switch result {
             case .success(let response):
-                print("✅ Fixer API response:", response.rates)
-                
-                let models = pairs.compactMap { pair -> FinanceUIModel? in
+                let models: [FinanceUIModel] = pairs.compactMap { pair in
                     let components = pair.split(separator: "/").map(String.init)
                     guard components.count == 2 else { return nil }
                     
                     let base = components[0]
                     let quote = components[1]
-                    guard let rate = response.rates[base] ?? response.rates[quote] else { return nil }
-                    
-                    let displayRate: Double
-                    if quote == response.base {
-                        displayRate = 1.0 / rate
-                    } else {
-                        displayRate = rate
+                    let rate: Double
+    
+                    if base == "EUR" {
+                        guard let r = response.rates[quote] else { return nil }
+                        rate = r
+                    }
+                    else if quote == "EUR" {
+                        guard let r = response.rates[base] else { return nil }
+                        rate = 1.0 / r
+                    }
+                    else {
+                        guard let baseRate = response.rates[base],
+                                let quoteRate = response.rates[quote] else { return nil }
+                        rate = quoteRate / baseRate
                     }
                     
-                    return FinanceUIModel(pair: pair, bid: String(format: "%.4f", displayRate), offer: String(format: "%.4f", displayRate))
+                    let formattedRate = String(format: "%.4f", rate)
+                    return FinanceUIModel(pair: pair, bid: formattedRate, offer: formattedRate)
                 }
                 completion(.success(models))
+                
             case .failure(let error):
-                print("api dont response", error)
+                print("❌ Error:", error)
                 completion(.failure(error))
             }
         }

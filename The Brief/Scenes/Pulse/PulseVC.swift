@@ -58,6 +58,7 @@ final class PulseVC: UIViewController {
         super.viewDidLoad()
         setupUI()
         viewModel.loadLastCity()
+        viewModel.fetchFinanceData()
     }
     
     private func setupUI() {

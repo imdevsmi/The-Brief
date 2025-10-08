@@ -65,4 +65,19 @@ final class PulseVM: PulseVMInputProtocol {
             }
         }
     }
+    
+    func fetchFinanceData() {
+        let pairs = ["EUR/USD", "GBP/USD", "USD/TRY"]
+        
+        financeService.fetchRates(pairs: pairs) { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let models):
+                DispatchQueue.main.async { self.output?.didUpdateFinance(models) }
+            case .failure(let error):
+                print("Finance fetch error:", error)
+            }
+        }
+    }
 }
