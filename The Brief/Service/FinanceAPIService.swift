@@ -21,6 +21,21 @@ final class FinanceAPIService: FinanceAPIServiceProtocol {
     init(networkManager: NetworkManagerProtocol = NetworkManager()) { self.networkManager = networkManager }
     
     func fetchRates(pairs: [String], completion: @escaping (Result<[FinanceUIModel], NetworkError>) -> Void) {
+        let symbols = pairs
+            .flatMap { $0.split(separator: "/").map(String.init) }
+            .filter { $0 != "USD" }
+            .joined(separator: ",")
         
+        var urlComponents = URLComponents(string: baseURL)
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "access_key", value: apiKey),
+            URLQueryItem(name: "base", value: "USD"),
+            URLQueryItem(name: "symbols", value: symbols)
+        ]
+        
+        guard let url = urlComponents?.url else {
+            completion(.failure(.invalidRequest))
+            return
+        }
     }
 }
