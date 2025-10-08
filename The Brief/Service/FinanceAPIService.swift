@@ -37,5 +37,8 @@ final class FinanceAPIService: FinanceAPIServiceProtocol {
             completion(.failure(.invalidRequest))
             return
         }
+        networkManager.request(url: url, method: .GET, headers: nil) { (result: Result<FinanceRatesResponse, NetworkError>) in
+            
+        }
     }
 }
