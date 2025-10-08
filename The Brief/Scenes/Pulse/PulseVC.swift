@@ -10,6 +10,7 @@ import SnapKit
 
 protocol PulseVCOutputProtocol: AnyObject {
     func didUpdateWeather(_ model: WeatherUIModel)
+    func didUpdateFinance(_ models: [FinanceUIModel])
 }
 
 final class PulseVC: UIViewController {
@@ -101,6 +102,7 @@ final class PulseVC: UIViewController {
 // MARK: - PulseVCOutputProtocol
 extension PulseVC: PulseVCOutputProtocol {
     func didUpdateWeather(_ model: WeatherUIModel) { weatherCard.configure(with: model) }
+    func didUpdateFinance(_ models: [FinanceUIModel]) { financeCard.configure(with: models) }
 }
 
 // MARK: - UISearchBarDelegate
