@@ -19,7 +19,7 @@ final class FinanceAPIService: FinanceAPIServiceProtocol {
     private let baseURL = "https://data.fixer.io/api/latest"
     
     init(networkManager: NetworkManagerProtocol = NetworkManager()) { self.networkManager = networkManager }
-    
+    // MARK: - Fetch Rates
     func fetchRates(pairs: [String], completion: @escaping (Result<[FinanceUIModel], NetworkError>) -> Void) {
         var allCurrencies = Set<String>()
         for pair in pairs {
@@ -32,10 +32,7 @@ final class FinanceAPIService: FinanceAPIServiceProtocol {
         
         let symbols = allCurrencies.joined(separator: ",")
         var urlComponents = URLComponents(string: baseURL)
-        urlComponents?.queryItems = [
-            URLQueryItem(name: "access_key", value: apiKey),
-            URLQueryItem(name: "symbols", value: symbols)
-        ]
+        urlComponents?.queryItems = [URLQueryItem(name: "access_key", value: apiKey), URLQueryItem(name: "symbols", value: symbols)]
         
         guard let url = urlComponents?.url else {
             completion(.failure(.invalidRequest))
@@ -61,18 +58,15 @@ final class FinanceAPIService: FinanceAPIServiceProtocol {
                         rate = 1.0 / r
                     }
                     else {
-                        guard let baseRate = response.rates[base],
-                                let quoteRate = response.rates[quote] else { return nil }
+                        guard let baseRate = response.rates[base], let quoteRate = response.rates[quote] else { return nil }
                         rate = quoteRate / baseRate
                     }
-                    
                     let formattedRate = String(format: "%.4f", rate)
                     return FinanceUIModel(pair: pair, bid: formattedRate, offer: formattedRate)
                 }
                 completion(.success(models))
                 
             case .failure(let error):
-                print("❌ Error:", error)
                 completion(.failure(error))
             }
         }
