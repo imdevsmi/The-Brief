@@ -46,6 +46,7 @@ final class HomeVC: UIViewController {
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseIdentifier)
+        
         return collectionView
     }()
     
@@ -146,7 +147,7 @@ private extension HomeVC {
         categoryCollectionView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40)
         tableView.tableHeaderView = categoryCollectionView
     }
-
+    
     func configureLayout() {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
