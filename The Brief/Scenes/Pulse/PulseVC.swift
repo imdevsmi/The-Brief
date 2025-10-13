@@ -95,7 +95,7 @@ final class PulseVC: UIViewController {
         financeCard.snp.makeConstraints { make in
             make.top.equalTo(financeTitleLabel.snp.bottom).offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(200)
+            make.height.equalTo(210)
         }
     }
 }

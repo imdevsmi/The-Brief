@@ -52,3 +52,6 @@
 
 "weather_title" = "Hava Durumu";
 "finance_title" = "Finans";
+
+"buy_title" = "Alış";
+"sell_title" = "Satış";

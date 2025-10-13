@@ -52,3 +52,6 @@
 
 "weather_title" = "Weather";
 "finance_title" = "Finance";
+
+"buy_title" = "Buy";
+"sell_title" = "Sell";
