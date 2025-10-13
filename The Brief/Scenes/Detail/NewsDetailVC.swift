@@ -5,6 +5,7 @@
 //  Created by Sami Gündoğan on 28.05.2025.
 //
 
+import SafariServices
 import SnapKit
 import UIKit
 
@@ -272,9 +273,12 @@ private extension NewsDetailVC {
         }
     }
     
-    func openInSafari(){
+    func openInSafari() {
         guard let urlString = viewModel.article.url,
               let url = URL(string: urlString) else { return }
-        UIApplication.shared.open(url)
+        
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.modalPresentationStyle = .pageSheet
+        present(safariVC, animated: true)
     }
 }
