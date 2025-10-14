@@ -16,6 +16,15 @@ struct SecureConfig {
         }
         return value
     }
+    
+    static var AdConfig: String {
+        guard let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
+              let dict = NSDictionary(contentsOfFile: path),
+              let key = dict["AdConfig"] as? String else {
+            fatalError("AdConfig not found in Info.plist")
+        }
+        return key
+    }
 
     static var apiKey: String {
         guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
