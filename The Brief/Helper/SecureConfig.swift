@@ -17,13 +17,15 @@ struct SecureConfig {
         return value
     }
     
-    static var AdConfig: String {
-        guard let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
-              let dict = NSDictionary(contentsOfFile: path),
-              let key = dict["AdConfig"] as? String else {
-            fatalError("AdConfig not found in Info.plist")
+    struct AdConfig {
+        static var interstitialID: String {
+            guard let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
+                  let dict = NSDictionary(contentsOfFile: path),
+                  let value = dict["GADInterstitialAdUnitID"] as? String else {
+                fatalError("InterstitialAdUnitID not found in Info.plist")
+            }
+            return value
         }
-        return key
     }
 
     static var apiKey: String {
