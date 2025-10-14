@@ -8,6 +8,13 @@
 import GoogleMobileAds
 import UIKit
 
-final class InterstitialManager: NSObject {
+final class InterstitialAd: NSObject {
     
+    static let shared = InterstitialAd()
+    private var interstitial: InterstitialAd?
+    private static let adCounterKey = "NewsDetailAdCounter"
+    
+    private override init() {
+        super.init()
+    }
 }
