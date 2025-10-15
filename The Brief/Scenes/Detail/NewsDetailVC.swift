@@ -157,6 +157,10 @@ final class NewsDetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         AdManager.shared.showInterstitialIfNeeded(from: self)
     }
 }
