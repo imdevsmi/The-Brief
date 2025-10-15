@@ -10,6 +10,7 @@ import UIKit
 
 final class AdManager: NSObject {
     
+    // MARK: -Properties
     static let shared = AdManager()
     private var interstitial: InterstitialAd?
     private var interstitialCounter = 0
@@ -17,53 +18,43 @@ final class AdManager: NSObject {
     private override init() {
         super.init()
         loadInterstitial()
-        print("AdManager initialized")
     }
     
-    deinit {
-        print("InterstitialAd deinitialized")
-    }
+    deinit { print("InterstitialAd deinitialized") }
     
-    // MARK: - Interstitial yükle
+    // MARK: - Load Interstitial
     func loadInterstitial() {
-        let request = Request()
-        InterstitialAd.load(with: SecureConfig.AdConfig.interstitialID,
-                            request: Request()) { [weak self] ad, error in
-            if let error = error {
-                print("Interstitial load failed: \(error.localizedDescription)")
-                return
-            }
+        _ = Request()
+        InterstitialAd.load(with: SecureConfig.AdConfig.interstitialID, request: Request()) { [weak self] ad, error in
+            if error != nil { return }
             self?.interstitial = ad
             self?.interstitial?.fullScreenContentDelegate = self
         }
     }
     
-    // MARK: - Gösterme mantığı
+    // MARK: - Display Logic
     func showInterstitialIfNeeded(from viewController: UIViewController) {
         interstitialCounter += 1
-        // load the interstitial if it doesnt exist
-        if interstitial == nil {
-            loadInterstitial()
-        }
-
-        // don't show the ad on the first two clicks
-        if interstitialCounter < 3 {
-            return
-        }
-
-        // from the 3. click onwards show the ad if ready
-        if let interstitial = interstitial {
-            interstitial.present(from: viewController)
-        } else {
-            // if the interstitial isn't ready on the 3rd click just reload it
-            loadInterstitial()
+        // Load the interstitial if it doesn't exist
+        if interstitial == nil { loadInterstitial() }
+        
+        switch interstitialCounter {
+        case 1, 2:
+            // first two clicks don't show the ad
+            break
+        default:
+            // from the 3. click onwards
+            if let interstitial = interstitial {
+                interstitial.present(from: viewController)
+            } else {
+                // if interstitial isn't ready on 3rd click reload it
+                loadInterstitial()
+            }
         }
     }
 }
 
 // MARK: - FullScreenContentDelegate
 extension AdManager: FullScreenContentDelegate {
-    func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) {
-        loadInterstitial()
-    }
+    func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) { loadInterstitial() }
 }
