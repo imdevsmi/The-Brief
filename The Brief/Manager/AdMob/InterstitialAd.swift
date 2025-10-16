@@ -25,8 +25,8 @@ final class InterstitialAds: NSObject {
     // MARK: - Load Interstitial
     func loadInterstitial() {
         _ = Request()
-        InterstitialAd.load(with: SecureConfig.InterstitialAd.interstitialID, request: Request()) { [weak self] ad, error in
-            if error != nil { return }
+        InterstitialAd.load(with: SecureConfig.interstitialAd, request: Request()) { [weak self] ad, error in
+            if let error = error { return }
             self?.interstitial = ad
             self?.interstitial?.fullScreenContentDelegate = self
         }
