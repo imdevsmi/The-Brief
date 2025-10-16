@@ -161,7 +161,7 @@ final class NewsDetailVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        AdManager.shared.showInterstitialIfNeeded(from: self)
+        InterstitialAds.shared.showInterstitialIfNeeded(from: self)
     }
 }
 

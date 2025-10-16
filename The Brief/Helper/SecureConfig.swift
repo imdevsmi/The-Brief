@@ -8,7 +8,7 @@
 import Foundation
 
 struct SecureConfig {
-    static var bannerID: String {
+    static var bannerAd: String {
         guard let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
               let dict = NSDictionary(contentsOfFile: path),
               let value = dict["GADApplicationIdentifier"] as? String else {
@@ -17,7 +17,7 @@ struct SecureConfig {
         return value
     }
     
-    struct AdConfig {
+    struct InterstitialAd {
         static var interstitialID: String {
             guard let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
                   let dict = NSDictionary(contentsOfFile: path),

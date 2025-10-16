@@ -8,10 +8,10 @@
 import GoogleMobileAds
 import UIKit
 
-final class AdManager: NSObject {
+final class InterstitialAds: NSObject {
     
     // MARK: - Properties
-    static let shared = AdManager()
+    static let shared = InterstitialAds()
     private var interstitial: InterstitialAd?
     private var interstitialCounter = 0
 
@@ -25,7 +25,7 @@ final class AdManager: NSObject {
     // MARK: - Load Interstitial
     func loadInterstitial() {
         _ = Request()
-        InterstitialAd.load(with: SecureConfig.AdConfig.interstitialID, request: Request()) { [weak self] ad, error in
+        InterstitialAd.load(with: SecureConfig.InterstitialAd.interstitialID, request: Request()) { [weak self] ad, error in
             if error != nil { return }
             self?.interstitial = ad
             self?.interstitial?.fullScreenContentDelegate = self
@@ -33,7 +33,7 @@ final class AdManager: NSObject {
     }
     
     // MARK: - Display Logic
-    func showInterstitialIfNeeded(from viewController: UIViewController) {
+    func showInterstitialIfNeeded(from vc: UIViewController) {
         interstitialCounter += 1
         if interstitial == nil { loadInterstitial() }
         
@@ -42,7 +42,7 @@ final class AdManager: NSObject {
             break
         default:
             if let interstitial = interstitial {
-                interstitial.present(from: viewController)
+                interstitial.present(from: vc)
             } else {
                 loadInterstitial()
             }
@@ -51,6 +51,6 @@ final class AdManager: NSObject {
 }
 
 // MARK: - FullScreenContentDelegate
-extension AdManager: FullScreenContentDelegate {
+extension InterstitialAds: FullScreenContentDelegate {
     func adDidDismissFullScreenContent(_ ad: FullScreenPresentingAd) { loadInterstitial() }
 }
