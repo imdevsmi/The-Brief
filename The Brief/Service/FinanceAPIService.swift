@@ -15,7 +15,6 @@ protocol FinanceAPIServiceProtocol {
 final class FinanceAPIService: FinanceAPIServiceProtocol {
     // MARK: - Properties
     private let networkManager: NetworkManagerProtocol
-    private let apiKey = SecureConfig.financeApiKey.trimmingCharacters(in: .whitespacesAndNewlines)
     private let baseURL = "https://data.fixer.io/api/latest"
     
     init(networkManager: NetworkManagerProtocol = NetworkManager()) { self.networkManager = networkManager }
@@ -32,7 +31,7 @@ final class FinanceAPIService: FinanceAPIServiceProtocol {
         
         let symbols = allCurrencies.joined(separator: ",")
         var urlComponents = URLComponents(string: baseURL)
-        urlComponents?.queryItems = [URLQueryItem(name: "access_key", value: apiKey), URLQueryItem(name: "symbols", value: symbols)]
+        urlComponents?.queryItems = [URLQueryItem(name: "access_key", value: SecureConfig.financeApiKey), URLQueryItem(name: "symbols", value: symbols)]
         
         guard let url = urlComponents?.url else {
             completion(.failure(.invalidRequest))
