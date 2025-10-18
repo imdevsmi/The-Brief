@@ -36,6 +36,9 @@
 "terms_of_use_title" = "Kullanım Şartları";
 "version_title" = "Version";
 
+"by_author" = "Yazan: %@";
+"unknown_author" = "Bilinmiyor";
+
 "save_button_title" = "Kaydet";
 "saved_button_title" = "Kaydedildi";
 

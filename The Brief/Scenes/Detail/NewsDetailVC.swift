@@ -57,7 +57,7 @@ final class NewsDetailVC: UIViewController {
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .subheadline)
-        label.text = "By: \(viewModel.article.author ?? "Unknown")"
+        label.text = String(format: L("by_author"), viewModel.article.author ?? L("unknown_author"))
         label.textAlignment = .natural
         label.textColor = .secondaryLabel
         label.numberOfLines = 0
