@@ -33,7 +33,6 @@ final class NewsDetailVC: UIViewController {
         return stack
     }()
     
-    
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -82,16 +81,36 @@ final class NewsDetailVC: UIViewController {
     
     private lazy var contentLabel: UILabel = {
         let label = UILabel()
-        var fullContent = ""
+        let attributedString = NSMutableAttributedString()
         
-        if let content = viewModel.article.content, !content.isEmpty { fullContent += content + "\n\n" }
-        if let description = viewModel.article.description, !description.isEmpty { fullContent += description }
+        func clean(_ text: String?) -> String {
+            guard var text = text else { return "" }
+            text = text.replacingOccurrences(of: #"\[\+\d+\s+chars\]"#, with: "", options: .regularExpression)
+            return text.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
         
-        label.text = fullContent
-        label.textAlignment = .natural
+        let description = clean(viewModel.article.description)
+        let content = clean(viewModel.article.content)
+        
+        if !description.isEmpty {
+            let descStyle = NSMutableParagraphStyle()
+            descStyle.lineSpacing = 4
+            attributedString.append(NSAttributedString(
+                string: description + "\n\n",
+                attributes: [.font: UIFont.systemFont(ofSize: 16, weight: .semibold), .foregroundColor: UIColor.label, .paragraphStyle: descStyle]))
+        }
+        
+        if !content.isEmpty {
+            let contentStyle = NSMutableParagraphStyle()
+            contentStyle.lineSpacing = 6
+            attributedString.append(NSAttributedString(
+                string: content,
+                attributes: [.font: UIFont.systemFont(ofSize: 15), .foregroundColor: UIColor.secondaryLabel, .paragraphStyle: contentStyle]))
+        }
+        
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = .label
+        label.attributedText = attributedString
+        label.textAlignment = .natural
         
         return label
     }()
