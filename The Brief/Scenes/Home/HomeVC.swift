@@ -118,7 +118,10 @@ extension HomeVC: HomeVMOutputProtocol {
     func didBecomeEmpty(_ isEmpty: Bool) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            emptyLabel.isHidden = !isEmpty
+            UIView.animate(withDuration: 0.3) {
+                self.emptyLabel.alpha = isEmpty ? 1 : 0
+            }
+            self.emptyLabel.isHidden = !isEmpty
         }
     }
     
@@ -182,9 +185,9 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseIdentifier, for: indexPath) as? CategoryCell else { fatalError() }
-        
         let category = categories[indexPath.item]
-        cell.configure(with: category.displayName, selected: indexPath == selectedIndexPath)
+        let selected = indexPath == selectedIndexPath
+        cell.configure(with: category.displayName, selected: selected)
         return cell
     }
 

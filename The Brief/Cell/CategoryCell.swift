@@ -31,12 +31,13 @@ final class CategoryCell: UICollectionViewCell {
             make.bottom.equalToSuperview().offset(-6)
         }
     }
-
+    
     required init?(coder: NSCoder) { fatalError() }
-
-    func configure(with title: String, selected: Bool) {
+    
+    func configure(with title: String, selected: Bool, backgroundColor: UIColor = .secondarySystemBackground, textColor: UIColor = .label ) {
         titleLabel.text = title
-        contentView.backgroundColor = selected ? .systemBlue : .systemGray5
-        titleLabel.textColor = selected ? .white : .label
+        titleLabel.textColor = textColor
+        contentView.backgroundColor = backgroundColor
+        layer.cornerRadius = 20
     }
 }

@@ -87,6 +87,18 @@ final class NewsCell: UITableViewCell {
         return label
     }()
     
+    private lazy var cardBackground: UIView = {
+        let view = UIView()
+        view.backgroundColor = .secondarySystemBackground
+        view.layer.cornerRadius = 12
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.05
+        view.layer.shadowOffset = CGSize(width: 0, height: 1)
+        view.layer.shadowRadius = 2
+        
+        return view
+    }()
+    
     private let separatorView: UIView = {
         let separator = UIView()
         separator.backgroundColor = .systemGray6
@@ -177,13 +189,15 @@ extension NewsCell {
     func setup(with article: Article) {
         self.article = article
         newsLabel.text = article.title
-        authorLabel.text = article.author
+        authorLabel.text = String(format: L("by_author"), article.author ?? L("unknown_author"))
         hourLabel.text = article.publishedAt?.formattedHourAndMinute()
         dateLabel.text = article.publishedAt?.timeAgoSinceDate()
         url = article.url
         
         loadingIndicator.startAnimating()
-        newsImage.setImage(with: article.urlToImage, placeholder: nil, targetSize: nil) { [weak self] in
+        newsImage.kf.setImage(with: URL(string: article.urlToImage ?? ""),
+                              placeholder: UIImage(systemName: "photo.artframe"),
+                              options: [.transition(.fade(0.3))]) { [weak self] _ in
             self?.loadingIndicator.stopAnimating()
         }
     }
