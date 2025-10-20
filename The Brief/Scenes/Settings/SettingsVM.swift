@@ -70,8 +70,8 @@ extension SettingsVM: SettingsVMInputProtocol {
     func didSelect(item: SettingsModel) {
         switch item.type {
         case .rateUs: output?.showReview()
-        case .privacyPolicy: output?.openURL("https://www.linkedin.com/in/samigundogan/")
-        case .termsOfUse: output?.openURL("https://www.linkedin.com/in/samigundogan/")
+        case .privacyPolicy: output?.openURL("https://imdevsmi.github.io/thebrief-daily-policies/privacy-policy.html")
+        case .termsOfUse: output?.openURL("https://imdevsmi.github.io/thebrief-daily-policies/terms-of-use.html")
         default: break
         }
     }
