@@ -11,11 +11,14 @@ extension String {
     
     func timeAgoSinceDate() -> String? {
         let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
         guard let date = isoFormatter.date(from: self) else { return nil }
+        let localDate = Calendar.current.date(byAdding: .second, value: TimeZone.current.secondsFromGMT(), to: date) ?? date
 
         let now = Date()
         let calendar = Calendar.current
-        let components = calendar.dateComponents([.minute, .hour, .day, .weekOfYear], from: date, to: now)
+        let components = calendar.dateComponents([.minute, .hour, .day, .weekOfYear], from: localDate, to: now)
 
         let week = components.weekOfYear ?? 0
         let day = components.day ?? 0
@@ -40,10 +43,12 @@ extension String {
 
     func formattedHourAndMinute() -> String? {
         let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         guard let date = isoFormatter.date(from: self) else { return nil }
+        let localDate = Calendar.current.date(byAdding: .second, value: TimeZone.current.secondsFromGMT(), to: date) ?? date
         
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        return formatter.string(from: date)
+        return formatter.string(from: localDate)
     }
 }

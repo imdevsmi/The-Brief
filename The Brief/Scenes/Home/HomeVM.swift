@@ -93,10 +93,12 @@ private extension HomeVM {
         }
         switch mode {
         case .top(let category):
-            newsService.fetchNews(country: "us", page: page, pageSize: pageSize, category: category, completion: completion)
+            let fromDate = Calendar.current.date(byAdding: .hour, value: -2, to: Date())
+            newsService.fetchNews(country: "us", page: page, pageSize: pageSize, category: category, from: fromDate, completion: completion)
             
         case .search(let query):
-            newsService.searchNews(searchString: query, page: page, pageSize: pageSize, completion: completion)
+            let fromDate = Calendar.current.date(byAdding: .hour, value: -2, to: Date())
+            newsService.searchNews(searchString: query, page: page, pageSize: pageSize, from: fromDate, completion: completion)
         }
     }
 }
