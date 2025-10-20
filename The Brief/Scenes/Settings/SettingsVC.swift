@@ -136,12 +136,19 @@ extension SettingsVC: UITableViewDataSource {
             cell.selectionStyle = .default
             
         case .version:
-            cell.textLabel?.text = viewModel.input?.appVersion()
-            cell.textLabel?.textColor = .secondaryLabel
-            cell.textLabel?.textAlignment = .center
-            cell.imageView?.image = nil
-            cell.backgroundColor = .clear
-            cell.textLabel?.snp.remakeConstraints { make in make.center.equalToSuperview() }
+            cell.imageView?.isHidden = true
+            cell.textLabel?.isHidden = true
+            cell.contentView.subviews.filter { $0.tag == 999 }.forEach { $0.removeFromSuperview() }
+            
+            let versionLabel = UILabel()
+            versionLabel.tag = 999
+            versionLabel.text = viewModel.input?.appVersion()
+            versionLabel.textColor = .secondaryLabel
+            versionLabel.textAlignment = .center
+            versionLabel.font = .systemFont(ofSize: 14)
+            
+            cell.contentView.addSubview(versionLabel)
+            versionLabel.snp.makeConstraints { make in make.center.equalToSuperview() }
         }
         return cell
     }
