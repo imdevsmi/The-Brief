@@ -28,9 +28,10 @@ final class WeatherCardView: UIView {
         backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 12
         layer.shadowColor = UIColor.label.cgColor
-        layer.shadowOpacity = 0.1
         layer.shadowRadius = 6
         layer.shadowOffset = CGSize(width: 0, height: 3)
+        layer.borderWidth = 3
+        layer.borderColor = UIColor.label.withAlphaComponent(0.27).cgColor
         
         searchBar.placeholder = L("search_city")
         searchBar.searchBarStyle = .minimal

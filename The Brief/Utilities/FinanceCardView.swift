@@ -23,9 +23,10 @@ final class FinanceCardView: UIView {
         backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 12
         layer.shadowColor = UIColor.label.cgColor
-        layer.shadowOpacity = 0.1
         layer.shadowRadius = 6
         layer.shadowOffset = CGSize(width: 0, height: 3)
+        layer.borderWidth = 2
+        layer.borderColor = UIColor.label.withAlphaComponent(0.25).cgColor
         
         stackView.axis = .vertical
         stackView.spacing = 10
