@@ -137,38 +137,38 @@ private extension NewsCell {
     
     func setupLayouts() {
         newsImage.snp.makeConstraints { make in
-            make.top.leading.equalTo(contentView.layoutMarginsGuide)
+            make.top.trailing.equalTo(contentView.layoutMarginsGuide)
             make.width.height.equalTo(136)
         }
         newsLabel.snp.makeConstraints { make in
             make.top.equalTo(contentView.layoutMarginsGuide)
-            make.leading.equalTo(newsImage.snp.trailing).offset(12)
-            make.trailing.equalTo(contentView.layoutMarginsGuide)
+            make.leading.equalTo(contentView.layoutMarginsGuide)
+            make.trailing.equalTo(newsImage.snp.leading).offset(-12)
         }
         authorLabel.snp.makeConstraints { make in
             make.top.equalTo(newsLabel.snp.bottom).offset(12)
-            make.leading.equalTo(newsImage.snp.trailing).offset(12)
-            make.trailing.equalTo(contentView.layoutMarginsGuide)
+            make.trailing.equalTo(newsImage.snp.leading).offset(-12)
+            make.leading.equalTo(contentView.layoutMarginsGuide)
         }
         hourLabel.snp.makeConstraints { make in
             make.top.equalTo(authorLabel.snp.bottom).offset(12)
-            make.leading.equalTo(newsImage.snp.trailing).offset(12)
+            make.leading.equalTo(contentView.layoutMarginsGuide)
+            make.width.lessThanOrEqualTo(60)
             make.height.equalTo(24)
         }
         hourSeperatorView.snp.makeConstraints { make in
-            make.leading.equalTo(hourLabel.snp.trailing).offset(12)
+            make.leading.equalTo(hourLabel.snp.trailing).offset(4)
             make.centerY.equalTo(hourLabel)
-            make.width.equalTo(8)
-            make.height.equalTo(8)
+            make.width.height.equalTo(4)
         }
         dateLabel.snp.makeConstraints { make in
-            make.leading.equalTo(hourSeperatorView.snp.trailing).offset(12)
+            make.leading.equalTo(hourSeperatorView.snp.trailing).offset(4)
             make.centerY.equalTo(hourLabel)
             make.height.equalTo(24)
         }
         moreButton.snp.makeConstraints { make in
-            make.centerY.equalTo(dateLabel)
             make.trailing.equalTo(contentView.layoutMarginsGuide)
+            make.centerY.equalTo(dateLabel)
             make.width.equalTo(24)
         }
         separatorView.snp.makeConstraints { make in
