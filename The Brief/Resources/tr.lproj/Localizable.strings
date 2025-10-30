@@ -56,5 +56,8 @@
 "weather_title" = "Hava Durumu";
 "finance_title" = "Finans";
 
+"currencies_title" = "Para Birimleri";
+"metals_title" = "Metaller";
+
 "buy_title" = "Alış";
 "sell_title" = "Satış";

@@ -12,11 +12,12 @@ protocol FinanceAPIServiceProtocol {
 }
 
 final class FinanceAPIService: FinanceAPIServiceProtocol {
+    // MARK: - Properties
     private let networkManager: NetworkManagerProtocol
     private let baseURL = "https://api.metalpriceapi.com/v1/latest"
     
     init(networkManager: NetworkManagerProtocol = NetworkManager()) { self.networkManager = networkManager }
-    
+    // MARK: - Fetch Rates
     func fetchRates(pairs: [String], completion: @escaping (Result<[FinanceUIModel], NetworkError>) -> Void) {
         let symbols = Set(pairs.flatMap { $0.split(separator: "/").map(String.init) }).joined(separator: ",")
         

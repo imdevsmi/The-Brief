@@ -11,7 +11,7 @@ import UIKit
 final class FinanceCardView: UIView {
 
     private let segmentControl: UISegmentedControl = {
-        let sc = UISegmentedControl(items: ["Currencies", "Metals"])
+        let sc = UISegmentedControl(items: [L("currencies_title"), L("metals_title")])
         sc.selectedSegmentIndex = 0
         sc.backgroundColor = .clear
         sc.selectedSegmentTintColor = .systemBlue
@@ -157,7 +157,6 @@ final class FinanceCardView: UIView {
             make.leading.trailing.equalToSuperview().inset(4)
             make.bottom.equalToSuperview().inset(2)
         }
-
         return container
     }
 }

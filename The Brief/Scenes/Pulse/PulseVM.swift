@@ -40,7 +40,6 @@ final class PulseVM: PulseVMInputProtocol {
 
 // MARK: - Weather
 extension PulseVM {
-    
     func fetchWeather(for city: String) {
         let trimmedCity = city.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedCity.isEmpty else { return }
@@ -86,9 +85,8 @@ extension PulseVM {
     }
 }
 
-// MARK: - Finance (MetalPriceAPI)
+// MARK: - Finance
 extension PulseVM {
-    
     func fetchFinanceData(for segment: FinanceSegment) {
         let pairs: [String]
         switch segment {

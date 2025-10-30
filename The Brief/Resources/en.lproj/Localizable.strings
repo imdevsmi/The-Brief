@@ -56,5 +56,8 @@
 "weather_title" = "Weather";
 "finance_title" = "Finance";
 
+"currencies_title" = "Currencies";
+"metals_title" = "Metals";
+
 "buy_title" = "Buy";
 "sell_title" = "Sell";
