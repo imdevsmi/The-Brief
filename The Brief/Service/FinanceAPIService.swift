@@ -7,64 +7,36 @@
 
 import Foundation
 
-// MARK: - Finance API Service Protocol
 protocol FinanceAPIServiceProtocol {
     func fetchRates(pairs: [String], completion: @escaping (Result<[FinanceUIModel], NetworkError>) -> Void)
 }
 
 final class FinanceAPIService: FinanceAPIServiceProtocol {
-    // MARK: - Properties
     private let networkManager: NetworkManagerProtocol
-    private let baseURL = "https://data.fixer.io/api/latest"
+    private let baseURL = "https://api.metalpriceapi.com/v1/latest"
     
     init(networkManager: NetworkManagerProtocol = NetworkManager()) { self.networkManager = networkManager }
-    // MARK: - Fetch Rates
+    
     func fetchRates(pairs: [String], completion: @escaping (Result<[FinanceUIModel], NetworkError>) -> Void) {
-        var allCurrencies = Set<String>()
-        for pair in pairs {
-            let components = pair.split(separator: "/").map(String.init)
-            if components.count == 2 {
-                if components[0] != "EUR" { allCurrencies.insert(components[0]) }
-                if components[1] != "EUR" { allCurrencies.insert(components[1]) }
-            }
-        }
+        let symbols = Set(pairs.flatMap { $0.split(separator: "/").map(String.init) }).joined(separator: ",")
         
-        let symbols = allCurrencies.joined(separator: ",")
         var urlComponents = URLComponents(string: baseURL)
-        urlComponents?.queryItems = [URLQueryItem(name: "access_key", value: SecureConfig.financeApiKey), URLQueryItem(name: "symbols", value: symbols)]
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "api_key", value: SecureConfig.financeApiKey),
+            URLQueryItem(name: "base", value: "TRY"),
+            URLQueryItem(name: "currencies", value: symbols)
+        ]
         
         guard let url = urlComponents?.url else {
             completion(.failure(.invalidRequest))
             return
         }
+        
         networkManager.request(url: url, method: .GET, headers: nil) { (result: Result<FinanceRatesResponse, NetworkError>) in
             switch result {
             case .success(let response):
-                let models: [FinanceUIModel] = pairs.compactMap { pair in
-                    let components = pair.split(separator: "/").map(String.init)
-                    guard components.count == 2 else { return nil }
-                    
-                    let base = components[0]
-                    let quote = components[1]
-                    let rate: Double
-    
-                    if base == "EUR" {
-                        guard let r = response.rates[quote] else { return nil }
-                        rate = r
-                    }
-                    else if quote == "EUR" {
-                        guard let r = response.rates[base] else { return nil }
-                        rate = 1.0 / r
-                    }
-                    else {
-                        guard let baseRate = response.rates[base], let quoteRate = response.rates[quote] else { return nil }
-                        rate = quoteRate / baseRate
-                    }
-                    let formattedRate = String(format: "%.4f", rate)
-                    return FinanceUIModel(pair: pair, bid: formattedRate, offer: formattedRate)
-                }
+                let models = FinanceUIModel.fromResponse(response, for: pairs)
                 completion(.success(models))
-                
             case .failure(let error):
                 completion(.failure(error))
             }

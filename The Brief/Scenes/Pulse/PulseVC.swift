@@ -58,8 +58,13 @@ final class PulseVC: UIViewController {
         super.viewDidLoad()
         setupUI()
         viewModel.loadLastCity()
-        viewModel.fetchFinanceData()
+        viewModel.fetchFinanceData(for: .currencies)
+        
+        financeCard.onSegmentChanged = { [weak self] segment in
+            self?.viewModel.fetchFinanceData(for: segment)
+        }
     }
+
     
     private func setupUI() {
         view.backgroundColor = .systemGroupedBackground
@@ -102,8 +107,15 @@ final class PulseVC: UIViewController {
 
 // MARK: - PulseVCOutputProtocol
 extension PulseVC: PulseVCOutputProtocol {
-    func didUpdateWeather(_ model: WeatherUIModel) { weatherCard.configure(with: model) }
-    func didUpdateFinance(_ models: [FinanceUIModel]) { financeCard.configure(with: models) }
+    func didUpdateWeather(_ model: WeatherUIModel) {
+        weatherCard.configure(with: model)
+    }
+    
+    func didUpdateFinance(_ models: [FinanceUIModel]) {
+        financeCard.currencies = models.filter { $0.pair.contains("/") && !$0.pair.starts(with: "X") }
+        financeCard.metals = models.filter { $0.pair.starts(with: "X") }
+        financeCard.configure(with: models)
+    }
 }
 
 // MARK: - UISearchBarDelegate

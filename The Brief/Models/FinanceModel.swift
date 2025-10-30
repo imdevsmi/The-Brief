@@ -10,6 +10,18 @@ import Foundation
 struct FinanceRatesResponse: Codable {
     let success: Bool
     let base: String
-    let date: String
+    let timestamp: TimeInterval?
     let rates: [String: Double]
+    let unit: String?
+    
+    var date: Date? {
+        guard let timestamp else { return nil }
+        return Date(timeIntervalSince1970: timestamp)
+    }
 }
+
+enum FinanceSegment {
+    case currencies
+    case metals
+}
+
