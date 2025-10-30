@@ -9,28 +9,29 @@ import SnapKit
 import UIKit
 
 final class FinanceCardView: UIView {
+    // MARK: - Properties
+    private let stackView = UIStackView()
     
-    private let segmentControl: UISegmentedControl = {
+    private lazy var segmentControl: UISegmentedControl = {
         let sc = UISegmentedControl(items: [L("currencies_title"), L("metals_title")])
         sc.selectedSegmentIndex = 0
         sc.backgroundColor = .clear
         sc.selectedSegmentTintColor = .systemBlue
         sc.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
         sc.setTitleTextAttributes([.foregroundColor: UIColor.label], for: .normal)
+        sc.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
         
         return sc
     }()
-    
-    private let stackView = UIStackView()
     
     var metals: [FinanceUIModel] = []
     var currencies: [FinanceUIModel] = []
     var onSegmentChanged: ((FinanceSegment) -> Void)?
     
+    // MARK: Inits
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
-        segmentControl.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
     }
     
     required init?(coder: NSCoder) { fatalError() }
@@ -61,12 +62,6 @@ final class FinanceCardView: UIView {
         }
     }
     
-    @objc private func segmentChanged(_ sender: UISegmentedControl) {
-        let segment: FinanceSegment = (sender.selectedSegmentIndex == 0) ? .currencies : .metals
-        onSegmentChanged?(segment)
-        reloadData(for: segment)
-    }
-    
     func configure(with models: [FinanceUIModel]) {
         currencies = models.filter { !$0.pair.starts(with: "X") }
         metals = models.filter { $0.pair.starts(with: "X") }
@@ -74,8 +69,19 @@ final class FinanceCardView: UIView {
         let segment: FinanceSegment = (segmentControl.selectedSegmentIndex == 0) ? .currencies : .metals
         reloadData(for: segment)
     }
-    
-    private func reloadData(for segment: FinanceSegment) {
+}
+
+// MARK: Objective Methods
+@objc private extension FinanceCardView {
+    func segmentChanged(_ sender: UISegmentedControl) {
+        let segment: FinanceSegment = (sender.selectedSegmentIndex == 0) ? .currencies : .metals
+        onSegmentChanged?(segment)
+    }
+}
+
+// MARK: - Private Methods
+private extension FinanceCardView {
+    func reloadData(for segment: FinanceSegment) {
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
         let data = (segment == .currencies) ? currencies : metals
@@ -86,7 +92,7 @@ final class FinanceCardView: UIView {
         }
     }
     
-    private func createFinanceItemView(with model: FinanceUIModel) -> UIView {
+    func createFinanceItemView(with model: FinanceUIModel) -> UIView {
         let containerView = UIView()
         containerView.backgroundColor = UIColor { traitCollection in
             traitCollection.userInterfaceStyle == .dark ? .secondarySystemBackground : .systemBackground
@@ -94,13 +100,13 @@ final class FinanceCardView: UIView {
         containerView.layer.cornerRadius = 8
         containerView.layer.borderWidth = 1
         containerView.layer.borderColor = UIColor.separator.cgColor
-
+        
         let pairContainer = UIView()
         pairContainer.backgroundColor = UIColor { traitCollection in
             traitCollection.userInterfaceStyle == .dark ? .tertiarySystemBackground : .secondarySystemBackground
         }
         pairContainer.layer.cornerRadius = 6
-
+        
         let pairLabel = UILabel()
         pairLabel.text = model.pair
         pairLabel.font = .systemFont(ofSize: 16, weight: .semibold)
@@ -108,18 +114,18 @@ final class FinanceCardView: UIView {
         pairLabel.textAlignment = .center
         pairLabel.adjustsFontSizeToFitWidth = true
         pairLabel.minimumScaleFactor = 0.5
-
+        
         pairContainer.addSubview(pairLabel)
         containerView.addSubview(pairContainer)
-
+        
         let isMetal = model.pair.starts(with: "X")
         let boxWidth: CGFloat = isMetal ? 90 : 70
         let bidContainer = createValueContainer(title: L("buy_title"), value: model.bid, color: .systemGreen)
         let offerContainer = createValueContainer(title: L("sell_title"), value: model.offer, color: .systemRed)
-
+        
         containerView.addSubview(bidContainer)
         containerView.addSubview(offerContainer)
-
+        
         pairContainer.snp.makeConstraints { make in
             make.leading.top.bottom.equalToSuperview().inset(8)
             make.width.equalTo(80)
@@ -127,7 +133,7 @@ final class FinanceCardView: UIView {
         pairLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(4)
         }
-
+        
         offerContainer.snp.makeConstraints { make in
             make.trailing.top.bottom.equalToSuperview().inset(8)
             make.width.equalTo(boxWidth)
@@ -137,12 +143,10 @@ final class FinanceCardView: UIView {
             make.top.bottom.equalToSuperview().inset(8)
             make.width.equalTo(boxWidth)
         }
-
         return containerView
     }
-
     
-    private func createValueContainer(title: String, value: String, color: UIColor) -> UIView {
+    func createValueContainer(title: String, value: String, color: UIColor) -> UIView {
         let container = UIView()
         container.backgroundColor = UIColor { traitCollection in
             traitCollection.userInterfaceStyle == .dark ? UIColor.systemGray5.withAlphaComponent(0.2) : UIColor.systemGray6.withAlphaComponent(0.5)
@@ -150,13 +154,13 @@ final class FinanceCardView: UIView {
         container.layer.cornerRadius = 8
         container.layer.borderWidth = 1
         container.layer.borderColor = color.withAlphaComponent(0.3).cgColor
-
+        
         let titleLabel = UILabel()
         titleLabel.text = title
         titleLabel.font = .systemFont(ofSize: 10, weight: .medium)
         titleLabel.textColor = .secondaryLabel
         titleLabel.textAlignment = .center
-
+        
         let valueLabel = UILabel()
         valueLabel.text = value
         valueLabel.font = .systemFont(ofSize: 14, weight: .bold)
@@ -165,10 +169,10 @@ final class FinanceCardView: UIView {
         valueLabel.adjustsFontSizeToFitWidth = true
         valueLabel.minimumScaleFactor = 0.5
         valueLabel.lineBreakMode = .byTruncatingTail
-
+        
         container.addSubview(titleLabel)
         container.addSubview(valueLabel)
-
+        
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(4)
             make.leading.trailing.equalToSuperview().inset(4)
@@ -178,7 +182,6 @@ final class FinanceCardView: UIView {
             make.leading.trailing.equalToSuperview().inset(4)
             make.bottom.equalToSuperview().inset(4)
         }
-
         return container
     }
 }
