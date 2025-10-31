@@ -16,8 +16,9 @@ struct FinanceUIModel {
 extension FinanceUIModel {
     static func fromResponse(_ response: FinanceRatesResponse, for pairs: [String]) -> [FinanceUIModel] {
         var models: [FinanceUIModel] = []
-
-        let usdTryRate = response.rates["TRY"] ?? 1.0
+        
+        let usdTryRate = response.rates["USD"].map { 1 / $0 } ?? 1.0
+        let metals: Set<String> = ["XAU", "XAG", "XPT", "XPD"]
 
         for pair in pairs {
             let components = pair.split(separator: "/").map(String.init)
@@ -41,11 +42,13 @@ extension FinanceUIModel {
                 rate = quoteRate / baseRate
             }
 
-            if base.starts(with: "X") && quote == "USD" {
-                rate *= usdTryRate
-                displayPair = "\(base)/TRY"
+            if metals.contains(base) && quote == "TRY" {
+                rate = 1 / response.rates[base]!
             }
-            
+            if base == "USD" && quote == "TRY" {
+                rate = usdTryRate
+            }
+
             let formatted = String(format: "%.3f", rate)
             models.append(FinanceUIModel(pair: displayPair, bid: formatted, offer: formatted))
         }
